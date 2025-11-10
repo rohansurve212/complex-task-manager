@@ -1,0 +1,9 @@
+pip
+setuptools
+wheel
+pika
+pandas
+datetime
+python-dotenv
+argparse
+pyodbc

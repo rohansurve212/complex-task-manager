@@ -1,0 +1,71 @@
+swagger: "2.0"
+info:
+  description: "This is the REST interface for STM project. They is no real backend to support those endpoint. The authorization will be managed by an API token provided when a real backend will be implemented."
+  version: "0.3.0"
+  title: "Swagger STM"
+  contact:
+    email: "eric.goulet@bell.ca"
+host: "dc6cgv.qc.bell.ca"
+basePath: "/v1"
+tags:
+- name: "work"
+  description: "Operations about agent works"
+schemes:
+- "https"
+paths:
+  /work/agent/{agentId}:
+    get:
+      tags:
+      - "work"
+      summary: "Get a new request for an agent"
+      description: ""
+      operationId: "getAgentWork"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "agentId"
+        in: "path"
+        description: "The agent's id to get a new request."
+        required: true
+        type: "string"
+      - name: "tenant"
+        in: "query"
+        description: "The tenant of the agent."
+        required: false
+        type: "string"
+      - name: "x-correlation-id"
+        in: "header"
+        description: "The id used to track a user request from Smartpath."
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Request"
+        "400":
+          description: "Invalid agent id supplied"
+        "401":
+          description: "Missing or invalid API token"
+        "404":
+          description: "Agent not found"
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  Request:
+    type: "object"
+    properties:
+      requestId:
+        type: "string"
+        description: The request's id. This field will be null if status is NO_WORK or NO_ASSIGNMENT.
+      correlationId:
+        type: "string"
+        description: The id used to track a user request from Smartpath.
+      status:
+        type: "string"
+        enum: [WORK, NO_WORK, NO_ASSIGNMENT]
+        description: Explains the status of the requestId
+        example: "WORK | NO_WORK | NO_ASSIGNMENT"

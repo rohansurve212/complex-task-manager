@@ -1,0 +1,110 @@
+{% extends 'forescalation/base.html' %}
+{% load i18n %}
+{% block content %}
+{% load static %}
+    <div class="pageholder">
+        <div class="titleholder"> 
+            
+            <div class="title"><i class="fa-solid fa-table"></i> {% trans "SAiRA Internal Exception Tool" %}
+
+            </div>
+
+        </div>
+        
+        <div class="linkholder">   
+            <div style="max-width: 100%;">
+                <table id="test" class="display wide-table">
+                            
+                    <thead style="height: 15%;">
+                        <tr>
+                            <th >{% trans "No" %} </th>
+                            <th >{% trans "Smartpath_Original_Request_ID" %}</th>
+                            <th >{% trans "Smartpath_Escalation_Request_ID" %}</th>
+                            <th>{% trans "Priority" %}</th>
+                            <th>{% trans "Request_Reason" %}</th>
+                            <!-- <th>Targeted_agent</th>          -->
+                            <th>{% trans "Submission_dt" %}</th>
+                            <th>{% trans "Status" %}</th>
+                            <th>{% trans "Assigned_dt" %}</th>
+                            <!-- <th>Requestor_Name</th> -->
+                            <th>{% trans "Submitter_Name" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <!-- jinja2 Technique -->
+
+                {% if d %}  
+                {% for i in d %}
+                    <tr>
+                    <td >{{i.escalation_id}}</td>
+                    <td>{{i.request_id}}</td>
+                    <td >{{i.escalation_ticket_no}}</td>
+                    <td >{{i.priority}}</td>
+                    <td>{%trans i.request_reason%}</td>
+                    <td>{{i.submission_dt}} </td>
+                    <td>{{i.status}}</td>
+                    <td>{{i.assigned_dt}}</td>
+                    <!-- <td>{{i.requestor_name}}</td> -->
+                    <td>{{i.submission_person_name}}</td>
+                    </tr>
+                {% endfor %}
+                {% endif %}
+                </tbody>
+            </table>
+        </div>   
+
+    </div>
+    <div><a href="{% url 'exportcsv' %}?{{request.GET.urlencode}}">
+        <button type="button" class="button">Export to CSV</button></a><a href="{{ back_url }}">
+        <button type="button" class="button_admin">Back</button></a></div> 
+
+    <div>
+        <!-- <center><img src="{% static 'photo/Bell_12.png' %}" style="vertical-align:bottom;justify-content:flex-end;width: 99.9%; object-fit: contain;margin-right:5%;"></center> -->
+        <center><img src="{% static 'photo/Bell_12.png' %}" style="vertical-align:bottom;justify-content:flex-end;width: 98%;object-fit: contain;"></center>
+
+    </div>    
+    
+
+    <script>
+        $(document).ready(function() {
+            $('#test').DataTable({
+                "sScrollX": "55%", 
+                "scrollY": "840px",
+                "bAutoWidth": false,
+                "autoWidth": false,
+                // "scrollX": true,
+                "aLengthMenu": [[12, 25, 50,-1], [12,25,50,75]],
+            "scrollCollapse": false,
+            "paging": true,
+            "columnDefs": [{ width: 10, targets: 0 }],
+            // "columns": [{ "width": "10%"},{ "width": "20%" }],
+            "fixedColumns": false,
+            'colReorder': {
+                'allowReorder': true
+            },
+            "destroy": true,
+            "columnDefs": [
+                            { targets: [0, 1, 2,3,4,5,6,7,8], visible: true },
+                            { targets: '_all', visible: false }
+                        ]
+            } );
+        } );
+    </script>
+    
+    <style>
+        .wide-table {
+            width: 900px !important;
+            height: auto;
+            /* text-align: center; */
+        }
+        
+        .wide-table th,
+        .wide-table td {
+            width: 25% !important; 
+            text-align: center;
+            line-height: 2.5em;
+        }
+    
+    </style>
+
+{% endblock %}

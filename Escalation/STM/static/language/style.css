@@ -1,0 +1,25 @@
+.language-selector {
+    display: flex;
+    align-items: center;
+}
+
+.language-buttons {
+    display: flex;
+}
+
+.language-buttons a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    margin-right: 15px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.language-buttons a.active {
+    background-color: #4267B2; 
+    color: #fff; 
+    border: 1px solid #4267B2; 
+}

@@ -1,0 +1,33 @@
+DateTime
+django-datetime-utc
+python-dotenv==0.20.0
+# logging
+#elasticsearch
+elasticsearch==7.17.8
+elastic-transport==8.1.2
+APScheduler
+pandas
+requests==2.26.0 
+django-mssql==1.8.0
+django-mssql-backend==2.8.1
+Django==4.1.4
+mssql-django==1.2
+django-pyodbc
+pyodbc
+pypyodbc==1.3.6
+# unixodbc
+# django-pyodbc-azure== 2.1.0.0
+sqlparse==0.4.3
+asgiref==3.7.2
+django-crispy-forms==1.14.0
+django-environ==0.8.1
+pytz-deprecation-shim
+tzdata==2022.7
+# uWSGI>=2.0.19.1<2.1
+poetry-core==1.0.0a9
+Pillow >= 9.0.0,<10.0.0
+whitenoise
+django_htmx
+django_object_actions
+pendulum
+django-translation-manager

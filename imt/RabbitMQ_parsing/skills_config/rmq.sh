@@ -1,0 +1,1 @@
+python rmq_consume_skills_config.py

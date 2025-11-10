@@ -1,0 +1,17 @@
+flow_id,request_source,customer_support_model,request_type,foc_target
+1,bcom,non-standard,disconnect,3
+2,bcom,non-standard,inquiry,3
+3,bcom,non-standard,nmac,2
+4,bcom,non-standard,other,3
+5,bcom,other,disconnect,3
+6,bcom,other,inquiry,3
+7,bcom,other,nmac,2
+8,bcom,other,other,3
+9,other,non-standard,disconnect,3
+10,other,non-standard,inquiry,3
+11,other,non-standard,nmac,2
+12,other,non-standard,other,3
+13,other,other,disconnect,3
+14,other,other,inquiry,3
+15,other,other,nmac,2
+16,other,other,other,3

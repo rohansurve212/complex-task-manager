@@ -1,0 +1,1 @@
+python rmq_consume_disposition_codes.py --path=Disposition_codes.txt

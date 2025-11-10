@@ -1,0 +1,9 @@
+pip 
+wheel 
+setuptools 
+python-ldap 
+certifi 
+pandas 
+python-dotenv 
+pyodbc 
+argparse

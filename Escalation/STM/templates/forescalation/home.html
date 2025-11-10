@@ -1,0 +1,37 @@
+{% extends 'forescalation/base.html' %}
+{% load i18n %}
+{% block content %}
+  
+<div class="pageholder">
+    <div class="titleholder"> 
+        <div class="title"><i class="fa-solid fa-table"></i> {% trans "Welcome to the table application!" %} </div>
+    </div>
+
+    <div class="linkholder">
+        <div class="linkbox"> 
+            <a href="{% url 'table1'%}"> {% trans "Table tutorial 1" %} </a>
+ 
+        </div>
+
+
+        <div class="linkbox"> 
+            <a href="{% url 'table2'%}">{% trans "Table tutorial 2" %} </a>
+        </div>
+
+    </div>
+
+    <div class="linkholder">
+        <div class="linkbox"> 
+            <a href="{% url 'table3'%}">{% trans "Table tutorial 3" %}</a>
+        </div>
+        <div class="linkbox"> 
+            <a href="{% url 'table4'%}">{% trans "Table tutorial 4" %} </a>
+        </div>
+        <div class="linkbox"> 
+            {% trans "Next tutorial..." %}
+        </div>
+
+        
+    </div>
+</div>
+{% endblock %}

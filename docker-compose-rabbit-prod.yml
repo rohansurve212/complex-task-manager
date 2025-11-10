@@ -1,0 +1,20 @@
+version: "3.2"
+services:
+  rabbitmq:
+    hostname: 'prod-rabbitmq'
+    image: rabbitmq:3.8-management-alpine
+    container_name: 'rabbitmq'
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+    ports:
+        - ${RABBITMQ_DEFAULT_PORT1}:5672
+        - ${RABBITMQ_DEFAULT_PORT2}:15672
+    volumes:
+        - /rawdata/stm/rabbitmq/data/:/var/lib/rabbitmq/
+        - /rawdata/stm/rabbitmq/log/:/var/log/rabbitmq/
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 30s
+      retries: 3

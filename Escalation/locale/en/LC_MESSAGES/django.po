@@ -1,0 +1,243 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-07-13 14:22-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: .\Escalation\settings.py:25
+msgid "English"
+msgstr ""
+
+#: .\Escalation\settings.py:26
+msgid "French"
+msgstr ""
+
+#: .\Escalation\urls.py:40
+msgid "SAiRA Internal Exception Tool  "
+msgstr ""
+
+#: .\Escalation\urls.py:41
+msgid "SAiRA Internal Exception Tool ADMIN SITE"
+msgstr ""
+
+#: .\Escalation\urls.py:42
+msgid "SAiRA Internal Exception Tool "
+msgstr ""
+
+#: .\STM\admin.py:31 .\STM\admin.py:90
+msgid "Smartpath Original Request ID*"
+msgstr ""
+
+#: .\STM\admin.py:32 .\STM\admin.py:91
+msgid "Smartpath Escalation Request ID*"
+msgstr ""
+
+#: .\STM\admin.py:33 .\STM\admin.py:92
+msgid "Reason for request*"
+msgstr ""
+
+#: .\STM\admin.py:34 .\STM\admin.py:93
+msgid "Submission person name"
+msgstr ""
+
+#: .\STM\admin.py:43
+msgid ""
+"Smartpath Original Request ID AND Smartpath Escalation Request ID IS REQUIRED"
+msgstr ""
+
+#: .\STM\admin.py:46
+msgid "REQUEST_ID IS REQUIRED"
+msgstr ""
+
+#: .\STM\admin.py:49
+msgid "Smartpath Escalation Request ID IS REQUIRED"
+msgstr ""
+
+#: .\STM\admin.py:52
+msgid "Select Request Reason"
+msgstr ""
+
+#: .\STM\admin.py:55 .\STM\admin.py:99
+msgid "Request Not Found"
+msgstr ""
+
+#: .\STM\admin.py:62
+msgid "Request ID already exists"
+msgstr ""
+
+#: .\STM\admin.py:71
+msgid "Smartpath Escalation Request ID already exists"
+msgstr ""
+
+#: .\STM\apps.py:10
+msgid "Smartpath Artificial Intelligence Routing Algorithm"
+msgstr ""
+
+#: .\STM\models.py:17 .\STM\models.py:30
+msgid "Executive/VP Request"
+msgstr ""
+
+#: .\STM\models.py:17 .\STM\models.py:34
+msgid "Past Contractual SLA"
+msgstr ""
+
+#: .\STM\models.py:17 .\STM\models.py:38
+msgid "Billing Dispute"
+msgstr ""
+
+#: .\STM\models.py:44
+msgid "Prioritized request"
+msgstr ""
+
+#: .\STM\templates\admin\custom_change_form.html:17
+msgid "Home"
+msgstr ""
+
+#: .\STM\templates\admin\custom_change_form.html:20
+#, python-format
+msgid "Add %(name)s"
+msgstr ""
+
+#: .\STM\templates\admin\custom_change_form.html:42
+msgid "Please correct the error below."
+msgstr ""
+
+#: .\STM\templates\admin\custom_change_form.html:42
+msgid "Please correct the errors below."
+msgstr ""
+
+#: .\STM\templates\admin\custom_change_form.html:70
+msgid "Save"
+msgstr ""
+
+#: .\STM\templates\admin\custom_change_form.html:73
+#: .\STM\templates\admin\submit_line.html:7
+msgid "Delete"
+msgstr ""
+
+#: .\STM\templates\admin\custom_change_form.html:75
+#: .\STM\templates\admin\submit_line.html:9
+msgid "Save as new"
+msgstr ""
+
+#: .\STM\templates\admin\custom_change_form.html:76
+#: .\STM\templates\admin\submit_line.html:4
+msgid "Submit"
+msgstr ""
+
+#: .\STM\templates\admin\custom_change_form.html:77
+#: .\STM\templates\admin\submit_line.html:11
+msgid "Save and continue editing"
+msgstr ""
+
+#: .\STM\templates\admin\custom_change_form.html:77
+#: .\STM\templates\admin\submit_line.html:11
+msgid "Save and view"
+msgstr ""
+
+#: .\STM\templates\admin\custom_change_form.html:78
+msgid "Cancel"
+msgstr ""
+
+#: .\STM\templates\admin\submit_line.html:10
+msgid "Save and add another"
+msgstr ""
+
+#: .\STM\templates\admin\submit_line.html:12
+msgid "Close"
+msgstr ""
+
+#: .\STM\templates\forescalation\base.html:22
+msgid "SAiRA_Acceleration Tool"
+msgstr ""
+
+#: .\STM\templates\forescalation\home.html:7
+msgid "Welcome to our table application!"
+msgstr ""
+
+#: .\STM\templates\forescalation\home.html:12
+msgid "Table tutorial 1"
+msgstr ""
+
+#: .\STM\templates\forescalation\home.html:18
+msgid "Table tutorial 2"
+msgstr ""
+
+#: .\STM\templates\forescalation\home.html:25
+msgid "Table tutorial 3"
+msgstr ""
+
+#: .\STM\templates\forescalation\home.html:28
+msgid "Table tutorial 4"
+msgstr ""
+
+#: .\STM\templates\forescalation\home.html:31
+msgid "Next tutorial..."
+msgstr ""
+
+#: .\STM\templates\forescalation\table1.html:20
+msgid "No"
+msgstr ""
+
+#: .\STM\templates\forescalation\table1.html:21
+msgid "Smartpath Original Request ID"
+msgstr ""
+
+#: .\STM\templates\forescalation\table1.html:22
+msgid "Smartpath Escalation Request ID"
+msgstr ""
+
+#: .\STM\templates\forescalation\table1.html:23
+msgid "Priority"
+msgstr ""
+
+#: .\STM\templates\forescalation\table1.html:24
+msgid "Request Reason"
+msgstr ""
+
+#: .\STM\templates\forescalation\table1.html:26
+msgid "Submission_dt"
+msgstr ""
+
+#: .\STM\templates\forescalation\table1.html:27
+msgid "Status"
+msgstr ""
+
+#: .\STM\templates\forescalation\table1.html:28
+msgid "Assigned_dt"
+msgstr ""
+
+#: .\STM\templates\forescalation\table1.html:30
+msgid "Submission_Person_Name"
+msgstr ""
+
+#: .\STM\templates\forescalation\table2.html:6
+#: .\STM\templates\forescalation\table3.html:5
+#: .\STM\templates\forescalation\table4.html:5
+msgid "To home"
+msgstr ""
+
+#: .\STM\templates\forescalation\table2.html:7
+msgid "Table from our second tutorial!"
+msgstr ""
+
+#: .\STM\templates\forescalation\table3.html:6
+msgid "Table from our third tutorial!"
+msgstr ""
+
+#: .\STM\templates\forescalation\table4.html:6
+msgid "Table from our fourth tutorial!"
+msgstr ""

@@ -1,0 +1,14 @@
+fastapi
+fastapi-versioning
+fastapi-utils
+apscheduler
+uvicorn
+pydantic
+httpx==0.27.2
+pyhumps
+python-dotenv
+pymssql
+Elasticsearch
+requests==2.26.0
+pyodbc
+pandas

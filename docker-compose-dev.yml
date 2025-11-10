@@ -1,0 +1,77 @@
+version: "3.2"
+services:
+  stm-api:
+    image: stm-api:1.31
+    build:
+      context: .
+      dockerfile: ./stm-api/Dockerfile
+    ports:
+      - 9090:8000
+    volumes:
+      - /home/aiml/assets/stm/api/log:/app/log
+      - /home/aiml/projects/stm/shared/.env:/app/.env
+    deploy:
+      restart_policy:
+        condition: unless-stopped
+
+  imt-ldap:
+    image: stm-imt-ldap:1.31
+    build: 
+      context: .
+      dockerfile: ./imt/ldap/Dockerfile
+    volumes:
+      - /home/aiml/assets/stm/imt/ldap/log:/var/log/
+      - /home/aiml/projects/stm/shared/.env:/.env
+    deploy:
+      restart_policy:
+        condition: unless-stopped
+
+  imt-rmq-disp:
+    image: stm-imt-rmq-disp:1.31
+    build: 
+      context: .
+      dockerfile: ./imt/RabbitMQ_parsing/disposition_codes/Dockerfile
+    volumes:
+      - /home/aiml/assets/stm/imt/rmq_disp/log:/var/log/
+      - /home/aiml/projects/stm/shared/.env:/.env
+    deploy:
+      restart_policy:
+        condition: unless-stopped
+
+  imt-rmq-agent:
+    image: stm-imt-rmq-agent:1.31
+    build:
+      context: .
+      dockerfile: ./imt/RabbitMQ_parsing/agent_assignment/Dockerfile
+    volumes:
+      - /home/aiml/assets/stm/imt/rmq_agent/log:/var/log/
+      - /home/aiml/projects/stm/shared/.env:/.env
+    deploy:
+      restart_policy:
+        condition: unless-stopped
+
+  imt-rmq-skills:
+    image: stm-imt-rmq-skills:1.31
+    build: 
+      context: .
+      dockerfile: ./imt/RabbitMQ_parsing/skills_config/Dockerfile
+    volumes:
+      - /home/aiml/assets/stm/imt/rmq_skills/log:/var/log/
+      - /home/aiml/projects/stm/shared/.env:/.env
+    deploy:
+      restart_policy:
+        condition: unless-stopped
+
+  web:
+    image: stm-escalation:1.31
+    build:
+      context: .
+      dockerfile: ./Escalation/Dockerfile
+    volumes:
+      - /home/aiml/assets/stm/Escalation/log:/app/log/
+      - /home/aiml/projects/stm/shared/.env:/app/.env
+    ports:
+      - "8002:8002"
+    deploy:
+      restart_policy:
+        condition: unless-stopped

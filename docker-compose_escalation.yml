@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    #image: mcr.microsoft.com/mssql/server:2017-latest
+    #image: "mcr.microsoft.com/mssql/server:2019-latest"
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: 'P@55w0rd'
+    ports:
+      - '1433:1433'
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+
+  web:
+    build: .
+    #command: python manage.py runserver 0.0.0.0:8002
+    command: python manage.py runserver 0.0.0.0:8002
+    volumes:
+      - .:/code
+    ports:
+      - "8002:8002"
+    depends_on:
+      - sqlserver
+
+volumes:
+  sqlserver-data:
+

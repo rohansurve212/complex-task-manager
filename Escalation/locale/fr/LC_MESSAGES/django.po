@@ -1,0 +1,262 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-07-20 10:04-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: .\Escalation\settings.py:25
+msgid "English"
+msgstr "Anglais"
+
+#: .\Escalation\settings.py:26
+msgid "French"
+msgstr "Français"
+
+#: .\Escalation\urls.py:40
+msgid "SAiRA Internal Exception Tool  "
+msgstr "l’outil de demande d’exceptions de SAiRA"
+
+#: .\Escalation\urls.py:41
+msgid "SAiRA Internal Exception Tool ADMIN SITE"
+msgstr "l’outil de demande d’exceptions de SAiRA - site d’administration"
+
+#: .\Escalation\urls.py:42
+msgid "SAiRA Internal Exception Tool "
+msgstr "l’outil de demande d’exceptions de SAiRA "
+
+#  #: .\Escalation\urls.py:42
+#  msgid "SAiRA Internal Exception Tool "
+#  msgstr ""
+#: .\STM\admin.py:32 .\STM\admin.py:91
+msgid "Smartpath Original Request ID*"
+msgstr "Numéro initial de la demande d’escalade Smartpath"
+
+#: .\STM\admin.py:33 .\STM\admin.py:92
+msgid "Smartpath Escalation Request ID*"
+msgstr "Numéro de la demande d’escalade Smartpath"
+
+#: .\STM\admin.py:34 .\STM\admin.py:93
+msgid "Reason for request*"
+msgstr "Raison de la demande"
+
+#: .\STM\admin.py:35
+#, fuzzy
+#| msgid "Submitter name"
+msgid "Submission person name"
+msgstr "Nom de l’expéditeur"
+
+#: .\STM\admin.py:44
+msgid ""
+"Smartpath Original Request ID AND Smartpath Escalation Request ID IS REQUIRED"
+msgstr ""
+"Numéro initial de la demande d’escalade Smartpath et Numéro de la demande "
+"d’escalade Smartpath est requis"
+
+#: .\STM\admin.py:47
+msgid "REQUEST_ID IS REQUIRED"
+msgstr "Un numéro  de demande est requis"
+
+#: .\STM\admin.py:50
+msgid "Smartpath Escalation Request ID IS REQUIRED"
+msgstr "Un numéro de demande d’escalade Smartpath est requis"
+
+#: .\STM\admin.py:53
+msgid "Select Request Reason"
+msgstr "Sélectionnez la raison de la demande"
+
+#: .\STM\admin.py:56 .\STM\admin.py:99
+msgid "Request Not Found"
+msgstr "Demande non trouvée "
+
+#: .\STM\admin.py:63
+msgid "Request ID already exists"
+msgstr "Numéro de demande déjà existant"
+
+#: .\STM\admin.py:72
+msgid "Smartpath Escalation Request ID already exists"
+msgstr "Un numéro  de demande d’escalade Smartpath existe déjà"
+
+#: .\STM\admin.py:94
+msgid "Submitter name"
+msgstr "Nom de l’expéditeur"
+
+#  #: .\STM\admin.py:99
+#  msgid "Request Not Found"
+#  msgstr ""
+#: .\STM\apps.py:10
+msgid "Smartpath Artificial Intelligence Routing Algorithm"
+msgstr ""
+"Algorithme d'Intelligence artificielle d’acheminement des requêtes Smartpath"
+
+#: .\STM\models.py:17 .\STM\models.py:30
+msgid "Executive/VP Request"
+msgstr "Escalade VP / Exécutifs "
+
+#: .\STM\models.py:17 .\STM\models.py:34
+msgid "Past Contractual SLA"
+msgstr "Délai EQS dépassé"
+
+#: .\STM\models.py:17 .\STM\models.py:38
+msgid "Billing Dispute"
+msgstr "Contestation de facturation"
+
+#: .\STM\models.py:44
+msgid "Prioritized request"
+msgstr "Demande priorisée"
+
+#: .\STM\templates\admin\custom_change_form.html:17
+msgid "Home"
+msgstr "à domicile"
+
+#: .\STM\templates\admin\custom_change_form.html:20
+#, python-format
+msgid "Add %(name)s"
+msgstr ""
+
+#: .\STM\templates\admin\custom_change_form.html:42
+msgid "Please correct the error below."
+msgstr "veuillez corriger l’erreur ci-dessous"
+
+#: .\STM\templates\admin\custom_change_form.html:42
+msgid "Please correct the errors below."
+msgstr "veuillez corriger l’erreurs ci-dessous"
+
+#: .\STM\templates\admin\custom_change_form.html:70
+msgid "Save"
+msgstr "Enregistrer"
+
+#: .\STM\templates\admin\custom_change_form.html:73
+#: .\STM\templates\admin\submit_line.html:7
+msgid "Delete"
+msgstr "supprimer"
+
+#: .\STM\templates\admin\custom_change_form.html:75
+#: .\STM\templates\admin\submit_line.html:9
+msgid "Save as new"
+msgstr "Enregistrer en tant que nouveau"
+
+#: .\STM\templates\admin\custom_change_form.html:76
+#: .\STM\templates\admin\submit_line.html:4
+msgid "Submit"
+msgstr "Soumettre"
+
+#: .\STM\templates\admin\custom_change_form.html:77
+#: .\STM\templates\admin\submit_line.html:11
+msgid "Save and continue editing"
+msgstr "Enregistrer et continuer la modification"
+
+#: .\STM\templates\admin\custom_change_form.html:77
+#: .\STM\templates\admin\submit_line.html:11
+msgid "Save and view"
+msgstr "Enregistrer et consulter"
+
+#: .\STM\templates\admin\custom_change_form.html:78
+msgid "Cancel"
+msgstr "Annuler"
+
+#: .\STM\templates\admin\submit_line.html:10
+msgid "Save and add another"
+msgstr "enregistrer et en ajouter un autre"
+
+#: .\STM\templates\admin\submit_line.html:12
+msgid "Close"
+msgstr "conclure"
+
+#: .\STM\templates\forescalation\base.html:22
+msgid "SAiRA Internal Exception Tool"
+msgstr "l’outil de demande d’exceptions de SAiRA"
+
+#: .\STM\templates\forescalation\home.html:7
+msgid "Welcome to the table application!"
+msgstr "Bienvenue dans l’application de table"
+
+#: .\STM\templates\forescalation\home.html:12
+msgid "Table tutorial 1"
+msgstr "Tutoriel de table 1"
+
+#: .\STM\templates\forescalation\home.html:18
+msgid "Table tutorial 2"
+msgstr "Tutoriel de table 2"
+
+#: .\STM\templates\forescalation\home.html:25
+msgid "Table tutorial 3"
+msgstr "Tutoriel de table 3"
+
+#: .\STM\templates\forescalation\home.html:28
+msgid "Table tutorial 4"
+msgstr "Tutoriel de table 4"
+
+#: .\STM\templates\forescalation\home.html:31
+msgid "Next tutorial..."
+msgstr ""
+
+#: .\STM\templates\forescalation\table1.html:8
+msgid "Welcome to our SAiRA Acceleration Tool"
+msgstr "Bienvenu dans l’outil de demande d’exceptions de SARiA"
+
+#: .\STM\templates\forescalation\table1.html:20
+msgid "No"
+msgstr "Numéro"
+
+#: .\STM\templates\forescalation\table1.html:21
+msgid "Smartpath_Original_Request_ID"
+msgstr "Numéro_initial_de_la_demande_d’escalade_Smartpath"
+
+#: .\STM\templates\forescalation\table1.html:22
+msgid "Smartpath_Escalation_Request_ID"
+msgstr "Numéro_de_lademande_d’escalade_Smartpath"
+
+#: .\STM\templates\forescalation\table1.html:23
+msgid "Priority"
+msgstr "Priorité"
+
+#: .\STM\templates\forescalation\table1.html:24
+msgid "Request_Reason"
+msgstr "Raison_de_la_demande"
+
+#: .\STM\templates\forescalation\table1.html:26
+msgid "Submission_dt"
+msgstr "Date_de_soumission"
+
+#: .\STM\templates\forescalation\table1.html:27
+msgid "Status"
+msgstr "Statut"
+
+#: .\STM\templates\forescalation\table1.html:28
+msgid "Assigned_dt"
+msgstr "attribuer_dt"
+
+#: .\STM\templates\forescalation\table1.html:30
+msgid "Submitter_Name"
+msgstr "Nom_de_l’expéditeur"
+
+#: .\STM\templates\forescalation\table2.html:6
+#: .\STM\templates\forescalation\table3.html:5
+#: .\STM\templates\forescalation\table4.html:5
+msgid "To home"
+msgstr "à domicile"
+
+#: .\STM\templates\forescalation\table2.html:7
+msgid "Table from our second tutorial!"
+msgstr ""
+
+#: .\STM\templates\forescalation\table3.html:6
+msgid "Table from our third tutorial!"
+msgstr ""
+
+#: .\STM\templates\forescalation\table4.html:6
+msgid "Table from our fourth tutorial!"
+msgstr ""
