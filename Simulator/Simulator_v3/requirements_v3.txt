@@ -1,0 +1,29 @@
+# Core Simulation Framework
+simpy==4.1.1                    # Discrete event simulation engine
+
+# Data Processing & Analysis
+pandas==2.1.4                   # DataFrames for request/agent data
+numpy==1.26.2                   # Numerical operations and random distributions
+
+# Configuration Management
+pyyaml==6.0.1                   # YAML configuration file parsing
+pydantic==2.5.3                 # Data validation and settings management
+
+# Database & Data Access
+pyodbc==5.0.1                   # ODBC driver for SQL Server (production compatibility)
+
+# Async Operations
+httpx==0.25.2                   # Async HTTP client (for future API integration)
+
+# Logging & Monitoring
+loguru==0.7.2                   # Enhanced logging with better formatting
+
+# Testing (for Phase 1 validation)
+pytest==7.4.3                   # Testing framework
+pytest-asyncio==0.21.1          # Async test support
+pytest-cov==4.1.0               # Code coverage reporting
+
+# Development Tools
+black==23.12.1                  # Code formatting
+flake8==6.1.0                   # Linting
+mypy==1.7.1                     # Type checking

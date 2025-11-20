@@ -1,0 +1,82 @@
+# ============================================================================
+# STM Simulator v3.0 - Sample Scenario Configuration
+# ============================================================================
+# This file defines a complete simulation scenario.
+# Copy and modify this template to create your own scenarios.
+
+# Scenario identification
+scenario_name: "baseline_may_2024"
+description: "Baseline simulation for May 2024 with historical data replay"
+
+# ============================================================================
+# SIMULATION PARAMETERS
+# ============================================================================
+simulation:
+  # Date range for simulation (YYYY-MM-DD format)
+  start_date: "2024-05-01"
+  end_date: "2024-05-08"  # 7-day simulation
+  
+  # Default time-to-pickup target in days (used when no specific target exists)
+  default_ttpu: 8.0
+  
+  # Prioritization algorithm: "foc", "fifo", or "custom"
+  prioritization_algorithm: "foc"
+
+# ============================================================================
+# DATA SOURCES
+# ============================================================================
+data_sources:
+  # Option 1: Load from CSV files
+  use_database: false
+  agents_csv: "../Simulator_v2/data/agents.csv"
+  requests_csv: "../Simulator_v2/data/requests.csv"
+  skillsets_csv: "../Simulator_v2/data/skillsets.csv"
+  
+  # Option 2: Load from database (set use_database: true)
+  # database_connection_string: "DSN=MyDSN;UID=user;PWD=password"
+
+# ============================================================================
+# AGENT BEHAVIOR
+# ============================================================================
+agent_behavior:
+  # Behavior type: "historical", "stochastic", or "deterministic"
+  behavior_type: "historical"
+  
+  # For historical replay (required if behavior_type: historical)
+  historical_data_path: "../Simulator_v2/data/agent_behavior.csv"
+  
+  # For stochastic behavior (required if behavior_type: stochastic)
+  # mean_click_interval_seconds: 300.0  # 5 minutes
+  # std_dev_seconds: 60.0               # 1 minute std dev
+
+# ============================================================================
+# OUTPUT CONFIGURATION
+# ============================================================================
+output:
+  # Where to save results
+  output_directory: "./simulation_results/baseline_may_2024"
+  
+  # What to save
+  save_detailed_logs: true
+  generate_report: true
+  save_metrics_csv: true
+
+# ============================================================================
+# WHAT-IF CHANGES (Optional)
+# ============================================================================
+# Use this section to test changes without modifying the base scenario
+what_if_changes:
+  # Example: Test new FOC targets
+  # new_foc_targets:
+  #   - product: "internet"
+  #     service_region: "ontario"
+  #     current_target: 8.0
+  #     new_target: 7.0
+  
+  # Example: Add new agents
+  # additional_agents:
+  #   - agent_id: "new_agent_001"
+  #     skills: ["internet", "voice"]
+  
+  # Example: Modify request arrival rate
+  # arrival_rate_multiplier: 1.2  # 20% increase in requests
