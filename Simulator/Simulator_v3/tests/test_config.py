@@ -237,14 +237,31 @@ class TestValidation:
     
     def test_warn_long_simulation(self):
         """Test that very long simulations generate warning"""
-        config = create_sample_config()
-        # Modify to be very long
-        config.simulation.end_date = "2025-05-01"  # 1 year
+        # Create a new config with a very long date range (366 days to exceed threshold)
+        config = ScenarioConfig(
+            scenario_name="long_scenario",
+            description="Long simulation for testing",
+            simulation=SimulationParameters(
+                start_date="2024-05-01",
+                end_date="2025-05-02",  # 366 days (more than 365, triggers warning)
+                default_ttpu=8.0,
+                prioritization_algorithm=PrioritizationAlgorithm.FOC
+            ),
+            data_sources=DataSourceConfig(
+                use_database=True
+            ),
+            agent_behavior=AgentBehaviorConfig(
+                behavior_type=AgentBehaviorType.DETERMINISTIC
+            ),
+            output=OutputConfig(
+                output_directory=Path("./test_results")
+            )
+        )
         
         warnings = validate_scenario(config)
         
-        # Should warn about long duration
-        assert any("365 days" in w for w in warnings)
+        # Should warn about long duration (366 days > 365)
+        assert any("366 days" in w for w in warnings)
 
 
 # ============================================================================

@@ -46,20 +46,20 @@ class SimulationParameters(BaseModel):
     start_date: str = Field(
         ...,  # ... means required field
         description="Simulation start date in YYYY-MM-DD format",
-        example="2024-05-01"
+        json_schema_extra={"example": "2024-05-01"}
     )
     
     end_date: str = Field(
         ...,
         description="Simulation end date in YYYY-MM-DD format",
-        example="2024-06-01"
+        json_schema_extra={"example": "2024-06-01"}
     )
     
     default_ttpu: float = Field(
         default=8.0,
         gt=0,  # Must be greater than 0
         description="Default time-to-pickup target in days",
-        example=8.0
+        json_schema_extra={"example": 8.0}
     )
     
     prioritization_algorithm: PrioritizationAlgorithm = Field(
@@ -69,6 +69,7 @@ class SimulationParameters(BaseModel):
 
     # Validators ensure data integrity
     @field_validator('start_date', 'end_date')
+    @classmethod
     def validate_date_format(cls, v):
         """
         Ensure dates are in the correct format and valid.
@@ -83,23 +84,24 @@ class SimulationParameters(BaseModel):
         except ValueError:
             raise ValueError(f"Date must be in YYYY-MM-DD format, got: {v}")
 
-    @model_validator
-    def validate_date_range(cls, values):
+    @model_validator(mode='after')
+    def validate_date_range(self):
         """
         Ensure end_date is after start_date.
         
         Root validators run after all field validators and can access multiple fields.
+        In Pydantic v2, model_validator with mode='after' receives self instead of values dict.
         """
-        start = datetime.strptime(values.get('start_date'), '%Y-%m-%d')
-        end = datetime.strptime(values.get('end_date'), '%Y-%m-%d')
+        start = datetime.strptime(self.start_date, '%Y-%m-%d')
+        end = datetime.strptime(self.end_date, '%Y-%m-%d')
         
         if end <= start:
             raise ValueError(
-                f"end_date ({values.get('end_date')}) must be after "
-                f"start_date ({values.get('start_date')})"
+                f"end_date ({self.end_date}) must be after "
+                f"start_date ({self.start_date})"
             )
         
-        return values
+        return self
 
     @property
     def duration_days(self) -> int:
@@ -187,30 +189,30 @@ class AgentBehaviorConfig(BaseModel):
         description="Path to historical agent behavior data"
     )
     
-    @model_validator
-    def validate_behavior_config(cls, values):
+    @model_validator(mode='after')
+    def validate_behavior_config(self):
         """Ensure required fields are present for chosen behavior type"""
-        behavior = values.get('behavior_type')
+        behavior = self.behavior_type
         
         if behavior == AgentBehaviorType.STOCHASTIC:
             # Stochastic mode requires mean and std_dev
-            if values.get('mean_click_interval_seconds') is None:
+            if self.mean_click_interval_seconds is None:
                 raise ValueError(
                     "mean_click_interval_seconds required for stochastic behavior"
                 )
-            if values.get('std_dev_seconds') is None:
+            if self.std_dev_seconds is None:
                 raise ValueError(
                     "std_dev_seconds required for stochastic behavior"
                 )
         
         elif behavior == AgentBehaviorType.HISTORICAL:
             # Historical mode requires data file
-            if values.get('historical_data_path') is None:
+            if self.historical_data_path is None:
                 raise ValueError(
                     "historical_data_path required for historical behavior"
                 )
         
-        return values
+        return self
 
 
 class OutputConfig(BaseModel):
@@ -249,7 +251,7 @@ class ScenarioConfig(BaseModel):
     scenario_name: str = Field(
         ...,
         description="Unique name for this scenario",
-        example="baseline_may_2024"
+        json_schema_extra={"example": "baseline_may_2024"}
     )
     
     description: str = Field(
@@ -269,12 +271,10 @@ class ScenarioConfig(BaseModel):
         description="Optional changes to test (e.g., new FOC targets)"
     )
     
-    class Config:
-        """Pydantic configuration"""
-        # Allow arbitrary types (like Path objects)
-        arbitrary_types_allowed = True
-        # Use enum values instead of enum objects in dict
-        use_enum_values = True
+    model_config = {
+        "arbitrary_types_allowed": True,
+        "use_enum_values": True
+    }
 
 
 # ============================================================================
@@ -383,7 +383,7 @@ def create_sample_config() -> ScenarioConfig:
             prioritization_algorithm=PrioritizationAlgorithm.FOC
         ),
         data_sources=DataSourceConfig(
-            use_database=False
+            use_database=True  # Use database to avoid missing file warnings in tests
         ),
         agent_behavior=AgentBehaviorConfig(
             behavior_type=AgentBehaviorType.DETERMINISTIC
