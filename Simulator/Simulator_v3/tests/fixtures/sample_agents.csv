@@ -1,0 +1,11 @@
+agent_id,full_name,skillsets,manager_name,cp2_name,cp3_name
+john.doe,John Doe,"internet,voice",Sarah Johnson,Toronto Team,Ontario Region
+jane.smith,Jane Smith,"internet,tv,voice",Sarah Johnson,Toronto Team,Ontario Region
+bob.wilson,Bob Wilson,internet,Mike Peters,Montreal Team,Quebec Region
+alice.brown,Alice Brown,"voice,tv",Mike Peters,Montreal Team,Quebec Region
+charlie.davis,Charlie Davis,internet,Sarah Johnson,Toronto Team,Ontario Region
+diana.evans,Diana Evans,"internet,voice",Lisa Anderson,Vancouver Team,BC Region
+frank.garcia,Frank Garcia,"tv,voice",Lisa Anderson,Vancouver Team,BC Region
+grace.harris,Grace Harris,internet,Tom Wilson,Calgary Team,Alberta Region
+henry.jackson,Henry Jackson,"internet,tv",Tom Wilson,Calgary Team,Alberta Region
+iris.kim,Iris Kim,"voice,tv",Lisa Anderson,Vancouver Team,BC Region
