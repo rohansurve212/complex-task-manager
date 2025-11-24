@@ -212,8 +212,14 @@ def _parse_skillsets(value: Any) -> set:
     Returns:
         set: Set of skill IDs
     """
-    if pd.isna(value) or value is None:
+    # Check for None first, then check type before using pd.isna()
+    if value is None:
         return set()
+    
+    # For scalar values (not list/set), check for Nan
+    if not isinstance(value, (list, set)):
+        if pd.isna(value):
+            return set()
     
     if isinstance(value, str):
         # Split by comma and strip whitespace

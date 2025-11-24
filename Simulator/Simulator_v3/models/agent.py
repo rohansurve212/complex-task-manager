@@ -648,12 +648,12 @@ class Agent:
         Example:
             >>> agent = Agent(agent_id="john", full_name="John Doe")
             >>> repr(agent)
-            "Agent(agent_id='john', full_name='John Doe', state=AgentState.IDLE, skills=0)"
+            "Agent(agent_id='john', full_name='John Doe', state=IDLE, skills=0)"
         """
         return (
             f"Agent(agent_id='{self.agent_id}', "
             f"full_name='{self.full_name}', "
-            f"state={self.state}, "
+            f"state={self.state.name}, "
             f"skills={len(self._skillsets)})"
         )
     
