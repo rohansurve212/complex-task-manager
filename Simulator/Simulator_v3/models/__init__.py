@@ -9,11 +9,14 @@ This package contains core data models for the simulation.
 
 # Import core models for easy access
 from .agent import Agent, AgentState
+from .request import Request, RequestState
 
 # Define public API
 __all__ = [
     'Agent',
     'AgentState',
+    'Request',
+    'RequestState',
 ]
 
 # Package metadata

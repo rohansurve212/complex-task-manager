@@ -11,6 +11,7 @@ import pandas as pd
 import logging
 
 from .agent import Agent
+from .request import Request, RequestState
 
 # Set up logger
 logger = logging.getLogger(__name__)
@@ -475,4 +476,387 @@ def validate_agent_data(agents: List[Agent]) -> Dict[str, Any]:
         'agent_count': len(agents),
         'errors': errors,
         'warnings': warnings
+    }
+
+
+# ============================================================================
+# REQUEST LOADING FUNCTIONS (for Ticket #3)
+# ============================================================================
+
+
+def load_requests_from_csv(
+    csv_path: Path,
+    required_columns: Optional[List[str]] = None
+) -> List[Request]:
+    """
+    Load requests from a CSV file.
+    
+    The CSV file should have columns matching request attributes:
+    - request_id (required)
+    - external_id (required)
+    - skill_id (required)
+    - request_source (required)
+    - product (required)
+    - service_region (required)
+    - request_type (required)
+    - order_date (required, ISO format with timezone)
+    - foc_target (optional, default: 8.0)
+    - has_sla (optional, default: false)
+    - is_escalated (optional, default: false)
+    - is_winback (optional, default: false)
+    - And other optional fields...
+    
+    Args:
+        csv_path: Path to the CSV file
+        required_columns: List of columns that must be present
+        
+    Returns:
+        List[Request]: List of Request objects
+        
+    Raises:
+        FileNotFoundError: If CSV file doesn't exist
+        ValueError: If required columns are missing
+        
+    Example:
+        >>> requests = load_requests_from_csv(Path("requests.csv"))
+        >>> len(requests)
+        100
+        >>> requests[0].request_id
+        'REQ_001'
+    """
+    # Validate file exists
+    csv_path = Path(csv_path)
+    if not csv_path.exists():
+        raise FileNotFoundError(f"CSV file not found: {csv_path}")
+    
+    logger.info(f"Loading requests from CSV: {csv_path}")
+    
+    # Read CSV
+    try:
+        df = pd.read_csv(csv_path)
+    except Exception as e:
+        raise ValueError(f"Failed to read CSV file: {e}")
+    
+    # Validate required columns
+    if required_columns is None:
+        required_columns = [
+            'request_id', 'external_id', 'skill_id', 'request_source',
+            'product', 'service_region', 'request_type', 'order_date'
+        ]
+    
+    missing_columns = set(required_columns) - set(df.columns)
+    if missing_columns:
+        raise ValueError(
+            f"CSV missing required columns: {missing_columns}. "
+            f"Found columns: {list(df.columns)}"
+        )
+    
+    # Convert DataFrame to requests
+    requests = load_requests_from_dataframe(df)
+    
+    logger.info(f"Successfully loaded {len(requests)} requests from CSV")
+    
+    return requests
+
+
+def load_requests_from_dataframe(df: pd.DataFrame) -> List[Request]:
+    """
+    Convert a pandas DataFrame to a list of Request objects.
+    
+    Args:
+        df: DataFrame with request data
+        
+    Returns:
+        List[Request]: List of Request objects
+        
+    Raises:
+        ValueError: If required columns are missing or data is invalid
+        
+    Example:
+        >>> import pandas as pd
+        >>> df = pd.DataFrame({
+        ...     'request_id': ['REQ_001', 'REQ_002'],
+        ...     'external_id': ['EXT_001', 'EXT_002'],
+        ...     'skill_id': ['internet', 'voice'],
+        ...     'request_source': ['bcom', 'residential'],
+        ...     'product': ['internet', 'voice'],
+        ...     'service_region': ['ontario', 'quebec'],
+        ...     'request_type': ['new', 'change'],
+        ...     'order_date': ['2024-05-01T10:00:00+00:00', '2024-05-01T11:00:00+00:00']
+        ... })
+        >>> requests = load_requests_from_dataframe(df)
+        >>> len(requests)
+        2
+    """
+    # Validate required columns
+    required_columns = [
+        'request_id', 'external_id', 'skill_id', 'request_source',
+        'product', 'service_region', 'request_type', 'order_date'
+    ]
+    missing_columns = set(required_columns) - set(df.columns)
+    if missing_columns:
+        raise ValueError(f"DataFrame missing required columns: {missing_columns}")
+    
+    requests = []
+    errors = []
+    
+    # Process each row
+    for idx, row in df.iterrows():
+        try:
+            request = _create_request_from_row(row, row_index=idx)
+            requests.append(request)
+        except Exception as e:
+            error_msg = f"Row {idx}: {e}"
+            errors.append(error_msg)
+            logger.warning(f"Failed to create request from row {idx}: {e}")
+    
+    # Report errors if any
+    if errors:
+        logger.warning(f"Failed to create {len(errors)} requests out of {len(df)} rows")
+        if len(errors) == len(df):
+            # All rows failed - this is a critical error
+            raise ValueError(
+                "Failed to create any requests. Errors:\n" + "\n".join(errors[:5])
+            )
+    
+    return requests
+
+
+def _create_request_from_row(row: pd.Series, row_index: int) -> Request:
+    """
+    Create a Request from a DataFrame row.
+    
+    Internal helper function that handles data type conversions and parsing.
+    
+    Args:
+        row: pandas Series representing one row
+        row_index: Index of the row (for error messages)
+        
+    Returns:
+        Request: New request instance
+        
+    Raises:
+        ValueError: If required data is missing or invalid
+    """
+    from datetime import datetime, timezone
+    
+    # Extract required fields
+    request_id = row.get('request_id')
+    external_id = row.get('external_id')
+    skill_id = row.get('skill_id')
+    request_source = row.get('request_source')
+    product = row.get('product')
+    service_region = row.get('service_region')
+    request_type = row.get('request_type')
+    order_date = row.get('order_date')
+    
+    # Validate required fields
+    if pd.isna(request_id) or not str(request_id).strip():
+        raise ValueError("request_id is missing or empty")
+    if pd.isna(external_id) or not str(external_id).strip():
+        raise ValueError("external_id is missing or empty")
+    if pd.isna(skill_id) or not str(skill_id).strip():
+        raise ValueError("skill_id is missing or empty")
+    if pd.isna(order_date):
+        raise ValueError("order_date is missing")
+    
+    # Convert to strings and strip whitespace
+    request_id = str(request_id).strip()
+    external_id = str(external_id).strip()
+    skill_id = str(skill_id).strip()
+    request_source = str(request_source).strip() if not pd.isna(request_source) else "unknown"
+    product = str(product).strip() if not pd.isna(product) else "unknown"
+    service_region = str(service_region).strip() if not pd.isna(service_region) else "unknown"
+    request_type = str(request_type).strip() if not pd.isna(request_type) else "unknown"
+    
+    # Parse order_date
+    if isinstance(order_date, str):
+        try:
+            order_date = datetime.fromisoformat(order_date)
+        except ValueError as e:
+            raise ValueError(f"Invalid order_date format: {order_date}. Expected ISO format. {e}")
+    elif isinstance(order_date, pd.Timestamp):
+        order_date = order_date.to_pydatetime()
+    
+    # Ensure timezone-aware
+    if order_date.tzinfo is None:
+        order_date = order_date.replace(tzinfo=timezone.utc)
+    
+    # Parse optional fields
+    foc_target = _parse_float(row.get('foc_target'), default=8.0)
+    has_sla = _parse_bool(row.get('has_sla'), default=False)
+    is_escalated = _parse_bool(row.get('is_escalated'), default=False)
+    is_winback = _parse_bool(row.get('is_winback'), default=False)
+    skill_priority = _parse_int(row.get('skill_priority'), default=0)
+    
+    # Extract other optional fields
+    customer_support_model = _get_optional_string_simple(row, 'customer_support_model')
+    control_desk = _get_optional_string_simple(row, 'control_desk')
+    golden_customer_id = _get_optional_string_simple(row, 'golden_customer_id')
+    
+    # Create request
+    try:
+        request = Request(
+            request_id=request_id,
+            external_id=external_id,
+            skill_id=skill_id,
+            request_source=request_source,
+            product=product,
+            service_region=service_region,
+            request_type=request_type,
+            order_date=order_date,
+            foc_target=foc_target,
+            has_sla=has_sla,
+            is_escalated=is_escalated,
+            is_winback=is_winback,
+            customer_support_model=customer_support_model,
+            control_desk=control_desk,
+            golden_customer_id=golden_customer_id,
+            skill_priority=skill_priority
+        )
+        return request
+    except Exception as e:
+        raise ValueError(f"Failed to create Request: {e}")
+
+
+def _parse_float(value: Any, default: float = 0.0) -> float:
+    """Parse float value from various formats"""
+    if pd.isna(value) or value is None:
+        return default
+    try:
+        return float(value)
+    except (ValueError, TypeError):
+        return default
+
+
+def _parse_bool(value: Any, default: bool = False) -> bool:
+    """Parse boolean value from various formats"""
+    if pd.isna(value) or value is None:
+        return default
+    
+    if isinstance(value, bool):
+        return value
+    
+    if isinstance(value, str):
+        value_lower = value.lower().strip()
+        if value_lower in ('true', '1', 'yes', 't', 'y'):
+            return True
+        elif value_lower in ('false', '0', 'no', 'f', 'n'):
+            return False
+    
+    if isinstance(value, (int, float)):
+        return bool(value)
+    
+    return default
+
+
+def _parse_int(value: Any, default: int = 0) -> int:
+    """Parse integer value from various formats"""
+    if pd.isna(value) or value is None:
+        return default
+    try:
+        return int(value)
+    except (ValueError, TypeError):
+        return default
+
+
+def _get_optional_string_simple(row: pd.Series, column_name: str) -> Optional[str]:
+    """Get optional string value from row"""
+    if column_name in row:
+        value = row[column_name]
+        if not pd.isna(value):
+            return str(value).strip()
+    return None
+
+
+def filter_requests_by_skill(
+    requests: List[Request],
+    skill_id: str
+) -> List[Request]:
+    """
+    Filter requests that require a specific skill.
+    
+    Args:
+        requests: List of requests to filter
+        skill_id: The skill ID to filter by
+        
+    Returns:
+        List[Request]: Requests requiring the specified skill
+        
+    Example:
+        >>> requests = load_requests_from_csv(Path("requests.csv"))
+        >>> internet_requests = filter_requests_by_skill(requests, "internet")
+        >>> len(internet_requests)
+        25
+    """
+    return [req for req in requests if req.skill_id == skill_id]
+
+
+def filter_requests_by_state(
+    requests: List[Request],
+    state: RequestState
+) -> List[Request]:
+    """
+    Filter requests by state.
+    
+    Args:
+        requests: List of requests to filter
+        state: The state to filter by
+        
+    Returns:
+        List[Request]: Requests in the specified state
+    """
+    return [req for req in requests if req.state == state]
+
+
+def get_request_statistics(requests: List[Request]) -> Dict[str, Any]:
+    """
+    Calculate statistics about a list of requests.
+    
+    Args:
+        requests: List of requests
+        
+    Returns:
+        Dict: Statistics including total count, unique skills, state distribution
+        
+    Example:
+        >>> requests = load_requests_from_csv(Path("requests.csv"))
+        >>> stats = get_request_statistics(requests)
+        >>> stats['total_requests']
+        100
+        >>> stats['unique_skills']
+        ['internet', 'voice', 'tv']
+    """
+    if not requests:
+        return {
+            'total_requests': 0,
+            'unique_skills': [],
+            'state_distribution': {},
+            'sla_count': 0,
+            'escalated_count': 0,
+            'winback_count': 0
+        }
+    
+    # Collect all skills
+    all_skills = set(req.skill_id for req in requests)
+    
+    # Count states
+    state_counts = {}
+    for req in requests:
+        state = req.state.value
+        state_counts[state] = state_counts.get(state, 0) + 1
+    
+    # Count flags
+    sla_count = sum(1 for req in requests if req.has_sla)
+    escalated_count = sum(1 for req in requests if req.is_escalated)
+    winback_count = sum(1 for req in requests if req.is_winback)
+    
+    return {
+        'total_requests': len(requests),
+        'unique_skills': sorted(list(all_skills)),
+        'state_distribution': state_counts,
+        'sla_count': sla_count,
+        'escalated_count': escalated_count,
+        'winback_count': winback_count,
+        'avg_foc_target': sum(req.foc_target for req in requests) / len(requests)
     }

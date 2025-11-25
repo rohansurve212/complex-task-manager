@@ -1,0 +1,11 @@
+request_id,external_id,skill_id,request_source,product,service_region,request_type,order_date,foc_target,has_sla,is_escalated,is_winback,customer_support_model,control_desk,skill_priority
+REQ_001,EXT_12345,internet,bcom,internet,ontario,new,2024-05-01T10:00:00+00:00,8.0,true,false,false,standard,toronto_desk,0
+REQ_002,EXT_12346,voice,residential,voice,ontario,change,2024-05-01T11:30:00+00:00,8.0,true,false,false,standard,toronto_desk,0
+REQ_003,EXT_12347,tv,bcom,tv,quebec,new,2024-05-01T09:15:00+00:00,5.0,true,true,false,non-standard,montreal_desk,1
+REQ_004,EXT_12348,internet,residential,internet,ontario,move,2024-05-01T14:20:00+00:00,8.0,false,false,true,standard,toronto_desk,0
+REQ_005,EXT_12349,voice,bcom,voice,bc,add,2024-05-02T08:00:00+00:00,8.0,true,false,false,standard,vancouver_desk,0
+REQ_006,EXT_12350,internet,bcom,internet,alberta,new,2024-05-02T10:30:00+00:00,6.0,true,true,false,non-standard,calgary_desk,1
+REQ_007,EXT_12351,tv,residential,tv,ontario,change,2024-05-02T13:45:00+00:00,8.0,false,false,false,standard,toronto_desk,0
+REQ_008,EXT_12352,voice,bcom,voice,quebec,new,2024-05-02T16:00:00+00:00,8.0,true,false,true,standard,montreal_desk,0
+REQ_009,EXT_12353,internet,residential,internet,bc,move,2024-05-03T09:00:00+00:00,8.0,true,false,false,standard,vancouver_desk,0
+REQ_010,EXT_12354,tv,bcom,tv,ontario,add,2024-05-03T11:30:00+00:00,5.0,true,true,false,non-standard,toronto_desk,2
