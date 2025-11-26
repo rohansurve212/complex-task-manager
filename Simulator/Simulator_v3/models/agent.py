@@ -11,8 +11,9 @@ The Agent class tracks:
 - Performance metrics (utilization, work count)
 """
 
+from datetime import datetime
 from enum import Enum
-from typing import Dict, List, Optional, Any, Set
+from typing import Dict, List, Optional, Any, Set, Union
 import copy
 
 
@@ -139,10 +140,10 @@ class Agent:
         # Work tracking
         self._work_history: List[Dict[str, Any]] = []
         
-        # Metrics (accumulated over time)
-        self._total_work_time = 0.0  # Total seconds spent working
-        self._total_idle_time = 0.0  # Total seconds spent idle
-        self._last_state_change = None  # Timestamp of last state change
+        # Time tracking Metrics (accumulated over time, can be float or datetime)
+        self._total_work_time: float = 0.0  # Total seconds spent working
+        self._total_idle_time: float = 0.0  # Total seconds spent idle
+        self._last_state_change: Optional[Union[float, datetime]] = None
     
     # ========================================================================
     # PROPERTIES - Read-only access to attributes
@@ -251,7 +252,7 @@ class Agent:
         
         Args:
             new_state: The new state to transition to
-            timestamp: Simulation time (optional, for metrics tracking)
+            timestamp: Simulation time (float) or datetime (optional, for metrics tracking)
             
         Raises:
             ValueError: If new_state is not a valid AgentState
@@ -269,7 +270,7 @@ class Agent:
         
         # Track time spent in previous state (if timestamp provided)
         if timestamp is not None and self._last_state_change is not None:
-            time_in_state = timestamp - self._last_state_change
+            time_in_state = self._calculate_time_delta(self._last_state_change, timestamp)
             
             if old_state == AgentState.WORKING:
                 self._total_work_time += time_in_state
@@ -280,6 +281,36 @@ class Agent:
         self._state = new_state
         self._last_state_change = timestamp
     
+    def _calculate_time_delta(self, start: Union[float, datetime], end: Union[float, datetime]) -> float:
+        """
+        Calculate time difference in seconds, handling both float and datetime types.
+        
+        Args:
+            start: Start time (float or datetime)
+            end: End time (float or datetime)
+        
+        Returns:
+            float: Time difference in seconds
+        
+        Raises:
+            ValueError: If mixing float and datetime types.
+        """
+        # Both are floats (simulation time)
+        if isinstance(start, (int,float)) and isinstance(end, (int,float)):
+            return float(end - start)
+        
+        # Both are datetime objects
+        elif isinstance(start, datetime) and isinstance(end, datetime):
+            delta = end - start
+            return delta.total_seconds()
+        
+        # Mixed types - error
+        else:
+            raise ValueError(
+                f"Cannot mix timestamp types: start is {type(start)._name_}, "
+                f"end is {type(end)._name_}. Both must be float or both must be datetime."
+            )
+
     def make_available(self, timestamp: Optional[float] = None) -> None:
         """
         Make agent available (set to IDLE state).
@@ -303,7 +334,7 @@ class Agent:
     def assign_request(
         self,
         request_id: str,
-        timestamp: float,
+        timestamp: Optional[Union[float, datetime]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
         """
@@ -362,7 +393,7 @@ class Agent:
     
     def complete_request(
         self,
-        timestamp: float,
+        timestamp: Optional[Union[float, datetime]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
         """
@@ -491,14 +522,18 @@ class Agent:
     # METRICS CALCULATION
     # ========================================================================
     
-    def calculate_utilization(self, total_simulation_time: float) -> float:
+    def calculate_utilization(
+            self, 
+            total_simulation_time: Optional[Union[float, datetime]] = None, start_time: Optional[Union[float, datetime]] = None
+        ) -> float:
         """
-        Calculate agent's utilization rate.
+        Calculate agent utilization as percentage of time spent working.
         
         Utilization = (time spent working) / (total time available)
         
         Args:
             total_simulation_time: Total simulation time in seconds
+            start_time: Start time (optional, for datetime calculations)
             
         Returns:
             float: Utilization rate between 0.0 and 1.0
@@ -510,19 +545,23 @@ class Agent:
             >>> agent.calculate_utilization(total_simulation_time=200.0)
             0.5
         """
-        if total_simulation_time <= 0:
+        if total_simulation_time is None:
             return 0.0
         
-        # Calculate total work time including current work if any
-        total_work = self._total_work_time
+         # Convert to seconds if datetime
+        if isinstance(total_simulation_time, datetime):
+            if start_time is None:
+                raise ValueError("start_time required when total_time is datetime")
+            if not isinstance(start_time, datetime):
+                raise ValueError("start_time must be datetime when total_time is datetime")
+            total_seconds = (total_simulation_time - start_time).total_seconds()
+        else:
+            total_seconds = float(total_simulation_time)
         
-        # If currently working, add time since assignment
-        if self.is_working and self._last_state_change is not None:
-            # This would need current simulation time, which we don't have here
-            # For now, just use accumulated time
-            pass
+        if total_seconds <= 0:
+            return 0.0
         
-        return min(total_work / total_simulation_time, 1.0)
+        return self._total_work_time / total_seconds
     
     def get_average_handle_time(self) -> Optional[float]:
         """
