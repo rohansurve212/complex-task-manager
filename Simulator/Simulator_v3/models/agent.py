@@ -84,7 +84,8 @@ class Agent:
         manager_name: Optional[str] = None,
         cp2_name: Optional[str] = None,
         cp3_name: Optional[str] = None,
-        metadata: Optional[Dict[str, Any]] = None
+        metadata: Optional[Dict[str, Any]] = None,
+        is_absent: bool = False  # NEW PARAMETER
     ):
         """
         Initialize a new Agent.
@@ -98,6 +99,7 @@ class Agent:
             cp2_name: CP2 (level 2) organizational unit name (optional)
             cp3_name: CP3 (level 3) organizational unit name (optional)
             metadata: Additional arbitrary data (default: empty dict)
+            is_absent: Whether agent is marked as absent (default: False)
             
         Raises:
             ValueError: If agent_id or full_name is empty
@@ -132,6 +134,9 @@ class Agent:
         
         # Additional metadata
         self._metadata = metadata if metadata is not None else {}
+
+        # Production routing fields
+        self._is_absent = is_absent
         
         # State management
         self._state = AgentState.IDLE
@@ -239,6 +244,16 @@ class Agent:
     def work_count(self) -> int:
         """Get total number of completed work items"""
         return len([w for w in self._work_history if w.get('completed_at') is not None])
+
+    @property
+    def is_absent(self) -> bool:
+        """Check if agent is marked as absent"""
+        return self._is_absent
+    
+    @is_absent.setter
+    def is_absent(self, value: bool) -> None:
+        """Set agent absence status"""
+        self._is_absent = value
     
     # ========================================================================
     # STATE MANAGEMENT METHODS
@@ -444,6 +459,55 @@ class Agent:
         return completed_request_id
     
     # ========================================================================
+    # ROUTING METHODS
+    # ========================================================================
+
+    def is_in_followup_window(
+        self,
+        current_time: datetime,
+        window_1_start: float = 14.0,
+        window_1_end: float = 15.5,
+        window_2_start: float = 19.5,
+        window_2_end: float = 20.0
+    ) -> bool:
+        """
+        Check if current time is in a follow-up routing window.
+        
+        Default windows (UTC):
+        - Window 1: 14:00-15:30 (10:00-11:30 AM EST)
+        - Window 2: 19:30-20:00 (3:30-4:00 PM EST)
+        
+        Args:
+            current_time: Current time to check
+            window_1_start: First window start hour (default 14.0)
+            window_1_end: First window end hour (default 15.5)
+            window_2_start: Second window start hour (default 19.5)
+            window_2_end: Second window end hour (default 20.0)
+            
+        Returns:
+            bool: True if in follow-up window
+            
+        Example:
+            >>> from datetime import datetime, timezone
+            >>> # 2:30 PM UTC (in first window)
+            >>> current_time = datetime(2024, 5, 1, 14, 30, 0, tzinfo=timezone.utc)
+            >>> agent.is_in_followup_window(current_time)
+            True
+            >>> # 3:00 PM UTC (outside windows)
+            >>> current_time = datetime(2024, 5, 1, 15, 0, 0, tzinfo=timezone.utc)
+            >>> agent.is_in_followup_window(current_time)
+            False
+        """
+        hour = current_time.hour
+        minute = current_time.minute
+        time_decimal = hour + (minute / 60.0)
+        
+        in_window_1 = window_1_start <= time_decimal <= window_1_end
+        in_window_2 = window_2_start <= time_decimal <= window_2_end
+        
+        return in_window_1 or in_window_2
+
+    # ========================================================================
     # SKILLS MANAGEMENT
     # ========================================================================
     
@@ -616,6 +680,7 @@ class Agent:
             'state': self.state.value,  # Convert enum to string
             'current_request': self.current_request,
             'work_count': self.work_count,
+            'is_absent': self.is_absent,  # NEW FIELD
             'metadata': self._metadata.copy()
         }
     
@@ -673,7 +738,8 @@ class Agent:
             manager_name=data.get('manager_name') or data.get('person_manager_name'),
             cp2_name=data.get('cp2_name') or data.get('CP2_name'),
             cp3_name=data.get('cp3_name') or data.get('CP3_name'),
-            metadata=data.get('metadata')
+            metadata=data.get('metadata'),
+            is_absent=data.get('is_absent', False)  # NEW FIELD
         )
     
     # ========================================================================

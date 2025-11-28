@@ -240,6 +240,95 @@ class OutputConfig(BaseModel):
     )
 
 
+class RoutingConfig(BaseModel):
+    """
+    Configuration for production routing behavior.
+
+    Controls follow-up routing, pilot program, and request attribute generation.
+    """
+
+    # Pilot Program
+    pilot_program_enabled: bool = Field(
+        default=False,
+        description="Enable follow-up routing for all agents (True) or none (False)"
+    )
+
+    # Follow-up time windows (UTC hours)
+    followup_window_1_start: float = Field(default=14.0, description="First window start (hour, UTC)")
+    followup_window_1_end: float = Field(default=15.5, description="First window end (hour, UTC)")
+    followup_window_2_start: float = Field(default=19.5, description="Second window start (hour, UTC)")
+    followup_window_2_end: float = Field(default=20.0, description="Second window end (hour, UTC)")
+
+    # Absent agents
+    absent_agent_percentage: float = Field(
+        default=0.1,
+        ge=0.0,
+        le=1.0,
+        description="Percentage of agents to mark as absent each day (0.0-1.0)"
+    )
+
+    # Random request attribute generation
+    customer_reply_probability: float = Field(
+        default=0.15,
+        ge=0.0,
+        le=1.0,
+        description="Probability a request has status 'customerreplied'"
+    )
+
+    internal_note_probability: float = Field(
+        default=0.20,
+        ge=0.0,
+        le=1.0,
+        description="Probability a request has 'NEW_INTERNAL_NOTE' tag"
+    )
+
+    locked_tag_probability: float = Field(
+        default=0.05,
+        ge=0.0,
+        le=1.0,
+        description="Probability a request has 'LOCKED' tag"
+    )
+    
+    followup_date_probability: float = Field(
+        default=0.30,
+        ge=0.0,
+        le=1.0,
+        description="Probability a request has a follow-up date set"
+    )
+    
+    expected_completion_date_probability: float = Field(
+        default=0.25,
+        ge=0.0,
+        le=1.0,
+        description="Probability a request has expected completion date set"
+    )
+
+    sticky_assignment_probability: float = Field(
+        default=0.40,
+        ge=0.0,
+        le=1.0,
+        description="Probability a request is sticky-assigned to an agent"
+    )
+    
+    # Random seed for reproducibility
+    random_seed: Optional[int] = Field(
+        default=None,
+        description="Random seed for request attribute generation (None = random)"
+    )
+
+    model_config = {
+        "json_schema_extra": {
+            "example": {
+                "pilot_program_enabled": True,
+                "absent_agent_percentage": 0.1,
+                "customer_reply_probability": 0.15,
+                "internal_note_probability": 0.20,
+                "random_seed": 42
+            }
+        }
+    }
+
+
 class ScenarioConfig(BaseModel):
     """
     Complete configuration for a simulation scenario.
@@ -264,6 +353,7 @@ class ScenarioConfig(BaseModel):
     data_sources: DataSourceConfig
     agent_behavior: AgentBehaviorConfig
     output: OutputConfig
+    routing: RoutingConfig = Field(default_factory=RoutingConfig)
     
     # Optional: What-if changes to test
     what_if_changes: Dict[str, Any] = Field(

@@ -13,7 +13,7 @@ The Request class tracks:
 """
 
 from enum import Enum
-from typing import Dict, Optional, Any
+from typing import Dict, Optional, Any, List
 from datetime import datetime, timezone
 
 
@@ -117,7 +117,13 @@ class Request:
         customer_market_segment: Optional[str] = None,
         preferred_language: Optional[str] = None,
         skill_priority: int = 0,
-        metadata: Optional[Dict[str, Any]] = None
+        metadata: Optional[Dict[str, Any]] = None,
+        # NEW FIELDS for production routing
+        workorder_followup_date: Optional[datetime] = None,
+        workorder_expected_completion_date: Optional[datetime] = None,
+        workorder_status: str = "new",
+        workorder_tags: Optional[List[str]] = None,
+        sticky_agent_id: Optional[str] = None
     ):
         """
         Initialize a new Request.
@@ -142,7 +148,12 @@ class Request:
             preferred_language: Preferred language
             skill_priority: P1/P2 priority (1=P1, 2=P2, 0=none)
             metadata: Additional arbitrary data
-            
+            workorder_followup_date: Follow-up date for this request
+            workorder_expected_completion_date: Expected completion date (ECD)
+            workorder_status: Request status (new, customerreplied, orderconfirmed, etc.)
+            workorder_tags: Request tags (NEW_INTERNAL_NOTE, LOCKED, etc.)
+            sticky_agent_id: Agent this request is 'sticky' assigned to
+
         Raises:
             ValueError: If required fields are empty or invalid
             
@@ -211,6 +222,17 @@ class Request:
         # Computed values (cached for performance)
         self._cached_priority_score = None
         self._cached_priority_score_time = None
+
+        # Production routing fields
+        self._workorder_followup_date = workorder_followup_date
+        self._workorder_expected_completion_date = workorder_expected_completion_date
+        self._workorder_status = workorder_status
+        self._workorder_tags = workorder_tags if workorder_tags is not None else []
+        self._sticky_agent_id = sticky_agent_id
+        
+        # Runtime flags (not persisted)
+        self.from_absent_agent = False
+        self.is_followup = False
     
     # ========================================================================
     # PROPERTIES - Read-only access to attributes
@@ -331,6 +353,51 @@ class Request:
         """Check if request is new (not yet assigned)"""
         return self._state == RequestState.NEW
     
+    @property
+    def workorder_followup_date(self) -> Optional[datetime]:
+        """Get follow-up date"""
+        return self._workorder_followup_date
+    
+    @workorder_followup_date.setter
+    def workorder_followup_date(self, value: Optional[datetime]) -> None:
+        """Set follow-up date"""
+        self._workorder_followup_date = value
+    
+    @property
+    def workorder_expected_completion_date(self) -> Optional[datetime]:
+        """Get expected completion date (ECD)"""
+        return self._workorder_expected_completion_date
+    
+    @workorder_expected_completion_date.setter
+    def workorder_expected_completion_date(self, value: Optional[datetime]) -> None:
+        """Set expected completion date"""
+        self._workorder_expected_completion_date = value
+    
+    @property
+    def workorder_status(self) -> str:
+        """Get workorder status"""
+        return self._workorder_status
+    
+    @workorder_status.setter
+    def workorder_status(self, value: str) -> None:
+        """Set workorder status"""
+        self._workorder_status = value
+    
+    @property
+    def workorder_tags(self) -> List[str]:
+        """Get workorder tags (returns copy)"""
+        return self._workorder_tags.copy()
+    
+    @property
+    def sticky_agent_id(self) -> Optional[str]:
+        """Get sticky agent ID (agent who 'owns' this request for follow-up)"""
+        return self._sticky_agent_id
+    
+    @sticky_agent_id.setter
+    def sticky_agent_id(self, value: Optional[str]) -> None:
+        """Set sticky agent ID"""
+        self._sticky_agent_id = value
+    
     # ========================================================================
     # AGE AND TIME CALCULATIONS
     # ========================================================================
@@ -442,7 +509,103 @@ class Request:
             self._cached_priority_score_time = current_time
         
         return score
+
+    def has_customer_update(self) -> bool:
+        """
+        Check if request has customer update (status is customerreplied).
+        
+        Returns:
+            bool: True if status is 'customerreplied'
+        """
+        return self._workorder_status == "customerreplied"
     
+    def has_internal_note(self) -> bool:
+        """
+        Check if request has new internal note tag.
+        
+        Returns:
+            bool: True if 'NEW_INTERNAL_NOTE' tag is present
+        """
+        return "NEW_INTERNAL_NOTE" in self._workorder_tags
+    
+    def has_customer_update_or_internal_note(self) -> bool:
+        """
+        Check if request has either customer update or internal note.
+        
+        Returns:
+            bool: True if either condition is met
+        """
+        return self.has_customer_update() or self.has_internal_note()
+    
+    def has_expected_completion_date(self) -> bool:
+        """
+        Check if expected completion date is set.
+        
+        Returns:
+            bool: True if ECD is set
+        """
+        return self._workorder_expected_completion_date is not None
+    
+    def is_followup_due(self, current_time: datetime) -> bool:
+        """
+        Check if follow-up date has passed.
+        
+        Args:
+            current_time: Current simulation time
+            
+        Returns:
+            bool: True if no follow-up date set OR follow-up date has passed
+            
+        Example:
+            >>> # Request with no follow-up date is available immediately
+            >>> request.is_followup_due(current_time)
+            True
+            >>> # Request with future follow-up date is not available yet
+            >>> request.workorder_followup_date = current_time + timedelta(days=1)
+            >>> request.is_followup_due(current_time)
+            False
+        """
+        if self._workorder_followup_date is None:
+            return True  # No follow-up date = available now
+        return current_time >= self._workorder_followup_date
+    
+    def is_locked(self) -> bool:
+        """
+        Check if request has LOCKED tag.
+        
+        Returns:
+            bool: True if 'LOCKED' tag is present
+        """
+        return "LOCKED" in self._workorder_tags
+    
+    def add_tag(self, tag: str) -> None:
+        """
+        Add a tag if not already present.
+        
+        Args:
+            tag: Tag to add (e.g., 'NEW_INTERNAL_NOTE', 'LOCKED')
+            
+        Example:
+            >>> request.add_tag('NEW_INTERNAL_NOTE')
+            >>> 'NEW_INTERNAL_NOTE' in request.workorder_tags
+            True
+        """
+        if tag not in self._workorder_tags:
+            self._workorder_tags.append(tag)
+    
+    def remove_tag(self, tag: str) -> None:
+        """
+        Remove a tag if present.
+        
+        Args:
+            tag: Tag to remove
+            
+        Example:
+            >>> request.remove_tag('LOCKED')
+        """
+        if tag in self._workorder_tags:
+            self._workorder_tags.remove(tag)
+
     # ========================================================================
     # FOC COMPLIANCE TRACKING
     # ========================================================================
@@ -624,9 +787,15 @@ class Request:
             'assigned_agent_id': self.assigned_agent_id,
             'assignment_date': self.assignment_date.isoformat() if self.assignment_date else None,
             'completion_date': self.completion_date.isoformat() if self.completion_date else None,
+            # NEW FIELDS
+            'workorder_followup_date': self.workorder_followup_date.isoformat() if self.workorder_followup_date else None,
+            'workorder_expected_completion_date': self.workorder_expected_completion_date.isoformat() if self.workorder_expected_completion_date else None,
+            'workorder_status': self.workorder_status,
+            'workorder_tags': self.workorder_tags,
+            'sticky_agent_id': self.sticky_agent_id,
             'metadata': self._metadata.copy()
         }
-    
+
     def to_production_format(self) -> Dict[str, Any]:
         """
         Convert request data to format expected by production routing code.
@@ -685,6 +854,16 @@ class Request:
         if completion_date and isinstance(completion_date, str):
             completion_date = datetime.fromisoformat(completion_date)
         
+        # NEW: Parse follow-up date if present
+        workorder_followup_date = data.get('workorder_followup_date')
+        if workorder_followup_date and isinstance(workorder_followup_date, str):
+            workorder_followup_date = datetime.fromisoformat(workorder_followup_date)
+        
+        # NEW: Parse expected completion date if present
+        workorder_expected_completion_date = data.get('workorder_expected_completion_date')
+        if workorder_expected_completion_date and isinstance(workorder_expected_completion_date, str):
+            workorder_expected_completion_date = datetime.fromisoformat(workorder_expected_completion_date)
+        
         request = cls(
             request_id=data['request_id'],
             external_id=data['external_id'],
@@ -702,7 +881,13 @@ class Request:
             control_desk=data.get('control_desk'),
             golden_customer_id=data.get('golden_customer_id'),
             skill_priority=data.get('skill_priority', 0),
-            metadata=data.get('metadata')
+            metadata=data.get('metadata'),
+            # NEW FIELDS
+            workorder_followup_date=workorder_followup_date,
+            workorder_expected_completion_date=workorder_expected_completion_date,
+            workorder_status=data.get('workorder_status', 'new'),
+            workorder_tags=data.get('workorder_tags', []),
+            sticky_agent_id=data.get('sticky_agent_id')
         )
         
         # Restore state if provided
@@ -716,7 +901,7 @@ class Request:
             request._state = RequestState.COMPLETED
         
         return request
-    
+
     # ========================================================================
     # SPECIAL METHODS
     # ========================================================================

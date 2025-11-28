@@ -5,8 +5,8 @@
 # Copy and modify this template to create your own scenarios.
 
 # Scenario identification
-scenario_name: "baseline_may_2024"
-description: "Baseline simulation for May 2024 with historical data replay"
+scenario_name: "Production Routing Test"
+description: "Test scenario with production routing logic"
 
 # ============================================================================
 # SIMULATION PARAMETERS
@@ -28,9 +28,8 @@ simulation:
 data_sources:
   # Option 1: Load from CSV files
   use_database: false
-  agents_csv: "../Simulator_v2/data/agents.csv"
-  requests_csv: "../Simulator_v2/data/requests.csv"
-  skillsets_csv: "../Simulator_v2/data/skillsets.csv"
+  agents_csv: "tests/fixtures/sample_agents.csv"
+  requests_csv: "tests/fixtures/sample_requests.csv"
   
   # Option 2: Load from database (set use_database: true)
   # database_connection_string: "DSN=MyDSN;UID=user;PWD=password"
@@ -41,25 +40,32 @@ data_sources:
 agent_behavior:
   # Behavior type: "historical", "stochastic", or "deterministic"
   behavior_type: "historical"
-  
-  # For historical replay (required if behavior_type: historical)
-  historical_data_path: "../Simulator_v2/data/agent_behavior.csv"
-  
-  # For stochastic behavior (required if behavior_type: stochastic)
-  # mean_click_interval_seconds: 300.0  # 5 minutes
-  # std_dev_seconds: 60.0               # 1 minute std dev
+  mean_handle_time: 3600
+  std_handle_time: 900
 
 # ============================================================================
 # OUTPUT CONFIGURATION
 # ============================================================================
 output:
   # Where to save results
-  output_directory: "./simulation_results/baseline_may_2024"
-  
+  output_directory: "./simulation_results"
+
   # What to save
   save_detailed_logs: true
-  generate_report: true
-  save_metrics_csv: true
+
+# ============================================================================
+# ROUTING CONFIGURATION
+# ============================================================================
+routing:
+  pilot_program_enabled: true
+  absent_agent_percentage: 0.1
+  customer_reply_probability: 0.15
+  internal_note_probability: 0.20
+  locked_tag_probability: 0.05
+  followup_date_probability: 0.30
+  expected_completion_date_probability: 0.25
+  sticky_assignment_probability: 0.40
+  random_seed: 42
 
 # ============================================================================
 # WHAT-IF CHANGES (Optional)

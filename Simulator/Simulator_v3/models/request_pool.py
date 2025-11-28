@@ -335,6 +335,7 @@ class RequestPool:
         min_age_days: Optional[float] = None,
         max_age_days: Optional[float] = None,
         current_time: Optional[datetime] = None,
+        sticky_agent_id: Optional[str] = None,  # NEW parameter
         custom_filter: Optional[Callable[[Request], bool]] = None
     ) -> List[Request]:
         """
@@ -352,6 +353,7 @@ class RequestPool:
             min_age_days: Minimum age in days
             max_age_days: Maximum age in days
             current_time: Current time for age calculations
+            sticky_agent_id: Filter by sticky agent assignment
             custom_filter: Custom filter function
             
         Returns:
@@ -396,6 +398,10 @@ class RequestPool:
                 results = [r for r in results if r.get_age_days(current_time) >= min_age_days]
             if max_age_days is not None:
                 results = [r for r in results if r.get_age_days(current_time) <= max_age_days]
+        
+        # Apply sticky agent filter
+        if sticky_agent_id is not None:
+            results = [r for r in results if r.sticky_agent_id == sticky_agent_id]
         
         # Apply custom filter
         if custom_filter:
