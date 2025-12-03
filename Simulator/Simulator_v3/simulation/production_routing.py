@@ -1,21 +1,23 @@
 """
-Production Routing Logic
+Production routing logic for STM Routing Simulator v3.0.
 
-Implements filter_static() from search_requests_utils.py
+This module implements the production routing algorithm from search_requests_utils.py:
+- Follow-up priority filter (4 buckets)
+- CMO (Common Mailbox Operations) routing (4 priority levels)
+- Time-based routing mode switching
 
-Routing strategy depends on time of day and pilot program setting:
-- During follow-up windows (if pilot enabled): Follow-up requests first, CMO fallback
-- Outside follow-up windows: CMO requests first, Follow-up fallback (if pilot enabled)
+Key concepts:
+- "Sticky assignment": sticky_agent_id is the agent who "owns" the request for follow-up
+- "Assigned": assigned_agent_id is the agent currently working on it
+- Requests can be in the pool (unassigned) but still have a sticky_agent_id
 """
 
-from typing import List, Optional
+from typing import Optional, List, Set
 from datetime import datetime
-import logging
-
-from models import Request, RequestState, Agent, RequestPool
+from models.request import Request
+from models.agent import Agent
+from models.request_pool import RequestPool
 from config.scenario_config import RoutingConfig
-
-logger = logging.getLogger("simulation")
 
 
 def followup_priority_filter(
@@ -24,9 +26,10 @@ def followup_priority_filter(
     current_time: datetime
 ) -> Optional[Request]:
     """
-    Get highest priority follow-up request for this agent.
+    Get highest priority follow-up request for an agent.
     
-    Priority buckets (matching production):
+    Follow-up requests are self-assigned (sticky_agent_id matches agent).
+    Priority buckets (highest to lowest):
     1. Self-assigned + (Customer update OR Internal note) + Has ECD
     2. Self-assigned + (Customer update OR Internal note) + NO ECD
     3. Self-assigned + NO updates + Has ECD + followUpDate passed
@@ -34,58 +37,61 @@ def followup_priority_filter(
     
     Args:
         pool: RequestPool to search
-        agent: Agent requesting work
+        agent: Agent to find follow-up for
         current_time: Current simulation time
         
     Returns:
-        Highest priority follow-up request, or None
+        Highest priority follow-up request, or None if no follow-ups
     """
-    # Get all self-assigned followups
-    all_followups = pool.filter_requests(
-        sticky_agent_id=agent.agent_id,
-        state=RequestState.NEW,
-        custom_filter=lambda r: r.workorder_followup_date is not None
+    # Get all pending requests with matching skill
+    skill_matched = pool.filter_requests(
+        status='pending',
+        skills=agent.skills
     )
     
-    if not all_followups:
+    # Filter for self-assigned (sticky) requests only
+    self_assigned = [r for r in skill_matched if r.sticky_agent_id == agent.agent_id]
+    
+    if not self_assigned:
         return None
     
-    # Bucket 1: Customer update/Internal note + Has ECD
-    bucket_1 = [
-        r for r in all_followups
+    # Bucket 1: Self-assigned + (Customer update OR Internal note) + Has ECD
+    bucket1 = [
+        r for r in self_assigned
         if r.has_customer_update_or_internal_note() and r.has_expected_completion_date()
     ]
+    if bucket1:
+        return bucket1[0]  # Return first match
     
-    # Bucket 2: Customer update/Internal note + NO ECD
-    bucket_2 = [
-        r for r in all_followups
+    # Bucket 2: Self-assigned + (Customer update OR Internal note) + NO ECD
+    bucket2 = [
+        r for r in self_assigned
         if r.has_customer_update_or_internal_note() and not r.has_expected_completion_date()
     ]
+    if bucket2:
+        return bucket2[0]
     
-    # Bucket 3: NO updates + Has ECD + followUpDate passed
-    bucket_3 = [
-        r for r in all_followups
-        if (not r.has_customer_update_or_internal_note() and 
-            r.has_expected_completion_date() and
-            r.is_followup_due(current_time))
+    # Bucket 3: Self-assigned + NO updates + Has ECD + followUpDate passed
+    bucket3 = [
+        r for r in self_assigned
+        if (not r.has_customer_update_or_internal_note() 
+            and r.has_expected_completion_date()
+            and r.is_followup_due(current_time))
     ]
+    if bucket3:
+        return bucket3[0]
     
-    # Bucket 4: NO updates + NO ECD + followUpDate passed
-    bucket_4 = [
-        r for r in all_followups
-        if (not r.has_customer_update_or_internal_note() and 
-            not r.has_expected_completion_date() and
-            r.is_followup_due(current_time))
+    # Bucket 4: Self-assigned + NO updates + NO ECD + followUpDate passed
+    bucket4 = [
+        r for r in self_assigned
+        if (not r.has_customer_update_or_internal_note()
+            and not r.has_expected_completion_date()
+            and r.is_followup_due(current_time))
     ]
+    if bucket4:
+        return bucket4[0]
     
-    # Return first non-empty bucket
-    for bucket_num, bucket in enumerate([bucket_1, bucket_2, bucket_3, bucket_4], 1):
-        if bucket:
-            # Sort by priority within bucket
-            sorted_bucket = pool.sort_by_priority(bucket, current_time, descending=True)
-            logger.debug(f"Agent {agent.agent_id}: Follow-up Bucket {bucket_num} - {len(bucket)} requests")
-            return sorted_bucket[0]
-    
+    # No follow-up requests match any bucket
     return None
 
 
@@ -93,12 +99,12 @@ def get_cmo_request(
     pool: RequestPool,
     agent: Agent,
     current_time: datetime,
-    absent_agent_ids: List[str]
+    absent_agent_ids: Set[str]
 ) -> Optional[Request]:
     """
     Get highest priority CMO (Common Mailbox Operations) request.
     
-    CMO Priority (matching production):
+    CMO priority levels (highest to lowest):
     1. Unassigned + status='customerreplied'
     2. Absent agent + status='customerreplied'
     3. Absent agent + has 'NEW_INTERNAL_NOTE' tag
@@ -106,61 +112,60 @@ def get_cmo_request(
     
     Args:
         pool: RequestPool to search
-        agent: Agent requesting work
+        agent: Agent to find CMO request for
         current_time: Current simulation time
-        absent_agent_ids: List of absent agent IDs
+        absent_agent_ids: Set of currently absent agent IDs
         
     Returns:
-        Highest priority CMO request, or None
+        Highest priority CMO request, or None if no CMO requests
     """
-    # Get available requests for agent's skills
-    available = []
-    for skill in agent.skillsets:
-        skill_requests = pool.get_available_requests(skill_id=skill)
-        available.extend(skill_requests)
-    
-    if not available:
-        return None
+    # Get all pending requests with matching skill
+    skill_matched = pool.filter_requests(
+        status='pending',
+        skills=agent.skills
+    )
     
     # Priority 1: Unassigned + status='customerreplied'
-    priority_1 = [
-        r for r in available
+    priority1 = [
+        r for r in skill_matched
         if r.sticky_agent_id is None and r.workorder_status == 'customerreplied'
     ]
+    if priority1:
+        return priority1[0]
     
     # Priority 2: Absent agent + status='customerreplied'
-    priority_2 = [
-        r for r in available
-        if (r.sticky_agent_id in absent_agent_ids and 
-            r.workorder_status == 'customerreplied' and
-            not (r.workorder_status != 'orderconfirmed' and r.is_locked()))
+    priority2 = [
+        r for r in skill_matched
+        if (r.sticky_agent_id in absent_agent_ids 
+            and r.workorder_status == 'customerreplied')
     ]
+    if priority2:
+        # Mark as from absent agent (for metrics/tracking)
+        request = priority2[0]
+        request.from_absent_agent = True
+        return request
     
-    # Priority 3: Absent agent + has 'NEW_INTERNAL_NOTE'
-    priority_3 = [
-        r for r in available
-        if (r.sticky_agent_id in absent_agent_ids and 
-            r.workorder_status != 'customerreplied' and
-            r.has_internal_note() and
-            not (r.workorder_status != 'orderconfirmed' and r.is_locked()))
+    # Priority 3: Absent agent + has 'NEW_INTERNAL_NOTE' tag
+    priority3 = [
+        r for r in skill_matched
+        if r.sticky_agent_id in absent_agent_ids and r.has_internal_note()
     ]
+    if priority3:
+        request = priority3[0]
+        request.from_absent_agent = True
+        return request
     
     # Priority 4: Unassigned + status='new' + followUpDate passed
-    priority_4 = [
-        r for r in available
-        if (r.sticky_agent_id is None and 
-            r.workorder_status == 'new' and
-            r.is_followup_due(current_time))
+    priority4 = [
+        r for r in skill_matched
+        if (r.sticky_agent_id is None 
+            and r.workorder_status == 'new'
+            and r.is_followup_due(current_time))
     ]
+    if priority4:
+        return priority4[0]
     
-    # Return first non-empty priority level
-    for priority_num, priority_list in enumerate([priority_1, priority_2, priority_3, priority_4], 1):
-        if priority_list:
-            # Sort by priority score within priority level
-            sorted_priority = pool.sort_by_priority(priority_list, current_time, descending=True)
-            logger.debug(f"Agent {agent.agent_id}: CMO Priority {priority_num} - {len(priority_list)} requests")
-            return sorted_priority[0]
-    
+    # No CMO requests found
     return None
 
 
@@ -168,33 +173,33 @@ def get_production_routed_request(
     pool: RequestPool,
     agent: Agent,
     current_time: datetime,
-    absent_agent_ids: List[str],
+    absent_agent_ids: Set[str],
     routing_config: RoutingConfig
 ) -> Optional[Request]:
     """
-    Get next request using production routing logic.
+    Get next request for agent using production routing logic.
     
-    Implements filter_static() from search_requests_utils.py
+    This implements the filter_static() logic from search_requests_utils.py:
     
-    Routing strategy:
-    - During follow-up time (if pilot enabled):
-      PRIMARY: Follow-up requests
-      FALLBACK: CMO requests
-      
-    - During non-follow-up time:
-      PRIMARY: CMO requests
-      FALLBACK (if pilot enabled): Follow-up requests
+    Mode A (Follow-up Time + Pilot Enabled):
+        PRIMARY: Follow-up requests (4 priority buckets)
+        FALLBACK: CMO requests (if no follow-ups)
+    
+    Mode B (Outside Follow-up Time OR Pilot Disabled):
+        PRIMARY: CMO requests (4 priority levels)
+        FALLBACK: Follow-up requests (if pilot enabled AND no CMO)
     
     Args:
         pool: RequestPool to search
         agent: Agent requesting work
         current_time: Current simulation time
-        absent_agent_ids: List of absent agent IDs
+        absent_agent_ids: Set of currently absent agent IDs
         routing_config: Routing configuration
         
     Returns:
-        Next request to assign, or None
+        Next request to assign, or None if no requests available
     """
+    # Check if we're in follow-up time window
     is_followup_time = agent.is_in_followup_window(
         current_time,
         window_1_start=routing_config.followup_window_1_start,
@@ -202,45 +207,38 @@ def get_production_routed_request(
         window_2_start=routing_config.followup_window_2_start,
         window_2_end=routing_config.followup_window_2_end
     )
+    
     pilot_enabled = routing_config.pilot_program_enabled
     
-    logger.debug(f"Agent {agent.agent_id}: followup_time={is_followup_time}, pilot={pilot_enabled}")
-    
-    # DURING FOLLOW-UP TIME (if pilot enabled)
+    # Mode A: Follow-up time AND pilot enabled
     if is_followup_time and pilot_enabled:
-        # PRIMARY: Follow-up requests
-        followup_request = followup_priority_filter(pool, agent, current_time)
-        if followup_request:
-            followup_request.is_followup = True
-            logger.info(f"Agent {agent.agent_id}: Assigned follow-up {followup_request.request_id}")
-            return followup_request
+        # PRIMARY: Try follow-up requests first
+        request = followup_priority_filter(pool, agent, current_time)
+        if request:
+            request.is_followup = True
+            return request
         
-        # FALLBACK: CMO requests
-        logger.debug(f"Agent {agent.agent_id}: No follow-ups, trying CMO")
-        cmo_request = get_cmo_request(pool, agent, current_time, absent_agent_ids)
-        if cmo_request:
-            cmo_request.is_followup = False
-            logger.info(f"Agent {agent.agent_id}: Assigned CMO {cmo_request.request_id}")
-            return cmo_request
+        # FALLBACK: Try CMO requests
+        request = get_cmo_request(pool, agent, current_time, absent_agent_ids)
+        if request:
+            request.is_followup = False
+            return request
+        
+        return None
     
-    # DURING NON-FOLLOW-UP TIME
+    # Mode B: Outside follow-up time OR pilot disabled
     else:
-        # PRIMARY: CMO requests
-        cmo_request = get_cmo_request(pool, agent, current_time, absent_agent_ids)
-        if cmo_request:
-            cmo_request.is_followup = False
-            logger.info(f"Agent {agent.agent_id}: Assigned CMO {cmo_request.request_id}")
-            return cmo_request
+        # PRIMARY: Try CMO requests first
+        request = get_cmo_request(pool, agent, current_time, absent_agent_ids)
+        if request:
+            request.is_followup = False
+            return request
         
-        # FALLBACK (if pilot enabled): Follow-up requests
+        # FALLBACK: Try follow-up requests (only if pilot enabled)
         if pilot_enabled:
-            logger.debug(f"Agent {agent.agent_id}: No CMO, trying follow-ups")
-            followup_request = followup_priority_filter(pool, agent, current_time)
-            if followup_request:
-                followup_request.is_followup = True
-                logger.info(f"Agent {agent.agent_id}: Assigned follow-up {followup_request.request_id}")
-                return followup_request
-    
-    logger.debug(f"Agent {agent.agent_id}: No requests available")
-    
-    return None
+            request = followup_priority_filter(pool, agent, current_time)
+            if request:
+                request.is_followup = True
+                return request
+        
+        return None
