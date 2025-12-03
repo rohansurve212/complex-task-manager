@@ -36,10 +36,14 @@ class RequestAttributeGenerator:
         followup_date_prob: float = 0.30,
         expected_completion_date_prob: float = 0.25,
         sticky_assignment_prob: float = 0.40,
+        escalated_prob: float = 0.15,
+        winback_prob: float = 0.10,
+        atlantic_routing_filter_prob: float = 0.05,
+        sla_prob: float = 0.20,
         random_seed: int = None
     ):
         """
-        Initialize attribute generator.
+        Initialize attribute generator with all probabilities.
         
         Args:
             customer_reply_prob: Probability of 'customerreplied' status
@@ -48,6 +52,10 @@ class RequestAttributeGenerator:
             followup_date_prob: Probability of follow-up date being set
             expected_completion_date_prob: Probability of ECD being set
             sticky_assignment_prob: Probability of sticky agent assignment
+            escalated_prob: Probability of request being escalated
+            winback_prob: Probability of request being a winback request
+            atlantic_routing_filter_prob: Probability of request being an Atlantic Routing Filter request
+            sla_prob: Probability of request being an SLA request
             random_seed: Random seed for reproducibility
         """
         self.customer_reply_prob = customer_reply_prob
@@ -56,7 +64,10 @@ class RequestAttributeGenerator:
         self.followup_date_prob = followup_date_prob
         self.expected_completion_date_prob = expected_completion_date_prob
         self.sticky_assignment_prob = sticky_assignment_prob
-        
+        self.escalated_prob = escalated_prob
+        self.winback_prob = winback_prob
+        self.atlantic_routing_filter_prob = atlantic_routing_filter_prob
+        self.sla_prob = sla_prob
         if random_seed is not None:
             random.seed(random_seed)
         
@@ -84,6 +95,8 @@ class RequestAttributeGenerator:
         # Status: customerreplied or keep as 'new'
         if random.random() < self.customer_reply_prob:
             request.workorder_status = "customerreplied"
+        else:
+            request.workorder_status = "new"
         
         # Tags
         if random.random() < self.internal_note_prob:
@@ -109,6 +122,22 @@ class RequestAttributeGenerator:
             if matching_agents:
                 sticky_agent = random.choice(matching_agents)
                 request.sticky_agent_id = sticky_agent.agent_id
+        
+        # Escalated request
+        if random.random() < self.escalated_prob:
+            request.is_escalated = True
+        
+        # Winback request
+        if random.random() < self.winback_prob:
+            request.is_winback = True
+        
+        # Atlantic Routing Filter request
+        if random.random() < self.atlantic_routing_filter_prob:
+            request.is_atl_rf = True
+        
+        # SLA request
+        if random.random() < self.sla_prob:
+            request.has_sla = True
     
     def generate_batch(
         self,

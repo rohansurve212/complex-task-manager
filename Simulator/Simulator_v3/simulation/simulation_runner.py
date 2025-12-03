@@ -119,7 +119,7 @@ class SimulationRunner:
         )
         logger.info(f"Created absent agent manager (absence rate: {self.config.routing.absent_agent_percentage*100}%)")
         
-        # Create request attribute generator
+        # Create request attribute generator with ALL probabilities
         self.attribute_generator = RequestAttributeGenerator(
             customer_reply_probability=self.config.routing.customer_reply_probability,
             internal_note_probability=self.config.routing.internal_note_probability,
@@ -127,6 +127,10 @@ class SimulationRunner:
             followup_date_probability=self.config.routing.followup_date_probability,
             expected_completion_date_probability=self.config.routing.expected_completion_date_probability,
             sticky_assignment_probability=self.config.routing.sticky_assignment_probability,
+            escalated_probability=self.config.routing.escalated_probability,
+            winback_probability=self.config.routing.winback_probability,
+            atl_rf_probability=self.config.routing.atl_rf_probability,
+            sla_probability=self.config.routing.sla_probability,
             random_seed=self.config.routing.random_seed
         )
         logger.info("Created request attribute generator")
@@ -190,11 +194,19 @@ class SimulationRunner:
         internal_notes = sum(1 for r in requests if r.has_internal_note())
         with_ecd = sum(1 for r in requests if r.has_expected_completion_date())
         sticky_assigned = sum(1 for r in requests if r.sticky_agent_id is not None)
+        escalated = sum(1 for r in requests if r.is_escalated)
+        winback = sum(1 for r in requests if r.is_winback)
+        atl_rf = sum(1 for r in requests if r.is_atl_rf)
+        has_sla = sum(1 for r in requests if r.has_sla)
         
         logger.info(f"  - Customer replies: {customer_replies}")
         logger.info(f"  - Internal notes: {internal_notes}")
         logger.info(f"  - With ECD: {with_ecd}")
         logger.info(f"  - Sticky assigned: {sticky_assigned}")
+        logger.info(f"  - Escalated: {escalated}")
+        logger.info(f"  - Winback: {winback}")
+        logger.info(f"  - Atlantic RF: {atl_rf}")
+        logger.info(f"  - Has SLA: {has_sla}")
     
     def _daily_rotation_process(self):
         """

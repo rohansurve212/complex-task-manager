@@ -240,6 +240,11 @@ class OutputConfig(BaseModel):
     )
 
 
+class SimulationConfig(BaseModel):
+    """Configuration for simulation timing and random seed."""
+    start_date: Optional[datetime] = None
+    random_seed: Optional[int] = None
+
 class RoutingConfig(BaseModel):
     """
     Configuration for production routing behavior.
@@ -308,6 +313,34 @@ class RoutingConfig(BaseModel):
         ge=0.0,
         le=1.0,
         description="Probability a request is sticky-assigned to an agent"
+    )
+
+    escalated_probability: float = Field(
+        default=0.15,
+        ge=0.0,
+        le=1.0,
+        description="Probability a request is escalated by the internal exception tool"
+    )
+
+    winback_probability: float = Field(
+        default=0.10,
+        ge=0.0,
+        le=1.0,
+        description="Probability a request is a winback request"
+    )
+
+    atlantic_routing_filter_probability: float = Field(
+        default=0.05,
+        ge=0.0,
+        le=1.0,
+        description="Probability a request is an Atlantic Routing Filter request"
+    )
+
+    sla_probability: float = Field(
+        default=0.20,
+        ge=0.0,
+        le=1.0,
+        description="Probability a request is an SLA request"
     )
     
     # Random seed for reproducibility

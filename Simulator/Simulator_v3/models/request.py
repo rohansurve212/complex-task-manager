@@ -111,6 +111,7 @@ class Request:
         has_sla: bool = False,
         is_escalated: bool = False,
         is_winback: bool = False,
+        is_atl_rf: bool = False,  # Atlantic Routing Filter
         customer_support_model: Optional[str] = None,
         control_desk: Optional[str] = None,
         golden_customer_id: Optional[str] = None,
@@ -123,7 +124,7 @@ class Request:
         workorder_expected_completion_date: Optional[datetime] = None,
         workorder_status: str = "new",
         workorder_tags: Optional[List[str]] = None,
-        sticky_agent_id: Optional[str] = None
+        sticky_agent_id: Optional[str] = None,
     ):
         """
         Initialize a new Request.
@@ -201,6 +202,7 @@ class Request:
         # Flags
         self._is_escalated = is_escalated
         self._is_winback = is_winback
+        self._is_atl_rf = is_atl_rf
         
         # Additional attributes (matching production data)
         self._customer_support_model = customer_support_model
@@ -297,6 +299,11 @@ class Request:
     def is_winback(self) -> bool:
         """Check if this is a winback request"""
         return self._is_winback
+
+    @property
+    def is_atl_rf(self) -> bool:
+        """Check if this is an Atlantic Routing Filter request"""
+        return self._is_atl_rf
     
     @property
     def customer_support_model(self) -> Optional[str]:
@@ -779,6 +786,7 @@ class Request:
             'has_sla': self.has_sla,
             'is_escalated': self.is_escalated,
             'is_winback': self.is_winback,
+            'is_atl_rf': self.is_atl_rf,
             'customer_support_model': self.customer_support_model,
             'control_desk': self.control_desk,
             'golden_customer_id': self.golden_customer_id,
@@ -877,6 +885,7 @@ class Request:
             has_sla=data.get('has_sla', False),
             is_escalated=data.get('is_escalated', False),
             is_winback=data.get('is_winback', False),
+            is_atl_rf=data.get('is_atl_rf', False),
             customer_support_model=data.get('customer_support_model'),
             control_desk=data.get('control_desk'),
             golden_customer_id=data.get('golden_customer_id'),
