@@ -455,7 +455,7 @@ class SimulationEngine:
         Returns:
             bool: True if simulation is idle
         """
-        # If event queue is empty and no agents are busy, we're done
+        # If event queue is empty and no agents are busy, we are done
         # (even if there are unassignable requests remaining)
         if self.event_queue.is_empty() and not self.busy_agents:
             return True
