@@ -447,12 +447,19 @@ class SimulationEngine:
         Check if simulation is idle (no pending work).
         
         Simulation is idle when:
-        - All agents are available (none busy)
-        - No pending requests in pool
+        - All agents are available (none busy), AND
+        - Either:
+        - No pending requests in pool, OR
+        - Event queue is empty (no more events to process)
         
         Returns:
             bool: True if simulation is idle
         """
+        # If event queue is empty and no agents are busy, we're done
+        # (even if there are unassignable requests remaining)
+        if self.event_queue.is_empty() and not self.busy_agents:
+            return True
+        
         # Check if any agents are busy
         if self.busy_agents:
             return False
