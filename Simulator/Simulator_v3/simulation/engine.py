@@ -31,7 +31,7 @@ from datetime import datetime, timedelta
 from typing import List, Dict, Set, Optional
 import logging
 
-from models.agent import Agent, AgentState
+from models.agent import Agent
 from models.request import Request, RequestState
 from models.request_pool import RequestPool
 from config.scenario_config import RoutingConfig
@@ -150,10 +150,12 @@ class SimulationEngine:
         
         All agents start as available at the simulation start time.
         This creates the initial events that drive the simulation.
+        
+        Note: Agent state is managed internally by the Agent class.
+        We only track availability in the engine's available_agents set.
         """
         for agent_id, agent in self.agents.items():
-            # Set agent as available
-            agent.state = AgentState.IDLE
+            # Mark agent as available in engine tracking
             self.available_agents.add(agent_id)
             
             # Schedule immediate availability event
@@ -276,8 +278,7 @@ class SimulationEngine:
             logger.error(f"Agent not found: {agent_id}")
             return
         
-        # Mark agent as available
-        agent.state = AgentState.IDLE
+        # Mark agent as available in engine tracking
         self.available_agents.add(agent_id)
         self.busy_agents.discard(agent_id)
         
@@ -321,7 +322,7 @@ class SimulationEngine:
         
         This:
         1. Updates request state to ASSIGNED
-        2. Updates agent state to BUSY
+        2. Marks agent as busy in engine tracking
         3. Records the assignment
         4. Schedules the agent's next availability
         
@@ -340,8 +341,7 @@ class SimulationEngine:
             logger.error(f"Failed to assign request {request.request_id} to agent {agent.agent_id}")
             return
         
-        # Update agent state
-        agent.state = AgentState.BUSY
+        # Update engine's agent tracking (not agent's internal state)
         self.available_agents.discard(agent.agent_id)
         self.busy_agents.add(agent.agent_id)
         
@@ -601,11 +601,9 @@ class SimulationEngine:
         # Clear event queue
         self.event_queue.clear()
         
-        # Reset agent states
+        # Reset agent tracking (not agent internal state)
         self.available_agents.clear()
         self.busy_agents.clear()
-        for agent in self.agents.values():
-            agent.state = AgentState.IDLE
         
         # Clear tracking
         self.assignments.clear()
