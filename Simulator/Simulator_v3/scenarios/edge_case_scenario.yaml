@@ -1,0 +1,218 @@
+# Edge Case Scenario
+# Tests edge cases and boundary conditions
+# Includes: skill mismatches, no agents, no requests, etc.
+
+name: Edge Case Scenario
+description: |
+  Scenario designed to test edge cases and error handling.
+  Tests: skill mismatches, absent agent handling, empty queues,
+  extreme ages, very short FOC targets.
+
+start_time: "2024-01-15T09:00:00-05:00"
+
+routing_config:
+  pilot_program_enabled: true
+
+# Mix of agents with different skills
+agents:
+  # Agents with SkillA (3 present, 1 absent)
+  - agent_id: AGENT_SKILLA_001
+    full_name: Agent SkillA 1
+    skillsets: [SkillA]
+
+  - agent_id: AGENT_SKILLA_002
+    full_name: Agent SkillA 2
+    skillsets: [SkillA]
+
+  - agent_id: AGENT_SKILLA_003
+    full_name: Agent SkillA 3
+    skillsets: [SkillA]
+
+  - agent_id: AGENT_SKILLA_ABSENT
+    full_name: Agent SkillA Absent
+    skillsets: [SkillA]
+    is_absent: true
+
+  # Agents with SkillB (2)
+  - agent_id: AGENT_SKILLB_001
+    full_name: Agent SkillB 1
+    skillsets: [SkillB]
+
+  - agent_id: AGENT_SKILLB_002
+    full_name: Agent SkillB 2
+    skillsets: [SkillB]
+
+  # Agent with SkillC (1)
+  - agent_id: AGENT_SKILLC_001
+    full_name: Agent SkillC 1
+    skillsets: [SkillC]
+
+requests:
+  # ========================================
+  # SKILL MISMATCHES
+  # ========================================
+  # SkillD requests (no agents have SkillD - should remain unassigned)
+  - request_id: REQ_MISMATCH_001
+    skill_id: SkillD
+    order_date_offset_hours: -10
+    foc_target: 7.0
+
+  - request_id: REQ_MISMATCH_002
+    skill_id: SkillD
+    order_date_offset_hours: -20
+    foc_target: 7.0
+
+  - request_id: REQ_MISMATCH_003
+    skill_id: SkillD
+    order_date_offset_hours: -30
+    foc_target: 7.0
+
+  # ========================================
+  # EXTREME AGES
+  # ========================================
+  # Very old requests (30+ days)
+  - request_id: REQ_OLD_001
+    skill_id: SkillA
+    order_date_offset_hours: -720  # 30 days old
+    foc_target: 7.0
+
+  - request_id: REQ_OLD_002
+    skill_id: SkillA
+    order_date_offset_hours: -1440  # 60 days old
+    foc_target: 7.0
+
+  - request_id: REQ_OLD_003
+    skill_id: SkillA
+    order_date_offset_hours: -2160  # 90 days old
+    foc_target: 7.0
+
+  # Very recent requests (< 1 hour)
+  - request_id: REQ_NEW_001
+    skill_id: SkillA
+    order_date_offset_hours: -0.5  # 30 minutes old
+    foc_target: 7.0
+
+  - request_id: REQ_NEW_002
+    skill_id: SkillA
+    order_date_offset_hours: -0.1  # 6 minutes old
+    foc_target: 7.0
+
+  # ========================================
+  # SHORT FOC TARGETS
+  # ========================================
+  # Very urgent (1-day FOC)
+  - request_id: REQ_URGENT_001
+    skill_id: SkillA
+    order_date_offset_hours: -12
+    foc_target: 1.0  # 1-day FOC
+
+  - request_id: REQ_URGENT_002
+    skill_id: SkillA
+    order_date_offset_hours: -24
+    foc_target: 0.5  # 12-hour FOC
+
+  # No FOC specified (should use default 7 days)
+  - request_id: REQ_NO_FOC_001
+    skill_id: SkillA
+    order_date_offset_hours: -48
+
+  - request_id: REQ_NO_FOC_002
+    skill_id: SkillA
+    order_date_offset_hours: -60
+
+  # ========================================
+  # ABSENT AGENT SCENARIOS
+  # ========================================
+  # All requests assigned to absent agent
+  - request_id: REQ_ABSENT_001
+    skill_id: SkillA
+    order_date_offset_hours: -72
+    sticky_agent_id: AGENT_SKILLA_ABSENT
+    workorder_status: customerreplied
+    workorder_expected_completion_date_offset_hours: -24
+
+  - request_id: REQ_ABSENT_002
+    skill_id: SkillA
+    order_date_offset_hours: -84
+    sticky_agent_id: AGENT_SKILLA_ABSENT
+    workorder_status: customerreplied
+    workorder_expected_completion_date_offset_hours: -12
+
+  - request_id: REQ_ABSENT_003
+    skill_id: SkillA
+    order_date_offset_hours: -96
+    sticky_agent_id: AGENT_SKILLA_ABSENT
+    workorder_status: customerreplied
+    workorder_expected_completion_date_offset_hours: 0
+
+  # ========================================
+  # BALANCED DISTRIBUTION
+  # ========================================
+  # SkillA requests (normal)
+  - request_id: REQ_SKILLA_001
+    skill_id: SkillA
+    order_date_offset_hours: -24
+    foc_target: 7.0
+
+  - request_id: REQ_SKILLA_002
+    skill_id: SkillA
+    order_date_offset_hours: -36
+    foc_target: 7.0
+
+  - request_id: REQ_SKILLA_003
+    skill_id: SkillA
+    order_date_offset_hours: -48
+    foc_target: 7.0
+
+  # SkillB requests (for SkillB agents)
+  - request_id: REQ_SKILLB_001
+    skill_id: SkillB
+    order_date_offset_hours: -30
+    foc_target: 7.0
+
+  - request_id: REQ_SKILLB_002
+    skill_id: SkillB
+    order_date_offset_hours: -40
+    foc_target: 7.0
+
+  - request_id: REQ_SKILLB_003
+    skill_id: SkillB
+    order_date_offset_hours: -50
+    foc_target: 7.0
+
+  # SkillC requests (for SkillC agent)
+  - request_id: REQ_SKILLC_001
+    skill_id: SkillC
+    order_date_offset_hours: -35
+    foc_target: 7.0
+
+  - request_id: REQ_SKILLC_002
+    skill_id: SkillC
+    order_date_offset_hours: -45
+    foc_target: 7.0
+
+  # ========================================
+  # PRIORITY MIX
+  # ========================================
+  # Priority 1: Winback + Escalated
+  - request_id: REQ_P1_EDGE
+    skill_id: SkillA
+    order_date_offset_hours: -100
+    is_winback: true
+    is_escalated: true
+    foc_target: 3.0
+
+  # Priority 3: SLA + Escalated
+  - request_id: REQ_P3_EDGE
+    skill_id: SkillA
+    order_date_offset_hours: -80
+    has_sla: true
+    is_escalated: true
+    foc_target: 5.0
+
+  # Priority 5: Commons
+  - request_id: REQ_P5_EDGE
+    skill_id: SkillA
+    order_date_offset_hours: -90
+    is_escalated: false
+    foc_target: 7.0

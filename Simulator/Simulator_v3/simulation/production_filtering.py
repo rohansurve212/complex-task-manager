@@ -63,10 +63,14 @@ def filter_followup_requests(
         List of ALL follow-up requests from highest priority bucket, or empty list
     """
     # Get all pending requests with matching skill
-    skill_matched = pool.filter_requests(
-        status='pending',
-        skills=agent.skills
-    )
+    # Get all pending requests
+    all_pending = pool.filter_requests(state='new')
+    
+    # Filter for skill match
+    skill_matched = [
+        req for req in all_pending
+        if req.skill_id in agent.skillsets
+    ]
     
     # Filter for self-assigned (sticky) requests only
     self_assigned = [r for r in skill_matched if r.sticky_agent_id == agent.agent_id]
@@ -141,10 +145,14 @@ def filter_cmo_requests(
         List of ALL CMO requests from all 4 categories combined
     """
     # Get all pending requests with matching skill
-    skill_matched = pool.filter_requests(
-        status='pending',
-        skills=agent.skills
-    )
+    # Get all pending requests
+    all_pending = pool.filter_requests(state='new')
+    
+    # Filter for skill match
+    skill_matched = [
+        req for req in all_pending
+        if req.skill_id in agent.skillsets
+    ]
     
     cmo_requests = []
     

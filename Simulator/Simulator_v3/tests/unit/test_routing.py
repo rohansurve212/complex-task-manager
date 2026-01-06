@@ -11,6 +11,9 @@ Tests cover:
 
 import pytest
 from datetime import datetime, timezone, timedelta
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).parent.parent.parent))
 from models.request import Request
 from simulation.routing import (
     calculate_cmo_priority_score,

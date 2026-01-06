@@ -1,0 +1,154 @@
+# Basic Scenario
+# Simple test scenario with 5 agents and 20 requests
+# Useful for quick testing and demonstration
+
+name: Basic Scenario
+description: Simple test scenario with 5 agents and 20 standard CMO requests
+
+# Simulation start time
+# Format: ISO 8601 datetime with timezone
+# If no timezone specified, defaults to EST (UTC-5)
+start_time: "2024-01-15T09:00:00-05:00"
+
+# Routing configuration (all optional, defaults shown)
+routing_config:
+  pilot_program_enabled: true
+
+# Agents
+# Required fields: agent_id, full_name, skillsets
+# Optional fields: is_absent
+agents:
+  - agent_id: AGENT001
+    full_name: Alice Johnson
+    skillsets: [SkillA]
+
+  - agent_id: AGENT002
+    full_name: Bob Smith
+    skillsets: [SkillA, SkillB]
+
+  - agent_id: AGENT003
+    full_name: Carol Davis
+    skillsets: [SkillA]
+
+  - agent_id: AGENT004
+    full_name: David Wilson
+    skillsets: [SkillA]
+
+  - agent_id: AGENT005
+    full_name: Eve Martinez
+    skillsets: [SkillA, SkillC]
+
+# Requests
+# Required fields: request_id, skill_id
+# Date specification (choose one):
+#   - order_date_offset_hours: hours relative to start_time (negative = past)
+#   - order_date: absolute ISO 8601 datetime
+#   - neither: defaults to start_time
+# Optional fields: Many (see below)
+requests:
+  # Recent requests (< 1 day old)
+  - request_id: REQ001
+    skill_id: SkillA
+    order_date_offset_hours: -2  # 2 hours ago
+    foc_target: 7.0
+    product: ProductA
+    service_region: Ontario
+
+  - request_id: REQ002
+    skill_id: SkillA
+    order_date_offset_hours: -4
+    foc_target: 7.0
+
+  - request_id: REQ003
+    skill_id: SkillA
+    order_date_offset_hours: -6
+    foc_target: 7.0
+
+  - request_id: REQ004
+    skill_id: SkillA
+    order_date_offset_hours: -8
+    foc_target: 7.0
+
+  # 1-2 day old requests
+  - request_id: REQ005
+    skill_id: SkillA
+    order_date_offset_hours: -24  # 1 day old
+    foc_target: 7.0
+
+  - request_id: REQ006
+    skill_id: SkillA
+    order_date_offset_hours: -30
+    foc_target: 7.0
+
+  - request_id: REQ007
+    skill_id: SkillA
+    order_date_offset_hours: -36
+    foc_target: 7.0
+
+  - request_id: REQ008
+    skill_id: SkillA
+    order_date_offset_hours: -42
+    foc_target: 7.0
+
+  # 2-3 day old requests
+  - request_id: REQ009
+    skill_id: SkillA
+    order_date_offset_hours: -48  # 2 days old
+    foc_target: 7.0
+
+  - request_id: REQ010
+    skill_id: SkillA
+    order_date_offset_hours: -54
+    foc_target: 7.0
+
+  - request_id: REQ011
+    skill_id: SkillA
+    order_date_offset_hours: -60
+    foc_target: 7.0
+
+  - request_id: REQ012
+    skill_id: SkillA
+    order_date_offset_hours: -66
+    foc_target: 7.0
+
+  # 3-4 day old requests
+  - request_id: REQ013
+    skill_id: SkillA
+    order_date_offset_hours: -72  # 3 days old
+    foc_target: 7.0
+
+  - request_id: REQ014
+    skill_id: SkillA
+    order_date_offset_hours: -78
+    foc_target: 7.0
+
+  - request_id: REQ015
+    skill_id: SkillA
+    order_date_offset_hours: -84
+    foc_target: 7.0
+
+  - request_id: REQ016
+    skill_id: SkillA
+    order_date_offset_hours: -90
+    foc_target: 7.0
+
+  # Older requests (5+ days)
+  - request_id: REQ017
+    skill_id: SkillA
+    order_date_offset_hours: -120  # 5 days old
+    foc_target: 7.0
+
+  - request_id: REQ018
+    skill_id: SkillA
+    order_date_offset_hours: -144  # 6 days old
+    foc_target: 7.0
+
+  - request_id: REQ019
+    skill_id: SkillA
+    order_date_offset_hours: -168  # 7 days old (1 week)
+    foc_target: 7.0
+
+  - request_id: REQ020
+    skill_id: SkillA
+    order_date_offset_hours: -192  # 8 days old
+    foc_target: 7.0

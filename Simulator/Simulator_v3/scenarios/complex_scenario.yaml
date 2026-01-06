@@ -1,0 +1,392 @@
+# Complex Scenario
+# Realistic production-like scenario with diverse request types
+# Includes: priorities, followups, absent agents, winback requests
+
+name: Complex Scenario
+description: |
+  Realistic production scenario with 10 agents and 50 diverse requests.
+  Tests all major features: priorities, followups, absent agents, 
+  winback requests, escalations, and pilot program.
+
+start_time: "2024-01-15T09:00:00-05:00"
+
+routing_config:
+  pilot_program_enabled: true
+
+# 10 Agents with diverse configurations
+agents:
+  # Present agents in pilot program
+  - agent_id: AGENT001
+    full_name: Alice Johnson
+    skillsets: [SkillA]
+
+  - agent_id: AGENT002
+    full_name: Bob Smith
+    skillsets: [SkillA, SkillB]
+
+  - agent_id: AGENT003
+    full_name: Carol Davis
+    skillsets: [SkillA]
+
+  # Present agents NOT in pilot program
+  - agent_id: AGENT004
+    full_name: David Wilson
+    skillsets: [SkillA]
+
+  - agent_id: AGENT005
+    full_name: Eve Martinez
+    skillsets: [SkillA, SkillC]
+
+  - agent_id: AGENT006
+    full_name: Frank Brown
+    skillsets: [SkillA]
+
+  - agent_id: AGENT007
+    full_name: Grace Lee
+    skillsets: [SkillA, SkillB]
+
+  - agent_id: AGENT008
+    full_name: Henry Chen
+    skillsets: [SkillA]
+
+  # Absent agents (requests should be redistributed)
+  - agent_id: AGENT009
+    full_name: Irene Garcia (ABSENT)
+    skillsets: [SkillA]
+    is_absent: true
+
+  - agent_id: AGENT010
+    full_name: Jack Thompson (ABSENT)
+    skillsets: [SkillA]
+    is_absent: true
+
+# 50 Diverse Requests
+requests:
+  # ========================================
+  # PRIORITY 1: Winback + Escalated (5)
+  # ========================================
+  - request_id: REQ_P1_001
+    skill_id: SkillA
+    order_date_offset_hours: -12
+    is_winback: true
+    is_escalated: true
+    foc_target: 3.0  # Urgent: 3-day FOC
+
+  - request_id: REQ_P1_002
+    skill_id: SkillA
+    order_date_offset_hours: -24
+    is_winback: true
+    is_escalated: true
+    foc_target: 3.0
+
+  - request_id: REQ_P1_003
+    skill_id: SkillA
+    order_date_offset_hours: -36
+    is_winback: true
+    is_escalated: true
+    foc_target: 3.0
+
+  - request_id: REQ_P1_004
+    skill_id: SkillA
+    order_date_offset_hours: -48
+    is_winback: true
+    is_escalated: true
+    foc_target: 3.0
+
+  - request_id: REQ_P1_005
+    skill_id: SkillA
+    order_date_offset_hours: -60
+    is_winback: true
+    is_escalated: true
+    foc_target: 3.0
+
+  # ========================================
+  # PRIORITY 2: Winback + NOT Escalated (5)
+  # ========================================
+  - request_id: REQ_P2_001
+    skill_id: SkillA
+    order_date_offset_hours: -18
+    is_winback: true
+    is_escalated: false
+    foc_target: 5.0
+
+  - request_id: REQ_P2_002
+    skill_id: SkillA
+    order_date_offset_hours: -30
+    is_winback: true
+    is_escalated: false
+    foc_target: 5.0
+
+  - request_id: REQ_P2_003
+    skill_id: SkillA
+    order_date_offset_hours: -42
+    is_winback: true
+    is_escalated: false
+    foc_target: 5.0
+
+  - request_id: REQ_P2_004
+    skill_id: SkillA
+    order_date_offset_hours: -54
+    is_atl_rf: true  # ATL RF also priority 2
+    is_escalated: false
+    foc_target: 5.0
+
+  - request_id: REQ_P2_005
+    skill_id: SkillA
+    order_date_offset_hours: -66
+    is_atl_rf: true
+    is_escalated: false
+    foc_target: 5.0
+
+  # ========================================
+  # PRIORITY 3: SLA + Escalated (5)
+  # ========================================
+  - request_id: REQ_P3_001
+    skill_id: SkillA
+    order_date_offset_hours: -20
+    has_sla: true
+    is_escalated: true
+    foc_target: 5.0
+
+  - request_id: REQ_P3_002
+    skill_id: SkillA
+    order_date_offset_hours: -32
+    has_sla: true
+    is_escalated: true
+    foc_target: 5.0
+
+  - request_id: REQ_P3_003
+    skill_id: SkillA
+    order_date_offset_hours: -44
+    has_sla: true
+    is_escalated: true
+    foc_target: 5.0
+
+  - request_id: REQ_P3_004
+    skill_id: SkillA
+    order_date_offset_hours: -56
+    has_sla: true
+    is_escalated: true
+    foc_target: 5.0
+
+  - request_id: REQ_P3_005
+    skill_id: SkillA
+    order_date_offset_hours: -68
+    has_sla: true
+    is_escalated: true
+    foc_target: 5.0
+
+  # ========================================
+  # PRIORITY 4: No SLA + Escalated (5)
+  # ========================================
+  - request_id: REQ_P4_001
+    skill_id: SkillA
+    order_date_offset_hours: -22
+    has_sla: false
+    is_escalated: true
+    foc_target: 7.0
+
+  - request_id: REQ_P4_002
+    skill_id: SkillA
+    order_date_offset_hours: -34
+    has_sla: false
+    is_escalated: true
+    foc_target: 7.0
+
+  - request_id: REQ_P4_003
+    skill_id: SkillA
+    order_date_offset_hours: -46
+    has_sla: false
+    is_escalated: true
+    foc_target: 7.0
+
+  - request_id: REQ_P4_004
+    skill_id: SkillA
+    order_date_offset_hours: -58
+    has_sla: false
+    is_escalated: true
+    foc_target: 7.0
+
+  - request_id: REQ_P4_005
+    skill_id: SkillA
+    order_date_offset_hours: -70
+    has_sla: false
+    is_escalated: true
+    foc_target: 7.0
+
+  # ========================================
+  # PRIORITY 5: Commons (not escalated) (10)
+  # ========================================
+  - request_id: REQ_P5_001
+    skill_id: SkillA
+    order_date_offset_hours: -5
+    is_escalated: false
+    foc_target: 7.0
+
+  - request_id: REQ_P5_002
+    skill_id: SkillA
+    order_date_offset_hours: -10
+    is_escalated: false
+    foc_target: 7.0
+
+  - request_id: REQ_P5_003
+    skill_id: SkillA
+    order_date_offset_hours: -15
+    is_escalated: false
+    foc_target: 7.0
+
+  - request_id: REQ_P5_004
+    skill_id: SkillA
+    order_date_offset_hours: -25
+    is_escalated: false
+    foc_target: 7.0
+
+  - request_id: REQ_P5_005
+    skill_id: SkillA
+    order_date_offset_hours: -35
+    is_escalated: false
+    foc_target: 7.0
+
+  - request_id: REQ_P5_006
+    skill_id: SkillA
+    order_date_offset_hours: -45
+    is_escalated: false
+    foc_target: 7.0
+
+  - request_id: REQ_P5_007
+    skill_id: SkillA
+    order_date_offset_hours: -55
+    is_escalated: false
+    foc_target: 7.0
+
+  - request_id: REQ_P5_008
+    skill_id: SkillA
+    order_date_offset_hours: -65
+    is_escalated: false
+    foc_target: 7.0
+
+  - request_id: REQ_P5_009
+    skill_id: SkillA
+    order_date_offset_hours: -75
+    is_escalated: false
+    foc_target: 7.0
+
+  - request_id: REQ_P5_010
+    skill_id: SkillA
+    order_date_offset_hours: -85
+    is_escalated: false
+    foc_target: 7.0
+
+  # ========================================
+  # FOLLOWUP REQUESTS (10)
+  # ========================================
+  
+  # Followups assigned to present agents (5)
+  - request_id: REQ_FOLLOWUP_001
+    skill_id: SkillA
+    order_date_offset_hours: -120  # 5 days old
+    sticky_agent_id: AGENT001
+    workorder_status: customerreplied
+    workorder_expected_completion_date_offset_hours: -24  # Past due by 1 day
+    foc_target: 7.0
+
+  - request_id: REQ_FOLLOWUP_002
+    skill_id: SkillA
+    order_date_offset_hours: -96
+    sticky_agent_id: AGENT002
+    workorder_status: customerreplied
+    workorder_expected_completion_date_offset_hours: -12
+    foc_target: 7.0
+
+  - request_id: REQ_FOLLOWUP_003
+    skill_id: SkillA
+    order_date_offset_hours: -84
+    sticky_agent_id: AGENT003
+    workorder_status: customerreplied
+    workorder_expected_completion_date_offset_hours: 0  # Due now
+    foc_target: 7.0
+
+  - request_id: REQ_FOLLOWUP_004
+    skill_id: SkillA
+    order_date_offset_hours: -72
+    sticky_agent_id: AGENT004
+    workorder_status: customerreplied
+    workorder_expected_completion_date_offset_hours: 12  # Due in 12 hours
+    foc_target: 7.0
+
+  - request_id: REQ_FOLLOWUP_005
+    skill_id: SkillA
+    order_date_offset_hours: -60
+    sticky_agent_id: AGENT005
+    workorder_status: customerreplied
+    workorder_expected_completion_date_offset_hours: 24
+    foc_target: 7.0
+
+  # Followups from ABSENT agents (should be redistributed) (5)
+  - request_id: REQ_FOLLOWUP_ABSENT_001
+    skill_id: SkillA
+    order_date_offset_hours: -108
+    sticky_agent_id: AGENT009  # ABSENT
+    workorder_status: customerreplied
+    workorder_expected_completion_date_offset_hours: -36
+    foc_target: 7.0
+
+  - request_id: REQ_FOLLOWUP_ABSENT_002
+    skill_id: SkillA
+    order_date_offset_hours: -100
+    sticky_agent_id: AGENT009  # ABSENT
+    workorder_status: customerreplied
+    workorder_expected_completion_date_offset_hours: -24
+    foc_target: 7.0
+
+  - request_id: REQ_FOLLOWUP_ABSENT_003
+    skill_id: SkillA
+    order_date_offset_hours: -92
+    sticky_agent_id: AGENT010  # ABSENT
+    workorder_status: customerreplied
+    workorder_expected_completion_date_offset_hours: -12
+    foc_target: 7.0
+
+  - request_id: REQ_FOLLOWUP_ABSENT_004
+    skill_id: SkillA
+    order_date_offset_hours: -80
+    sticky_agent_id: AGENT010  # ABSENT
+    workorder_status: customerreplied
+    workorder_expected_completion_date_offset_hours: 0
+    foc_target: 7.0
+
+  - request_id: REQ_FOLLOWUP_ABSENT_005
+    skill_id: SkillA
+    order_date_offset_hours: -68
+    sticky_agent_id: AGENT009  # ABSENT
+    workorder_status: customerreplied
+    workorder_expected_completion_date_offset_hours: 12
+    foc_target: 7.0
+
+  # ========================================
+  # MULTI-SKILL REQUESTS (5)
+  # ========================================
+  - request_id: REQ_SKILLB_001
+    skill_id: SkillB
+    order_date_offset_hours: -40
+    foc_target: 7.0
+
+  - request_id: REQ_SKILLB_002
+    skill_id: SkillB
+    order_date_offset_hours: -50
+    foc_target: 7.0
+
+  - request_id: REQ_SKILLC_001
+    skill_id: SkillC
+    order_date_offset_hours: -30
+    foc_target: 7.0
+
+  - request_id: REQ_SKILLC_002
+    skill_id: SkillC
+    order_date_offset_hours: -40
+    foc_target: 7.0
+
+  - request_id: REQ_SKILLC_003
+    skill_id: SkillC
+    order_date_offset_hours: -50
+    foc_target: 7.0
