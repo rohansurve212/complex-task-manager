@@ -154,18 +154,21 @@ class SimulationEngine:
         Note: Agent state is managed internally by the Agent class.
         We only track availability in the engine's available_agents set.
         """
+        available_count = 0
         for agent_id, agent in self.agents.items():
-            # Mark agent as available in engine tracking
-            self.available_agents.add(agent_id)
+            if not agent.is_absent:
+                # Mark agent as available in engine tracking
+                self.available_agents.add(agent_id)
             
-            # Schedule immediate availability event
-            event = AgentAvailableEvent(
-                timestamp=self.start_time,
-                agent_id=agent_id
-            )
-            self.event_queue.add(event)
+                # Schedule immediate availability event
+                event = AgentAvailableEvent(
+                    timestamp=self.start_time,
+                    agent_id=agent_id
+                )
+                self.event_queue.add(event)
+                available_count += 1
             
-        logger.info(f"Initialized {len(self.agents)} agents with availability events")
+        logger.info(f"Initialized {available_count} available agents (skipped {len(self.agents) - available_count} absent agents)")
     
     def run(
         self,

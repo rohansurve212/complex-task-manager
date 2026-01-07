@@ -1,0 +1,471 @@
+{
+  "scenario_name": "Basic Scenario",
+  "start_time": "2026-01-07T19:44:23.450359",
+  "end_time": "2026-01-07T19:44:23.451445",
+  "statistics": {
+    "timing": {
+      "start_time": "2024-01-15 09:00:00-05:00",
+      "end_time": "2024-02-12 09:00:00-05:00",
+      "duration_seconds": 2419200.0,
+      "duration_hours": 672.0
+    },
+    "events": {
+      "total_processed": 25
+    },
+    "assignments": {
+      "total": 20,
+      "by_priority": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 20
+      },
+      "followup_count": 0,
+      "cmo_count": 20,
+      "from_absent_agent_count": 0
+    },
+    "agents": {
+      "total_agents": 5,
+      "agents_with_assignments": 5,
+      "agents_without_assignments": 0,
+      "avg_assignments_per_agent": 4.0,
+      "max_assignments_per_agent": 4,
+      "min_assignments_per_agent": 4,
+      "assignments_per_agent": {
+        "AGENT001": 4,
+        "AGENT003": 4,
+        "AGENT005": 4,
+        "AGENT002": 4,
+        "AGENT004": 4
+      }
+    },
+    "requests": {
+      "total_requests": 20,
+      "assigned_requests": 20,
+      "pending_requests": 0,
+      "pool_statistics": {
+        "total_requests": 20,
+        "total_added": 20,
+        "total_removed": 0,
+        "total_assigned": 20,
+        "by_state": {
+          "new": 0,
+          "assigned": 20
+        },
+        "by_skill": {
+          "SkillA": 20
+        },
+        "flags": {
+          "sla_count": 0,
+          "escalated_count": 0,
+          "winback_count": 0
+        },
+        "age": {
+          "min_days": 28.083333333333332,
+          "max_days": 36.0,
+          "avg_days": 30.76666666666667
+        },
+        "foc_compliance": {
+          "compliant_count": 0,
+          "breached_count": 20,
+          "compliance_rate": 0.0
+        }
+      }
+    },
+    "routing": {
+      "total_decisions": 25,
+      "successful_routings": 20,
+      "failed_routings": 5,
+      "success_rate": 0.8,
+      "avg_filtered_per_decision": 8.4
+    }
+  },
+  "assignments": [
+    {
+      "assignment_id": "ASSIGN_0",
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT001",
+      "request_id": "REQ020",
+      "completion_time": "2024-01-22 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_1",
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT003",
+      "request_id": "REQ019",
+      "completion_time": "2024-01-22 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_2",
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT005",
+      "request_id": "REQ018",
+      "completion_time": "2024-01-22 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_3",
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT002",
+      "request_id": "REQ017",
+      "completion_time": "2024-01-22 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_4",
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT004",
+      "request_id": "REQ016",
+      "completion_time": "2024-01-22 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_5",
+      "timestamp": "2024-01-22 09:00:00-05:00",
+      "agent_id": "AGENT001",
+      "request_id": "REQ015",
+      "completion_time": "2024-01-29 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_6",
+      "timestamp": "2024-01-22 09:00:00-05:00",
+      "agent_id": "AGENT002",
+      "request_id": "REQ014",
+      "completion_time": "2024-01-29 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_7",
+      "timestamp": "2024-01-22 09:00:00-05:00",
+      "agent_id": "AGENT004",
+      "request_id": "REQ013",
+      "completion_time": "2024-01-29 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_8",
+      "timestamp": "2024-01-22 09:00:00-05:00",
+      "agent_id": "AGENT003",
+      "request_id": "REQ012",
+      "completion_time": "2024-01-29 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_9",
+      "timestamp": "2024-01-22 09:00:00-05:00",
+      "agent_id": "AGENT005",
+      "request_id": "REQ011",
+      "completion_time": "2024-01-29 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_10",
+      "timestamp": "2024-01-29 09:00:00-05:00",
+      "agent_id": "AGENT001",
+      "request_id": "REQ010",
+      "completion_time": "2024-02-05 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_11",
+      "timestamp": "2024-01-29 09:00:00-05:00",
+      "agent_id": "AGENT003",
+      "request_id": "REQ009",
+      "completion_time": "2024-02-05 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_12",
+      "timestamp": "2024-01-29 09:00:00-05:00",
+      "agent_id": "AGENT005",
+      "request_id": "REQ008",
+      "completion_time": "2024-02-05 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_13",
+      "timestamp": "2024-01-29 09:00:00-05:00",
+      "agent_id": "AGENT002",
+      "request_id": "REQ007",
+      "completion_time": "2024-02-05 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_14",
+      "timestamp": "2024-01-29 09:00:00-05:00",
+      "agent_id": "AGENT004",
+      "request_id": "REQ006",
+      "completion_time": "2024-02-05 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_15",
+      "timestamp": "2024-02-05 09:00:00-05:00",
+      "agent_id": "AGENT001",
+      "request_id": "REQ005",
+      "completion_time": "2024-02-12 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_16",
+      "timestamp": "2024-02-05 09:00:00-05:00",
+      "agent_id": "AGENT002",
+      "request_id": "REQ004",
+      "completion_time": "2024-02-12 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_17",
+      "timestamp": "2024-02-05 09:00:00-05:00",
+      "agent_id": "AGENT004",
+      "request_id": "REQ003",
+      "completion_time": "2024-02-12 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_18",
+      "timestamp": "2024-02-05 09:00:00-05:00",
+      "agent_id": "AGENT003",
+      "request_id": "REQ002",
+      "completion_time": "2024-02-12 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_19",
+      "timestamp": "2024-02-05 09:00:00-05:00",
+      "agent_id": "AGENT005",
+      "request_id": "REQ001",
+      "completion_time": "2024-02-12 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    }
+  ],
+  "routing_decisions": [
+    {
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT001",
+      "filtered_count": 20,
+      "selected_request_id": "REQ020",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT003",
+      "filtered_count": 19,
+      "selected_request_id": "REQ019",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT005",
+      "filtered_count": 18,
+      "selected_request_id": "REQ018",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT002",
+      "filtered_count": 17,
+      "selected_request_id": "REQ017",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT004",
+      "filtered_count": 16,
+      "selected_request_id": "REQ016",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-22 09:00:00-05:00",
+      "agent_id": "AGENT001",
+      "filtered_count": 15,
+      "selected_request_id": "REQ015",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-22 09:00:00-05:00",
+      "agent_id": "AGENT002",
+      "filtered_count": 14,
+      "selected_request_id": "REQ014",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-22 09:00:00-05:00",
+      "agent_id": "AGENT004",
+      "filtered_count": 13,
+      "selected_request_id": "REQ013",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-22 09:00:00-05:00",
+      "agent_id": "AGENT003",
+      "filtered_count": 12,
+      "selected_request_id": "REQ012",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-22 09:00:00-05:00",
+      "agent_id": "AGENT005",
+      "filtered_count": 11,
+      "selected_request_id": "REQ011",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-29 09:00:00-05:00",
+      "agent_id": "AGENT001",
+      "filtered_count": 10,
+      "selected_request_id": "REQ010",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-29 09:00:00-05:00",
+      "agent_id": "AGENT003",
+      "filtered_count": 9,
+      "selected_request_id": "REQ009",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-29 09:00:00-05:00",
+      "agent_id": "AGENT005",
+      "filtered_count": 8,
+      "selected_request_id": "REQ008",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-29 09:00:00-05:00",
+      "agent_id": "AGENT002",
+      "filtered_count": 7,
+      "selected_request_id": "REQ007",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-29 09:00:00-05:00",
+      "agent_id": "AGENT004",
+      "filtered_count": 6,
+      "selected_request_id": "REQ006",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-02-05 09:00:00-05:00",
+      "agent_id": "AGENT001",
+      "filtered_count": 5,
+      "selected_request_id": "REQ005",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-02-05 09:00:00-05:00",
+      "agent_id": "AGENT002",
+      "filtered_count": 4,
+      "selected_request_id": "REQ004",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-02-05 09:00:00-05:00",
+      "agent_id": "AGENT004",
+      "filtered_count": 3,
+      "selected_request_id": "REQ003",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-02-05 09:00:00-05:00",
+      "agent_id": "AGENT003",
+      "filtered_count": 2,
+      "selected_request_id": "REQ002",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-02-05 09:00:00-05:00",
+      "agent_id": "AGENT005",
+      "filtered_count": 1,
+      "selected_request_id": "REQ001",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-02-12 09:00:00-05:00",
+      "agent_id": "AGENT001",
+      "filtered_count": 0,
+      "selected_request_id": null,
+      "was_followup": null
+    },
+    {
+      "timestamp": "2024-02-12 09:00:00-05:00",
+      "agent_id": "AGENT003",
+      "filtered_count": 0,
+      "selected_request_id": null,
+      "was_followup": null
+    },
+    {
+      "timestamp": "2024-02-12 09:00:00-05:00",
+      "agent_id": "AGENT005",
+      "filtered_count": 0,
+      "selected_request_id": null,
+      "was_followup": null
+    },
+    {
+      "timestamp": "2024-02-12 09:00:00-05:00",
+      "agent_id": "AGENT002",
+      "filtered_count": 0,
+      "selected_request_id": null,
+      "was_followup": null
+    },
+    {
+      "timestamp": "2024-02-12 09:00:00-05:00",
+      "agent_id": "AGENT004",
+      "filtered_count": 0,
+      "selected_request_id": null,
+      "was_followup": null
+    }
+  ],
+  "metadata": {
+    "description": "Simple test scenario with 5 agents and 20 standard CMO requests",
+    "filepath": "scenarios/basic_scenario.yaml",
+    "sim_start_time": "2024-01-15T09:00:00-05:00",
+    "max_events": null,
+    "max_time": null,
+    "stop_when_idle": true
+  }
+}

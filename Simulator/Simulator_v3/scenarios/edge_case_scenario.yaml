@@ -56,16 +56,19 @@ requests:
     skill_id: SkillD
     order_date_offset_hours: -10
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ_MISMATCH_002
     skill_id: SkillD
     order_date_offset_hours: -20
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ_MISMATCH_003
     skill_id: SkillD
     order_date_offset_hours: -30
     foc_target: 7.0
+    workorder_status: new
 
   # ========================================
   # EXTREME AGES
@@ -75,27 +78,32 @@ requests:
     skill_id: SkillA
     order_date_offset_hours: -720  # 30 days old
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ_OLD_002
     skill_id: SkillA
     order_date_offset_hours: -1440  # 60 days old
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ_OLD_003
     skill_id: SkillA
     order_date_offset_hours: -2160  # 90 days old
     foc_target: 7.0
+    workorder_status: new
 
   # Very recent requests (< 1 hour)
   - request_id: REQ_NEW_001
     skill_id: SkillA
     order_date_offset_hours: -0.5  # 30 minutes old
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ_NEW_002
     skill_id: SkillA
     order_date_offset_hours: -0.1  # 6 minutes old
     foc_target: 7.0
+    workorder_status: new
 
   # ========================================
   # SHORT FOC TARGETS
@@ -105,20 +113,24 @@ requests:
     skill_id: SkillA
     order_date_offset_hours: -12
     foc_target: 1.0  # 1-day FOC
+    workorder_status: new
 
   - request_id: REQ_URGENT_002
     skill_id: SkillA
     order_date_offset_hours: -24
     foc_target: 0.5  # 12-hour FOC
+    workorder_status: new
 
   # No FOC specified (should use default 7 days)
   - request_id: REQ_NO_FOC_001
     skill_id: SkillA
     order_date_offset_hours: -48
+    workorder_status: new
 
   - request_id: REQ_NO_FOC_002
     skill_id: SkillA
     order_date_offset_hours: -60
+    workorder_status: new
 
   # ========================================
   # ABSENT AGENT SCENARIOS
@@ -153,43 +165,51 @@ requests:
     skill_id: SkillA
     order_date_offset_hours: -24
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ_SKILLA_002
     skill_id: SkillA
     order_date_offset_hours: -36
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ_SKILLA_003
     skill_id: SkillA
     order_date_offset_hours: -48
     foc_target: 7.0
+    workorder_status: new
 
   # SkillB requests (for SkillB agents)
   - request_id: REQ_SKILLB_001
     skill_id: SkillB
     order_date_offset_hours: -30
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ_SKILLB_002
     skill_id: SkillB
     order_date_offset_hours: -40
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ_SKILLB_003
     skill_id: SkillB
     order_date_offset_hours: -50
     foc_target: 7.0
+    workorder_status: new
 
   # SkillC requests (for SkillC agent)
   - request_id: REQ_SKILLC_001
     skill_id: SkillC
     order_date_offset_hours: -35
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ_SKILLC_002
     skill_id: SkillC
     order_date_offset_hours: -45
     foc_target: 7.0
+    workorder_status: new
 
   # ========================================
   # PRIORITY MIX
@@ -201,6 +221,7 @@ requests:
     is_winback: true
     is_escalated: true
     foc_target: 3.0
+    workorder_status: new
 
   # Priority 3: SLA + Escalated
   - request_id: REQ_P3_EDGE
@@ -209,6 +230,7 @@ requests:
     has_sla: true
     is_escalated: true
     foc_target: 5.0
+    workorder_status: new
 
   # Priority 5: Commons
   - request_id: REQ_P5_EDGE
@@ -216,3 +238,4 @@ requests:
     order_date_offset_hours: -90
     is_escalated: false
     foc_target: 7.0
+    workorder_status: new

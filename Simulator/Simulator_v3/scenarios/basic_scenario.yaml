@@ -53,102 +53,122 @@ requests:
     foc_target: 7.0
     product: ProductA
     service_region: Ontario
+    workorder_status: new
 
   - request_id: REQ002
     skill_id: SkillA
     order_date_offset_hours: -4
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ003
     skill_id: SkillA
     order_date_offset_hours: -6
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ004
     skill_id: SkillA
     order_date_offset_hours: -8
     foc_target: 7.0
+    workorder_status: new
 
   # 1-2 day old requests
   - request_id: REQ005
     skill_id: SkillA
     order_date_offset_hours: -24  # 1 day old
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ006
     skill_id: SkillA
     order_date_offset_hours: -30
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ007
     skill_id: SkillA
     order_date_offset_hours: -36
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ008
     skill_id: SkillA
     order_date_offset_hours: -42
     foc_target: 7.0
+    workorder_status: new
 
   # 2-3 day old requests
   - request_id: REQ009
     skill_id: SkillA
     order_date_offset_hours: -48  # 2 days old
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ010
     skill_id: SkillA
     order_date_offset_hours: -54
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ011
     skill_id: SkillA
     order_date_offset_hours: -60
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ012
     skill_id: SkillA
     order_date_offset_hours: -66
     foc_target: 7.0
+    workorder_status: new
 
   # 3-4 day old requests
   - request_id: REQ013
     skill_id: SkillA
     order_date_offset_hours: -72  # 3 days old
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ014
     skill_id: SkillA
     order_date_offset_hours: -78
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ015
     skill_id: SkillA
     order_date_offset_hours: -84
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ016
     skill_id: SkillA
     order_date_offset_hours: -90
     foc_target: 7.0
+    workorder_status: new
 
   # Older requests (5+ days)
   - request_id: REQ017
     skill_id: SkillA
     order_date_offset_hours: -120  # 5 days old
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ018
     skill_id: SkillA
     order_date_offset_hours: -144  # 6 days old
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ019
     skill_id: SkillA
     order_date_offset_hours: -168  # 7 days old (1 week)
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ020
     skill_id: SkillA
     order_date_offset_hours: -192  # 8 days old
     foc_target: 7.0
+    workorder_status: new

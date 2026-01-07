@@ -71,6 +71,7 @@ requests:
     is_winback: true
     is_escalated: true
     foc_target: 3.0  # Urgent: 3-day FOC
+    workorder_status: new
 
   - request_id: REQ_P1_002
     skill_id: SkillA
@@ -78,6 +79,7 @@ requests:
     is_winback: true
     is_escalated: true
     foc_target: 3.0
+    workorder_status: new
 
   - request_id: REQ_P1_003
     skill_id: SkillA
@@ -85,6 +87,7 @@ requests:
     is_winback: true
     is_escalated: true
     foc_target: 3.0
+    workorder_status: new
 
   - request_id: REQ_P1_004
     skill_id: SkillA
@@ -92,6 +95,7 @@ requests:
     is_winback: true
     is_escalated: true
     foc_target: 3.0
+    workorder_status: new
 
   - request_id: REQ_P1_005
     skill_id: SkillA
@@ -99,6 +103,7 @@ requests:
     is_winback: true
     is_escalated: true
     foc_target: 3.0
+    workorder_status: new
 
   # ========================================
   # PRIORITY 2: Winback + NOT Escalated (5)
@@ -109,6 +114,7 @@ requests:
     is_winback: true
     is_escalated: false
     foc_target: 5.0
+    workorder_status: new
 
   - request_id: REQ_P2_002
     skill_id: SkillA
@@ -116,6 +122,7 @@ requests:
     is_winback: true
     is_escalated: false
     foc_target: 5.0
+    workorder_status: new
 
   - request_id: REQ_P2_003
     skill_id: SkillA
@@ -123,6 +130,7 @@ requests:
     is_winback: true
     is_escalated: false
     foc_target: 5.0
+    workorder_status: new
 
   - request_id: REQ_P2_004
     skill_id: SkillA
@@ -130,6 +138,7 @@ requests:
     is_atl_rf: true  # ATL RF also priority 2
     is_escalated: false
     foc_target: 5.0
+    workorder_status: new
 
   - request_id: REQ_P2_005
     skill_id: SkillA
@@ -137,6 +146,7 @@ requests:
     is_atl_rf: true
     is_escalated: false
     foc_target: 5.0
+    workorder_status: new
 
   # ========================================
   # PRIORITY 3: SLA + Escalated (5)
@@ -147,6 +157,7 @@ requests:
     has_sla: true
     is_escalated: true
     foc_target: 5.0
+    workorder_status: new
 
   - request_id: REQ_P3_002
     skill_id: SkillA
@@ -154,6 +165,7 @@ requests:
     has_sla: true
     is_escalated: true
     foc_target: 5.0
+    workorder_status: new
 
   - request_id: REQ_P3_003
     skill_id: SkillA
@@ -161,6 +173,7 @@ requests:
     has_sla: true
     is_escalated: true
     foc_target: 5.0
+    workorder_status: new
 
   - request_id: REQ_P3_004
     skill_id: SkillA
@@ -168,6 +181,7 @@ requests:
     has_sla: true
     is_escalated: true
     foc_target: 5.0
+    workorder_status: new
 
   - request_id: REQ_P3_005
     skill_id: SkillA
@@ -175,6 +189,7 @@ requests:
     has_sla: true
     is_escalated: true
     foc_target: 5.0
+    workorder_status: new
 
   # ========================================
   # PRIORITY 4: No SLA + Escalated (5)
@@ -185,6 +200,7 @@ requests:
     has_sla: false
     is_escalated: true
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ_P4_002
     skill_id: SkillA
@@ -192,6 +208,7 @@ requests:
     has_sla: false
     is_escalated: true
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ_P4_003
     skill_id: SkillA
@@ -199,6 +216,7 @@ requests:
     has_sla: false
     is_escalated: true
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ_P4_004
     skill_id: SkillA
@@ -206,6 +224,7 @@ requests:
     has_sla: false
     is_escalated: true
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ_P4_005
     skill_id: SkillA
@@ -213,6 +232,7 @@ requests:
     has_sla: false
     is_escalated: true
     foc_target: 7.0
+    workorder_status: new
 
   # ========================================
   # PRIORITY 5: Commons (not escalated) (10)
@@ -222,60 +242,70 @@ requests:
     order_date_offset_hours: -5
     is_escalated: false
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ_P5_002
     skill_id: SkillA
     order_date_offset_hours: -10
     is_escalated: false
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ_P5_003
     skill_id: SkillA
     order_date_offset_hours: -15
     is_escalated: false
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ_P5_004
     skill_id: SkillA
     order_date_offset_hours: -25
     is_escalated: false
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ_P5_005
     skill_id: SkillA
     order_date_offset_hours: -35
     is_escalated: false
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ_P5_006
     skill_id: SkillA
     order_date_offset_hours: -45
     is_escalated: false
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ_P5_007
     skill_id: SkillA
     order_date_offset_hours: -55
     is_escalated: false
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ_P5_008
     skill_id: SkillA
     order_date_offset_hours: -65
     is_escalated: false
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ_P5_009
     skill_id: SkillA
     order_date_offset_hours: -75
     is_escalated: false
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ_P5_010
     skill_id: SkillA
     order_date_offset_hours: -85
     is_escalated: false
     foc_target: 7.0
+    workorder_status: new
 
   # ========================================
   # FOLLOWUP REQUESTS (10)
@@ -370,23 +400,28 @@ requests:
     skill_id: SkillB
     order_date_offset_hours: -40
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ_SKILLB_002
     skill_id: SkillB
     order_date_offset_hours: -50
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ_SKILLC_001
     skill_id: SkillC
     order_date_offset_hours: -30
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ_SKILLC_002
     skill_id: SkillC
     order_date_offset_hours: -40
     foc_target: 7.0
+    workorder_status: new
 
   - request_id: REQ_SKILLC_003
     skill_id: SkillC
     order_date_offset_hours: -50
     foc_target: 7.0
+    workorder_status: new

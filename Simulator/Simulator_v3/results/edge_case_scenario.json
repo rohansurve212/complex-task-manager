@@ -1,0 +1,533 @@
+{
+  "scenario_name": "Edge Case Scenario",
+  "start_time": "2026-01-07T19:44:23.451718",
+  "end_time": "2026-01-07T19:44:23.452779",
+  "statistics": {
+    "timing": {
+      "start_time": "2024-01-15 09:00:00-05:00",
+      "end_time": "2024-02-24 09:00:00-05:00",
+      "duration_seconds": 3456000.0,
+      "duration_hours": 960.0
+    },
+    "events": {
+      "total_processed": 29
+    },
+    "assignments": {
+      "total": 23,
+      "by_priority": {
+        "1": 1,
+        "2": 0,
+        "3": 1,
+        "4": 0,
+        "5": 21
+      },
+      "followup_count": 0,
+      "cmo_count": 23,
+      "from_absent_agent_count": 3
+    },
+    "agents": {
+      "total_agents": 7,
+      "agents_with_assignments": 6,
+      "agents_without_assignments": 1,
+      "avg_assignments_per_agent": 3.2857142857142856,
+      "max_assignments_per_agent": 7,
+      "min_assignments_per_agent": 1,
+      "assignments_per_agent": {
+        "AGENT_SKILLA_001": 6,
+        "AGENT_SKILLA_003": 7,
+        "AGENT_SKILLC_001": 2,
+        "AGENT_SKILLA_002": 5,
+        "AGENT_SKILLB_002": 2,
+        "AGENT_SKILLB_001": 1
+      }
+    },
+    "requests": {
+      "total_requests": 26,
+      "assigned_requests": 23,
+      "pending_requests": 3,
+      "pool_statistics": {
+        "total_requests": 26,
+        "total_added": 26,
+        "total_removed": 0,
+        "total_assigned": 23,
+        "by_state": {
+          "new": 3,
+          "assigned": 23
+        },
+        "by_skill": {
+          "SkillD": 3,
+          "SkillA": 18,
+          "SkillB": 3,
+          "SkillC": 2
+        },
+        "flags": {
+          "sla_count": 1,
+          "escalated_count": 2,
+          "winback_count": 1
+        },
+        "age": {
+          "min_days": 40.00416666666667,
+          "max_days": 130.0,
+          "avg_days": 48.58108974358974
+        },
+        "foc_compliance": {
+          "compliant_count": 0,
+          "breached_count": 26,
+          "compliance_rate": 0.0
+        }
+      }
+    },
+    "routing": {
+      "total_decisions": 29,
+      "successful_routings": 23,
+      "failed_routings": 6,
+      "success_rate": 0.7931034482758621,
+      "avg_filtered_per_decision": 5.068965517241379
+    }
+  },
+  "assignments": [
+    {
+      "assignment_id": "ASSIGN_0",
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_001",
+      "request_id": "REQ_P1_EDGE",
+      "completion_time": "2024-01-18 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 1
+    },
+    {
+      "assignment_id": "ASSIGN_1",
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_003",
+      "request_id": "REQ_P3_EDGE",
+      "completion_time": "2024-01-20 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 3
+    },
+    {
+      "assignment_id": "ASSIGN_2",
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLC_001",
+      "request_id": "REQ_SKILLC_002",
+      "completion_time": "2024-01-22 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_3",
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_002",
+      "request_id": "REQ_OLD_003",
+      "completion_time": "2024-01-22 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_4",
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLB_002",
+      "request_id": "REQ_SKILLB_003",
+      "completion_time": "2024-01-22 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_5",
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLB_001",
+      "request_id": "REQ_SKILLB_002",
+      "completion_time": "2024-01-22 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_6",
+      "timestamp": "2024-01-18 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_001",
+      "request_id": "REQ_OLD_002",
+      "completion_time": "2024-01-25 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_7",
+      "timestamp": "2024-01-20 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_003",
+      "request_id": "REQ_URGENT_002",
+      "completion_time": "2024-01-20 21:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_8",
+      "timestamp": "2024-01-20 21:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_003",
+      "request_id": "REQ_URGENT_001",
+      "completion_time": "2024-01-21 21:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_9",
+      "timestamp": "2024-01-21 21:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_003",
+      "request_id": "REQ_OLD_001",
+      "completion_time": "2024-01-28 21:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_10",
+      "timestamp": "2024-01-22 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLB_002",
+      "request_id": "REQ_SKILLB_001",
+      "completion_time": "2024-01-29 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_11",
+      "timestamp": "2024-01-22 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_002",
+      "request_id": "REQ_P5_EDGE",
+      "completion_time": "2024-01-29 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_12",
+      "timestamp": "2024-01-22 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLC_001",
+      "request_id": "REQ_SKILLC_001",
+      "completion_time": "2024-01-29 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_13",
+      "timestamp": "2024-01-25 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_001",
+      "request_id": "REQ_ABSENT_003",
+      "completion_time": "2024-02-02 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": true,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_14",
+      "timestamp": "2024-01-28 21:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_003",
+      "request_id": "REQ_SKILLA_003",
+      "completion_time": "2024-02-04 21:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_15",
+      "timestamp": "2024-01-29 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_002",
+      "request_id": "REQ_SKILLA_002",
+      "completion_time": "2024-02-05 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_16",
+      "timestamp": "2024-02-02 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_001",
+      "request_id": "REQ_SKILLA_001",
+      "completion_time": "2024-02-09 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_17",
+      "timestamp": "2024-02-04 21:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_003",
+      "request_id": "REQ_ABSENT_002",
+      "completion_time": "2024-02-12 21:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": true,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_18",
+      "timestamp": "2024-02-05 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_002",
+      "request_id": "REQ_NEW_001",
+      "completion_time": "2024-02-12 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_19",
+      "timestamp": "2024-02-09 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_001",
+      "request_id": "REQ_NEW_002",
+      "completion_time": "2024-02-16 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_20",
+      "timestamp": "2024-02-12 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_002",
+      "request_id": "REQ_ABSENT_001",
+      "completion_time": "2024-02-20 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": true,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_21",
+      "timestamp": "2024-02-12 21:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_003",
+      "request_id": "REQ_NO_FOC_002",
+      "completion_time": "2024-02-20 21:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_22",
+      "timestamp": "2024-02-16 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_001",
+      "request_id": "REQ_NO_FOC_001",
+      "completion_time": "2024-02-24 09:00:00-05:00",
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    }
+  ],
+  "routing_decisions": [
+    {
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_001",
+      "filtered_count": 1,
+      "selected_request_id": "REQ_P1_EDGE",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_003",
+      "filtered_count": 1,
+      "selected_request_id": "REQ_P3_EDGE",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLC_001",
+      "filtered_count": 2,
+      "selected_request_id": "REQ_SKILLC_002",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_002",
+      "filtered_count": 16,
+      "selected_request_id": "REQ_OLD_003",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLB_002",
+      "filtered_count": 3,
+      "selected_request_id": "REQ_SKILLB_003",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLB_001",
+      "filtered_count": 2,
+      "selected_request_id": "REQ_SKILLB_002",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-18 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_001",
+      "filtered_count": 15,
+      "selected_request_id": "REQ_OLD_002",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-20 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_003",
+      "filtered_count": 14,
+      "selected_request_id": "REQ_URGENT_002",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-20 21:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_003",
+      "filtered_count": 13,
+      "selected_request_id": "REQ_URGENT_001",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-21 21:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_003",
+      "filtered_count": 12,
+      "selected_request_id": "REQ_OLD_001",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-22 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLB_002",
+      "filtered_count": 1,
+      "selected_request_id": "REQ_SKILLB_001",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-22 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_002",
+      "filtered_count": 11,
+      "selected_request_id": "REQ_P5_EDGE",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-22 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLB_001",
+      "filtered_count": 0,
+      "selected_request_id": null,
+      "was_followup": null
+    },
+    {
+      "timestamp": "2024-01-22 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLC_001",
+      "filtered_count": 1,
+      "selected_request_id": "REQ_SKILLC_001",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-25 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_001",
+      "filtered_count": 10,
+      "selected_request_id": "REQ_ABSENT_003",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-28 21:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_003",
+      "filtered_count": 9,
+      "selected_request_id": "REQ_SKILLA_003",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-29 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_002",
+      "filtered_count": 8,
+      "selected_request_id": "REQ_SKILLA_002",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-29 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLB_002",
+      "filtered_count": 0,
+      "selected_request_id": null,
+      "was_followup": null
+    },
+    {
+      "timestamp": "2024-01-29 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLC_001",
+      "filtered_count": 0,
+      "selected_request_id": null,
+      "was_followup": null
+    },
+    {
+      "timestamp": "2024-02-02 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_001",
+      "filtered_count": 7,
+      "selected_request_id": "REQ_SKILLA_001",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-02-04 21:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_003",
+      "filtered_count": 6,
+      "selected_request_id": "REQ_ABSENT_002",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-02-05 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_002",
+      "filtered_count": 5,
+      "selected_request_id": "REQ_NEW_001",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-02-09 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_001",
+      "filtered_count": 4,
+      "selected_request_id": "REQ_NEW_002",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-02-12 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_002",
+      "filtered_count": 3,
+      "selected_request_id": "REQ_ABSENT_001",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-02-12 21:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_003",
+      "filtered_count": 2,
+      "selected_request_id": "REQ_NO_FOC_002",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-02-16 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_001",
+      "filtered_count": 1,
+      "selected_request_id": "REQ_NO_FOC_001",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-02-20 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_002",
+      "filtered_count": 0,
+      "selected_request_id": null,
+      "was_followup": null
+    },
+    {
+      "timestamp": "2024-02-20 21:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_003",
+      "filtered_count": 0,
+      "selected_request_id": null,
+      "was_followup": null
+    },
+    {
+      "timestamp": "2024-02-24 09:00:00-05:00",
+      "agent_id": "AGENT_SKILLA_001",
+      "filtered_count": 0,
+      "selected_request_id": null,
+      "was_followup": null
+    }
+  ],
+  "metadata": {
+    "description": "Scenario designed to test edge cases and error handling.\nTests: skill mismatches, absent agent handling, empty queues,\nextreme ages, very short FOC targets.\n",
+    "filepath": "scenarios/edge_case_scenario.yaml",
+    "sim_start_time": "2024-01-15T09:00:00-05:00",
+    "max_events": null,
+    "max_time": null,
+    "stop_when_idle": true
+  }
+}
