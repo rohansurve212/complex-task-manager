@@ -22,7 +22,7 @@ Example usage:
 """
 
 from typing import Dict, List, Any, Optional
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 import logging
 
@@ -123,6 +123,53 @@ class ScenarioResult:
             'events_processed': stats['events']['total_processed']
         }
 
+class SimulationResult:
+    """
+    Container for simulation results.
+    """
+    
+    def __init__(
+        self,
+        start_time: datetime,
+        end_time: datetime,
+        statistics: Dict,
+        assignments: List[Dict],
+        routing_decisions: List[Dict]
+    ):
+        self.start_time = start_time
+        self.end_time = end_time
+        self.statistics = statistics
+        self.assignments = assignments
+        self.routing_decisions = routing_decisions
+    
+    def to_dict(self) -> Dict:
+        """Convert to dictionary for serialization."""
+        return {
+            'start_time': self.start_time.isoformat(),
+            'end_time': self.end_time.isoformat() if self.end_time else None,
+            'statistics': self.statistics,
+            'assignments': [
+                {
+                    **assignment,
+                    'timestamp': assignment['timestamp'].isoformat() if isinstance(assignment['timestamp'], datetime) else assignment['timestamp'],
+                    'completion_time': assignment['completion_time'].isoformat() if isinstance(assignment['completion_time'], datetime) else assignment['completion_time']
+                }
+                for assignment in self.assignments
+            ],
+            'routing_decisions': self.routing_decisions
+        }
+
+    def to_json(self, indent: int = 2) -> str:
+        """
+        Convert result to JSON string.
+        
+        Args:
+            indent: JSON indentation level
+            
+        Returns:
+            str: JSON representation
+        """
+        return json.dumps(self.to_dict(), indent=indent, default=str)
 
 class ScenarioRunner:
     """
@@ -143,91 +190,87 @@ class ScenarioRunner:
     
     def run_scenario(
         self,
-        scenario: Dict[str, Any],
-        max_events: Optional[int] = None,
-        max_time: Optional[datetime] = None,
+        scenario: Dict,
+        duration_hours: Optional[float] = None,
         stop_when_idle: bool = True,
         verbose: bool = False
-    ) -> ScenarioResult:
+    ) -> 'SimulationResult':
         """
-        Run a single scenario.
+        Run a simulation scenario.
         
         Args:
-            scenario: Loaded scenario dictionary from ScenarioLoader
-            max_events: Maximum events to process (None = unlimited)
-            max_time: Maximum simulation time (None = unlimited)
-            stop_when_idle: Stop when all work completed
-            verbose: Print progress messages
+            scenario: Loaded scenario dict
+            duration_hours: Maximum simulation duration (None = run until done)
+            stop_when_idle: Stop when all agents idle and no pending work
+            verbose: Print detailed progress
             
         Returns:
-            ScenarioResult: Complete execution results
-            
-        Example:
-            >>> result = runner.run_scenario(
-            ...     scenario=scenario,
-            ...     stop_when_idle=True,
-            ...     verbose=True
-            ... )
+            SimulationResult object
         """
-        if verbose:
-            print(f"\n{'='*60}")
-            print(f"Running Scenario: {scenario['name']}")
-            print(f"{'='*60}")
-            print(f"Description: {scenario.get('description', 'N/A')}")
-            print(f"Start Time: {scenario['start_time'].isoformat()}")
-            print(f"Agents: {len(scenario['agents'])}")
-            print(f"Requests: {len(scenario['requests'])}")
-            print(f"{'='*60}\n")
+        # Extract scenario components
+        start_time = scenario['start_time']
+        agents = scenario['agents']
+        requests = scenario['requests']
+        
+        # Get routing config
+        routing_config_dict = scenario.get('routing_config', {})
+        
+        # Get simulation config - THIS IS THE KEY LINE
+        simulation_config = scenario.get('simulation_config', {})
+        
+        # DEBUG: Print what we got
+        print(f"\n{'='*80}")
+        print("SCENARIO RUNNER DEBUG")
+        print(f"{'='*80}")
+        print(f"Scenario keys: {scenario.keys()}")
+        print(f"Has 'simulation_config'? {'simulation_config' in scenario}")
+        print(f"Simulation config type: {type(simulation_config)}")
+        print(f"Simulation config: {simulation_config}")
+        print(f"{'='*80}\n")
+        
+        # Convert routing_config dict to RoutingConfig object if needed
+        from config.scenario_config import RoutingConfig
+        if isinstance(routing_config_dict, dict):
+            routing_config = RoutingConfig(**routing_config_dict)
+        else:
+            routing_config = routing_config_dict
         
         # Create simulation engine
         engine = SimulationEngine(
-            agents=scenario['agents'],
-            requests=scenario['requests'],
-            config=scenario['routing_config'],
-            start_time=scenario['start_time']
+            agents=agents,
+            requests=requests,
+            config=routing_config,
+            start_time=start_time,
+            simulation_config=simulation_config  # This should now have the values
         )
         
-        # Run simulation
-        logger.info(f"Starting simulation: {scenario['name']}")
-        start_time = datetime.now()
+        # Calculate end time if duration specified
+        max_time = None
+        if duration_hours:
+            max_time = start_time + timedelta(hours=duration_hours)
         
+        # Run simulation
         engine.run(
-            max_events=max_events,
             max_time=max_time,
             stop_when_idle=stop_when_idle
         )
         
-        end_time = datetime.now()
-        logger.info(f"Simulation completed: {scenario['name']}")
-        
-        # Collect results
+        # Get results
         statistics = engine.get_statistics()
         assignments = engine.get_assignments()
         routing_decisions = engine.get_routing_decisions()
         
         # Create result object
-        result = ScenarioResult(
-            scenario_name=scenario['name'],
+        result = SimulationResult(
             start_time=start_time,
-            end_time=end_time,
+            end_time=engine.end_time,
             statistics=statistics,
             assignments=assignments,
-            routing_decisions=routing_decisions,
-            metadata={
-                'description': scenario.get('description', ''),
-                'filepath': scenario.get('filepath', ''),
-                'sim_start_time': scenario['start_time'].isoformat(),
-                'max_events': max_events,
-                'max_time': max_time.isoformat() if max_time else None,
-                'stop_when_idle': stop_when_idle
-            }
+            routing_decisions=routing_decisions
         )
         
-        if verbose:
-            self.print_summary(result)
-        
         return result
-    
+
     def run_multiple_scenarios(
         self,
         scenarios: List[Dict[str, Any]],

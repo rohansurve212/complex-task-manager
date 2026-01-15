@@ -88,7 +88,8 @@ class SimulationEngine:
         agents: List[Agent],
         requests: List[Request],
         config: RoutingConfig,
-        start_time: datetime
+        start_time: datetime,
+        simulation_config: Optional[Dict] = None  # ADD THIS
     ):
         """
         Initialize the simulation engine.
@@ -98,13 +99,15 @@ class SimulationEngine:
             requests: List of requests to process
             config: Routing configuration
             start_time: Simulation start time
+            simulation_config: Simulation configuration (handle times, etc.)  # ADD THIS
             
         Example:
             >>> engine = SimulationEngine(
             ...     agents=[agent1, agent2, agent3],
             ...     requests=[req1, req2, req3, ...],
             ...     config=RoutingConfig(pilot_program_enabled=True),
-            ...     start_time=datetime(2024, 1, 15, 9, 0, 0, tzinfo=timezone.utc)
+            ...     start_time=datetime(2024, 1, 15, 9, 0, 0, tzinfo=timezone.utc),
+            ...     simulation_config={'default_handle_time': 15}  # ADD THIS
             ... )
         """
         # Time management
@@ -117,8 +120,8 @@ class SimulationEngine:
         
         # Agent management
         self.agents: Dict[str, Agent] = {agent.agent_id: agent for agent in agents}
-        self.available_agents: Set[str] = set()  # Currently available agent IDs
-        self.busy_agents: Set[str] = set()  # Currently busy agent IDs
+        self.available_agents: Set[str] = set()
+        self.busy_agents: Set[str] = set()
         
         # Request management
         self.request_pool = RequestPool()
@@ -126,24 +129,25 @@ class SimulationEngine:
         
         # Configuration
         self.config = config
+        self.simulation_config = simulation_config or {}  # ADD THIS
         
         # Assignment tracking
-        self.assignments: List[Dict] = []  # History of all assignments
-        self.active_assignments: Dict[str, Dict] = {}  # agent_id -> assignment details
-        self.completed_assignments: List[Dict] = []  # History of completed assignments
+        self.assignments: List[Dict] = []
+        self.active_assignments: Dict[str, Dict] = {}
+        self.completed_assignments: List[Dict] = []
         
         # Statistics
         self.total_events_processed = 0
         self.total_assignments = 0
         self.total_completions = 0
-        self.routing_decisions: List[Dict] = []  # Track routing decisions for analysis
+        self.routing_decisions: List[Dict] = []
         
         # Initialize simulation
         self._initialize_agents()
         
         logger.info(f"SimulationEngine initialized: {len(agents)} agents, "
-                   f"{len(requests)} requests, start_time={start_time}")
-    
+                f"{len(requests)} requests, start_time={start_time}")
+
     def _initialize_agents(self) -> None:
         """
         Initialize all agents and schedule their first availability events.
@@ -319,6 +323,71 @@ class SimulationEngine:
             # No work available - agent remains idle
             logger.debug(f"No work available for agent {agent_id} at {self.current_time}")
     
+    def _get_handle_time(self, request) -> float:
+        """
+        Get handle time for a request in minutes.
+        
+        Args:
+            request: Request object
+            
+        Returns:
+            float: Handle time in minutes
+        """
+        print(f"\n  _get_handle_time() called for {request.request_id}")
+        print(f"    Request type: {type(request)}")
+        print(f"    Has handle_time_minutes attr? {hasattr(request, 'handle_time_minutes')}")
+
+        # Check if request has explicit handle time
+        if hasattr(request, 'handle_time_minutes') and request.handle_time_minutes:
+            handle_time = float(request.handle_time_minutes)
+            print(f"    ✓ Using explicit handle_time_minutes: {handle_time}")
+            return handle_time
+
+        print("    ✗ No explicit handle_time_minutes, falling back to config")
+        
+        # Use simulation config defaults
+        simulation_config = self.simulation_config
+        print(f"    Simulation config: {simulation_config}")
+        
+        # Check if followup
+        is_followup = request.sticky_agent_id is not None
+        print(f"    Is followup? {is_followup} (sticky_agent={request.sticky_agent_id})")
+        
+        if is_followup:
+            handle_time = float(simulation_config.get('followup_handle_time', 12))
+            print(f"    ✓ Using followup handle time: {handle_time}")
+            return handle_time
+        
+        # Priority-based handle time
+        priority_times = simulation_config.get('priority_handle_times', {})
+        print(f"    Priority times from config: {priority_times}")
+        
+        # Calculate priority
+        print("    Request attributes:")
+        print(f"      is_winback: {request.is_winback}")
+        print(f"      is_atl_rf: {request.is_atl_rf}")
+        print(f"      is_escalated: {request.is_escalated}")
+        print(f"      has_sla: {request.has_sla}")
+
+        if (request.is_winback or request.is_atl_rf) and request.is_escalated:
+            priority = 1
+        elif (request.is_winback or request.is_atl_rf) and not request.is_escalated:
+            priority = 2
+        elif request.has_sla and request.is_escalated:
+            priority = 3
+        elif not request.has_sla and request.is_escalated:
+            priority = 4
+        else:
+            priority = 5
+        
+        print(f"    Calculated priority: {priority}")
+        
+        handle_time = float(priority_times.get(priority, simulation_config.get('default_handle_time', 15)))
+    
+        print(f"    ✓ Using priority-based handle time: {handle_time}")
+    
+        return handle_time
+    
     def _assign_request_to_agent(self, agent: Agent, request: Request) -> None:
         """
         Assign a request to an agent.
@@ -327,12 +396,20 @@ class SimulationEngine:
         1. Updates request state to ASSIGNED
         2. Marks agent as busy in engine tracking
         3. Records the assignment
-        4. Schedules the agent's next availability
+        4. Schedules the agent's next availability (using HANDLE TIME)
         
         Args:
             agent: The agent receiving the assignment
             request: The request being assigned
         """
+        # DEBUG: Log simulation config state
+        print(f"\n{'='*80}")
+        print(f"ASSIGNMENT DEBUG for {request.request_id}")
+        print(f"{'='*80}")
+        print(f"Simulation config type: {type(self.simulation_config)}")
+        print(f"Simulation config contents: {self.simulation_config}")
+        print(f"Has priority_handle_times? {('priority_handle_times' in self.simulation_config)}")
+
         # Assign in request pool
         success = self.request_pool.assign_request_to_agent(
             request_id=request.request_id,
@@ -348,8 +425,21 @@ class SimulationEngine:
         self.available_agents.discard(agent.agent_id)
         self.busy_agents.add(agent.agent_id)
         
-        # Calculate completion time (use FOC target)
-        completion_time = self._calculate_completion_time(request)
+        # GET HANDLE TIME IN MINUTES (CRITICAL CHANGE)
+        print(f"\nCalling _get_handle_time() for {request.request_id}...")
+        handle_time_minutes = self._get_handle_time(request)
+        print(f"Returned handle time: {handle_time_minutes} minutes")
+        handle_time_seconds = handle_time_minutes * 60.0
+
+        # Calculate completion time using handle time
+        completion_time = self.current_time + timedelta(seconds=handle_time_seconds)
+        
+        print("\nTiming:")
+        print(f"  Current time: {self.current_time}")
+        print(f"  Handle time: {handle_time_minutes} minutes ({handle_time_seconds} seconds)")
+        print(f"  Completion time: {completion_time}")
+        print(f"  Delta: {completion_time - self.current_time}")
+        print(f"{'='*80}\n")
         
         # Record assignment
         assignment = {
@@ -358,6 +448,7 @@ class SimulationEngine:
             'agent_id': agent.agent_id,
             'request_id': request.request_id,
             'completion_time': completion_time,
+            'handle_time_minutes': handle_time_minutes,  # ADD THIS
             'was_followup': getattr(request, 'is_followup', False),
             'from_absent_agent': getattr(request, 'from_absent_agent', False),
             'priority_level': self._get_priority_level(request)
@@ -375,30 +466,9 @@ class SimulationEngine:
         self.event_queue.add(next_event)
         
         logger.info(f"Assigned {request.request_id} to {agent.agent_id}, "
-                   f"completion={completion_time.isoformat()}")
-    
-    def _calculate_completion_time(self, request: Request) -> datetime:
-        """
-        Calculate when a request will be completed.
-        
-        For now, uses FOC target as estimated completion time.
-        Future: Could add variability, skill-based multipliers, etc.
-        
-        Args:
-            request: The request being worked on
-            
-        Returns:
-            datetime: Expected completion time
-        """
-        # Use FOC target (in days) as completion time estimate
-        if request.foc_target and request.foc_target > 0:
-            completion_delta = timedelta(days=request.foc_target)
-        else:
-            # Default: 7 days
-            completion_delta = timedelta(days=7.0)
-        
-        return self.current_time + completion_delta
-    
+                f"handle_time={handle_time_minutes:.1f}min, "
+                f"completion={completion_time.isoformat()}")
+
     def _get_priority_level(self, request: Request) -> int:
         """
         Determine priority level of a request (1-5).

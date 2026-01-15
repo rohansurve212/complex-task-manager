@@ -110,6 +110,9 @@ class ScenarioLoader:
         
         # Build routing config
         routing_config = self._build_routing_config(data.get('routing_config', {}))
+
+        # Load simulation config
+        simulation_config = data.get('simulation_config', {})
         
         # Build agents
         agents = self._build_agents(data['agents'])
@@ -124,8 +127,10 @@ class ScenarioLoader:
             'start_time': start_time,
             'agents': agents,
             'requests': requests,
-            'routing_config': routing_config
+            'routing_config': routing_config,
+            'simulation_config': simulation_config
         }
+    
     
     def _validate_scenario_structure(self, data: Dict[str, Any]) -> None:
         """

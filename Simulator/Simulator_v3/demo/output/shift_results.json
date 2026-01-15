@@ -1,0 +1,503 @@
+{
+  "start_time": "2024-05-01T09:00:00-04:00",
+  "end_time": "2024-05-01T16:04:00-04:00",
+  "statistics": {
+    "timing": {
+      "start_time": "2024-05-01 09:00:00-04:00",
+      "end_time": "2024-05-01 16:04:00-04:00",
+      "duration_seconds": 25440.0,
+      "duration_hours": 7.066666666666666
+    },
+    "events": {
+      "total_processed": 23
+    },
+    "assignments": {
+      "total": 23,
+      "by_priority": {
+        "1": 2,
+        "2": 2,
+        "3": 2,
+        "4": 2,
+        "5": 15
+      },
+      "followup_count": 1,
+      "cmo_count": 22,
+      "from_absent_agent_count": 2
+    },
+    "agents": {
+      "total_agents": 6,
+      "agents_with_assignments": 5,
+      "agents_without_assignments": 1,
+      "avg_assignments_per_agent": 3.8333333333333335,
+      "max_assignments_per_agent": 6,
+      "min_assignments_per_agent": 4,
+      "assignments_per_agent": {
+        "alice.johnson": 4,
+        "carol.davis": 4,
+        "eve.martinez": 4,
+        "bob.smith": 5,
+        "dave.wilson": 6
+      }
+    },
+    "requests": {
+      "total_requests": 31,
+      "assigned_requests": 23,
+      "pending_requests": 8,
+      "pool_statistics": {
+        "total_requests": 31,
+        "total_added": 31,
+        "total_removed": 0,
+        "total_assigned": 23,
+        "by_state": {
+          "new": 8,
+          "assigned": 23
+        },
+        "by_skill": {
+          "internet": 16,
+          "voice": 9,
+          "tv": 6
+        },
+        "flags": {
+          "sla_count": 2,
+          "escalated_count": 6,
+          "winback_count": 4
+        },
+        "age": {
+          "min_days": 0.37777777777777777,
+          "max_days": 7.294444444444444,
+          "avg_days": 2.7447132616487453
+        },
+        "foc_compliance": {
+          "compliant_count": 31,
+          "breached_count": 0,
+          "compliance_rate": 1.0
+        }
+      }
+    },
+    "routing": {
+      "total_decisions": 23,
+      "successful_routings": 23,
+      "failed_routings": 0,
+      "success_rate": 1.0,
+      "avg_filtered_per_decision": 5.260869565217392
+    }
+  },
+  "assignments": [
+    {
+      "assignment_id": "ASSIGN_0",
+      "timestamp": "2024-05-01T09:00:00-04:00",
+      "agent_id": "alice.johnson",
+      "request_id": "REQ_P1_002",
+      "completion_time": "2024-05-01T11:56:00-04:00",
+      "handle_time_minutes": 176.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 1
+    },
+    {
+      "assignment_id": "ASSIGN_1",
+      "timestamp": "2024-05-01T09:00:00-04:00",
+      "agent_id": "carol.davis",
+      "request_id": "REQ_P1_001",
+      "completion_time": "2024-05-01T11:56:00-04:00",
+      "handle_time_minutes": 176.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 1
+    },
+    {
+      "assignment_id": "ASSIGN_2",
+      "timestamp": "2024-05-01T09:00:00-04:00",
+      "agent_id": "eve.martinez",
+      "request_id": "REQ_P2_001",
+      "completion_time": "2024-05-01T11:24:00-04:00",
+      "handle_time_minutes": 144.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 2
+    },
+    {
+      "assignment_id": "ASSIGN_3",
+      "timestamp": "2024-05-01T09:00:00-04:00",
+      "agent_id": "bob.smith",
+      "request_id": "REQ_P2_002",
+      "completion_time": "2024-05-01T11:24:00-04:00",
+      "handle_time_minutes": 144.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 2
+    },
+    {
+      "assignment_id": "ASSIGN_4",
+      "timestamp": "2024-05-01T09:00:00-04:00",
+      "agent_id": "dave.wilson",
+      "request_id": "REQ_P3_002",
+      "completion_time": "2024-05-01T11:40:00-04:00",
+      "handle_time_minutes": 160.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 3
+    },
+    {
+      "assignment_id": "ASSIGN_5",
+      "timestamp": "2024-05-01T11:24:00-04:00",
+      "agent_id": "eve.martinez",
+      "request_id": "REQ_P3_001",
+      "completion_time": "2024-05-01T14:04:00-04:00",
+      "handle_time_minutes": 160.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 3
+    },
+    {
+      "assignment_id": "ASSIGN_6",
+      "timestamp": "2024-05-01T11:24:00-04:00",
+      "agent_id": "bob.smith",
+      "request_id": "REQ_P4_001",
+      "completion_time": "2024-05-01T13:32:00-04:00",
+      "handle_time_minutes": 128.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 4
+    },
+    {
+      "assignment_id": "ASSIGN_7",
+      "timestamp": "2024-05-01T11:40:00-04:00",
+      "agent_id": "dave.wilson",
+      "request_id": "REQ_P4_002",
+      "completion_time": "2024-05-01T13:48:00-04:00",
+      "handle_time_minutes": 128.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 4
+    },
+    {
+      "assignment_id": "ASSIGN_8",
+      "timestamp": "2024-05-01T11:56:00-04:00",
+      "agent_id": "alice.johnson",
+      "request_id": "REQ_CMN_001",
+      "completion_time": "2024-05-01T13:48:00-04:00",
+      "handle_time_minutes": 112.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_9",
+      "timestamp": "2024-05-01T11:56:00-04:00",
+      "agent_id": "carol.davis",
+      "request_id": "REQ_CMN_003",
+      "completion_time": "2024-05-01T13:48:00-04:00",
+      "handle_time_minutes": 112.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_10",
+      "timestamp": "2024-05-01T13:32:00-04:00",
+      "agent_id": "bob.smith",
+      "request_id": "REQ_FU_FRANK_001",
+      "completion_time": "2024-05-01T13:44:00-04:00",
+      "handle_time_minutes": 12.0,
+      "was_followup": false,
+      "from_absent_agent": true,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_11",
+      "timestamp": "2024-05-01T13:44:00-04:00",
+      "agent_id": "bob.smith",
+      "request_id": "REQ_CMN_004",
+      "completion_time": "2024-05-01T15:36:00-04:00",
+      "handle_time_minutes": 112.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_12",
+      "timestamp": "2024-05-01T13:48:00-04:00",
+      "agent_id": "carol.davis",
+      "request_id": "REQ_CMN_002",
+      "completion_time": "2024-05-01T15:40:00-04:00",
+      "handle_time_minutes": 112.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_13",
+      "timestamp": "2024-05-01T13:48:00-04:00",
+      "agent_id": "dave.wilson",
+      "request_id": "REQ_FU_FRANK_002",
+      "completion_time": "2024-05-01T14:00:00-04:00",
+      "handle_time_minutes": 12.0,
+      "was_followup": false,
+      "from_absent_agent": true,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_14",
+      "timestamp": "2024-05-01T13:48:00-04:00",
+      "agent_id": "alice.johnson",
+      "request_id": "REQ_CMN_005",
+      "completion_time": "2024-05-01T15:40:00-04:00",
+      "handle_time_minutes": 112.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_15",
+      "timestamp": "2024-05-01T14:00:00-04:00",
+      "agent_id": "dave.wilson",
+      "request_id": "REQ_FU_DAVE_001",
+      "completion_time": "2024-05-01T14:12:00-04:00",
+      "handle_time_minutes": 12.0,
+      "was_followup": true,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_16",
+      "timestamp": "2024-05-01T14:04:00-04:00",
+      "agent_id": "eve.martinez",
+      "request_id": "REQ_CMN_007",
+      "completion_time": "2024-05-01T15:56:00-04:00",
+      "handle_time_minutes": 112.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_17",
+      "timestamp": "2024-05-01T14:12:00-04:00",
+      "agent_id": "dave.wilson",
+      "request_id": "REQ_CMN_006",
+      "completion_time": "2024-05-01T16:04:00-04:00",
+      "handle_time_minutes": 112.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_18",
+      "timestamp": "2024-05-01T15:36:00-04:00",
+      "agent_id": "bob.smith",
+      "request_id": "REQ_CMN_008",
+      "completion_time": "2024-05-01T17:28:00-04:00",
+      "handle_time_minutes": 112.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_19",
+      "timestamp": "2024-05-01T15:40:00-04:00",
+      "agent_id": "alice.johnson",
+      "request_id": "REQ_CMN_009",
+      "completion_time": "2024-05-01T17:32:00-04:00",
+      "handle_time_minutes": 112.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_20",
+      "timestamp": "2024-05-01T15:40:00-04:00",
+      "agent_id": "carol.davis",
+      "request_id": "REQ_CMN_010",
+      "completion_time": "2024-05-01T17:32:00-04:00",
+      "handle_time_minutes": 112.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_21",
+      "timestamp": "2024-05-01T15:56:00-04:00",
+      "agent_id": "eve.martinez",
+      "request_id": "REQ_CMN_011",
+      "completion_time": "2024-05-01T17:48:00-04:00",
+      "handle_time_minutes": 112.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_22",
+      "timestamp": "2024-05-01T16:04:00-04:00",
+      "agent_id": "dave.wilson",
+      "request_id": "REQ_CMN_012",
+      "completion_time": "2024-05-01T17:56:00-04:00",
+      "handle_time_minutes": 112.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    }
+  ],
+  "routing_decisions": [
+    {
+      "timestamp": "2024-05-01 09:00:00-04:00",
+      "agent_id": "alice.johnson",
+      "filtered_count": 2,
+      "selected_request_id": "REQ_P1_002",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-05-01 09:00:00-04:00",
+      "agent_id": "carol.davis",
+      "filtered_count": 1,
+      "selected_request_id": "REQ_P1_001",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-05-01 09:00:00-04:00",
+      "agent_id": "eve.martinez",
+      "filtered_count": 1,
+      "selected_request_id": "REQ_P2_001",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-05-01 09:00:00-04:00",
+      "agent_id": "bob.smith",
+      "filtered_count": 1,
+      "selected_request_id": "REQ_P2_002",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-05-01 09:00:00-04:00",
+      "agent_id": "dave.wilson",
+      "filtered_count": 1,
+      "selected_request_id": "REQ_P3_002",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-05-01 11:24:00-04:00",
+      "agent_id": "eve.martinez",
+      "filtered_count": 1,
+      "selected_request_id": "REQ_P3_001",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-05-01 11:24:00-04:00",
+      "agent_id": "bob.smith",
+      "filtered_count": 2,
+      "selected_request_id": "REQ_P4_001",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-05-01 11:40:00-04:00",
+      "agent_id": "dave.wilson",
+      "filtered_count": 1,
+      "selected_request_id": "REQ_P4_002",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-05-01 11:56:00-04:00",
+      "agent_id": "alice.johnson",
+      "filtered_count": 14,
+      "selected_request_id": "REQ_CMN_001",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-05-01 11:56:00-04:00",
+      "agent_id": "carol.davis",
+      "filtered_count": 16,
+      "selected_request_id": "REQ_CMN_003",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-05-01 13:32:00-04:00",
+      "agent_id": "bob.smith",
+      "filtered_count": 10,
+      "selected_request_id": "REQ_FU_FRANK_001",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-05-01 13:44:00-04:00",
+      "agent_id": "bob.smith",
+      "filtered_count": 9,
+      "selected_request_id": "REQ_CMN_004",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-05-01 13:48:00-04:00",
+      "agent_id": "carol.davis",
+      "filtered_count": 13,
+      "selected_request_id": "REQ_CMN_002",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-05-01 13:48:00-04:00",
+      "agent_id": "dave.wilson",
+      "filtered_count": 6,
+      "selected_request_id": "REQ_FU_FRANK_002",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-05-01 13:48:00-04:00",
+      "agent_id": "alice.johnson",
+      "filtered_count": 9,
+      "selected_request_id": "REQ_CMN_005",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-05-01 14:00:00-04:00",
+      "agent_id": "dave.wilson",
+      "filtered_count": 1,
+      "selected_request_id": "REQ_FU_DAVE_001",
+      "was_followup": true
+    },
+    {
+      "timestamp": "2024-05-01 14:04:00-04:00",
+      "agent_id": "eve.martinez",
+      "filtered_count": 5,
+      "selected_request_id": "REQ_CMN_007",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-05-01 14:12:00-04:00",
+      "agent_id": "dave.wilson",
+      "filtered_count": 5,
+      "selected_request_id": "REQ_CMN_006",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-05-01 15:36:00-04:00",
+      "agent_id": "bob.smith",
+      "filtered_count": 6,
+      "selected_request_id": "REQ_CMN_008",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-05-01 15:40:00-04:00",
+      "agent_id": "alice.johnson",
+      "filtered_count": 6,
+      "selected_request_id": "REQ_CMN_009",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-05-01 15:40:00-04:00",
+      "agent_id": "carol.davis",
+      "filtered_count": 6,
+      "selected_request_id": "REQ_CMN_010",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-05-01 15:56:00-04:00",
+      "agent_id": "eve.martinez",
+      "filtered_count": 3,
+      "selected_request_id": "REQ_CMN_011",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-05-01 16:04:00-04:00",
+      "agent_id": "dave.wilson",
+      "filtered_count": 2,
+      "selected_request_id": "REQ_CMN_012",
+      "was_followup": false
+    }
+  ]
+}

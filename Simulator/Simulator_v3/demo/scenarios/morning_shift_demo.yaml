@@ -1,0 +1,517 @@
+name: Morning Shift Demo - 8 Hours
+description: |
+  Realistic 8-hour morning shift simulation (9 AM - 5 PM EST)
+  
+  Team Setup:
+  - 6 agents total
+  - 5 agents working (alice, bob, carol, dave, eve)
+  - 1 agent absent (frank - on vacation)
+  
+  Request Mix:
+  - 25 new requests (backlog from overnight)
+  - 8 followup requests (5 for present agents, 3 for frank)
+  - Mix of priorities (winback, escalated, SLA, commons)
+  - Various FOC targets (3, 5, 7, 10 days)
+  - Realistic handle times (10-25 minutes per request)
+  
+  Expected Outcomes:
+  - Frank's followups redistributed to other agents
+  - Priority requests processed first
+  - All agents stay busy throughout shift
+  - ~28-32 requests completed in 8 hours
+  - Work distributed across the full 8-hour period
+
+start_time: "2024-05-01T09:00:00-04:00"  # 9 AM EST
+
+routing_config:
+  pilot_program_enabled: true
+  followup_window_1_start: 14.0   # 10:00 AM EST (14:00 UTC)
+  followup_window_1_end: 15.5     # 11:30 AM EST (15:30 UTC)
+  followup_window_2_start: 19.5   # 3:30 PM EST (19:30 UTC)
+  followup_window_2_end: 20.0     # 4:00 PM EST (20:00 UTC)
+
+# HANDLE TIME CONFIGURATION
+simulation_config:
+  # Base handle times by priority level (in minutes)
+  # Higher priority = more complex = longer handle time
+  priority_handle_times:
+    1: 176  # Winback/ATL + Escalated (complex customer issues)
+    2: 144  # Winback/ATL (retention effort required)
+    3: 160  # SLA + Escalated (contract customers with issues)
+    4: 128  # Escalated (troubleshooting required)
+    5: 112  # Commons (standard new orders)
+  
+  # Handle time variation (std deviation in minutes)
+  handle_time_std_dev: 4  # ±4 minutes variation
+  
+  # Followup handle times (usually quicker - just updates)
+  followup_handle_time: 12  # Followups are typically faster
+  
+  # Default if priority not specified
+  default_handle_time: 15
+
+# ============================================================================
+# AGENTS
+# ============================================================================
+
+agents:
+  # Working agents
+  - agent_id: alice.johnson
+    full_name: Alice Johnson
+    skillsets: [internet, voice]
+    manager_name: Sarah Manager
+    cp2_name: Toronto Team
+    cp3_name: Ontario Region
+    is_absent: false
+  
+  - agent_id: bob.smith
+    full_name: Bob Smith
+    skillsets: [internet, tv]
+    manager_name: Sarah Manager
+    cp2_name: Toronto Team
+    cp3_name: Ontario Region
+    is_absent: false
+  
+  - agent_id: carol.davis
+    full_name: Carol Davis
+    skillsets: [internet, voice, tv]
+    manager_name: Sarah Manager
+    cp2_name: Toronto Team
+    cp3_name: Ontario Region
+    is_absent: false
+  
+  - agent_id: dave.wilson
+    full_name: Dave Wilson
+    skillsets: [voice, tv]
+    manager_name: Sarah Manager
+    cp2_name: Toronto Team
+    cp3_name: Ontario Region
+    is_absent: false
+  
+  - agent_id: eve.martinez
+    full_name: Eve Martinez
+    skillsets: [internet]
+    manager_name: Sarah Manager
+    cp2_name: Toronto Team
+    cp3_name: Ontario Region
+    is_absent: false
+  
+  # Absent agent
+  - agent_id: frank.brown
+    full_name: Frank Brown
+    skillsets: [internet, voice]
+    manager_name: Sarah Manager
+    cp2_name: Toronto Team
+    cp3_name: Ontario Region
+    is_absent: true
+
+# ============================================================================
+# REQUESTS
+# ============================================================================
+
+requests:
+  # ========================================================================
+  # PRIORITY 1: Winback + Escalated (22 min handle time)
+  # ========================================================================
+  
+  - request_id: REQ_P1_001
+    external_id: EXT_WB_E_001
+    skill_id: internet
+    request_source: bcom
+    product: internet
+    service_region: ontario
+    request_type: new
+    order_date_offset_hours: -36
+    foc_target: 3.0
+    has_sla: false
+    is_escalated: true
+    is_winback: true
+    workorder_status: new
+  
+  - request_id: REQ_P1_002
+    external_id: EXT_WB_E_002
+    skill_id: voice
+    request_source: residential
+    product: voice
+    service_region: ontario
+    request_type: change
+    order_date_offset_hours: -48
+    foc_target: 3.0
+    has_sla: false
+    is_escalated: true
+    is_winback: true
+    workorder_status: new
+  
+  # ========================================================================
+  # PRIORITY 2: Winback (NOT escalated) (18 min handle time)
+  # ========================================================================
+  
+  - request_id: REQ_P2_001
+    external_id: EXT_WB_001
+    skill_id: internet
+    request_source: bcom
+    product: internet
+    service_region: ontario
+    request_type: new
+    order_date_offset_hours: -24
+    foc_target: 5.0
+    has_sla: false
+    is_escalated: false
+    is_winback: true
+    workorder_status: new
+  
+  - request_id: REQ_P2_002
+    external_id: EXT_WB_002
+    skill_id: tv
+    request_source: residential
+    product: tv
+    service_region: ontario
+    request_type: new
+    order_date_offset_hours: -30
+    foc_target: 5.0
+    has_sla: false
+    is_escalated: false
+    is_winback: true
+    workorder_status: new
+  
+  # ========================================================================
+  # PRIORITY 3: SLA + Escalated (20 min handle time)
+  # ========================================================================
+  
+  - request_id: REQ_P3_001
+    external_id: EXT_SLA_E_001
+    skill_id: internet
+    request_source: bcom
+    product: internet
+    service_region: ontario
+    request_type: change
+    order_date_offset_hours: -72
+    foc_target: 7.0
+    has_sla: true
+    is_escalated: true
+    workorder_status: new
+  
+  - request_id: REQ_P3_002
+    external_id: EXT_SLA_E_002
+    skill_id: voice
+    request_source: bcom
+    product: voice
+    service_region: ontario
+    request_type: move
+    order_date_offset_hours: -60
+    foc_target: 7.0
+    has_sla: true
+    is_escalated: true
+    workorder_status: new
+  
+  # ========================================================================
+  # PRIORITY 4: Escalated (no SLA) (16 min handle time)
+  # ========================================================================
+  
+  - request_id: REQ_P4_001
+    external_id: EXT_ESC_001
+    skill_id: internet
+    request_source: residential
+    product: internet
+    service_region: ontario
+    request_type: new
+    order_date_offset_hours: -96
+    foc_target: 10.0
+    has_sla: false
+    is_escalated: true
+    workorder_status: new
+  
+  - request_id: REQ_P4_002
+    external_id: EXT_ESC_002
+    skill_id: tv
+    request_source: residential
+    product: tv
+    service_region: ontario
+    request_type: add
+    order_date_offset_hours: -84
+    foc_target: 10.0
+    has_sla: false
+    is_escalated: true
+    workorder_status: new
+  
+  # ========================================================================
+  # PRIORITY 5: Commons (14 min handle time)
+  # ========================================================================
+  
+  - request_id: REQ_CMN_001
+    external_id: EXT_CMN_001
+    skill_id: internet
+    request_source: residential
+    product: internet
+    service_region: ontario
+    request_type: new
+    order_date_offset_hours: -168
+    foc_target: 10.0
+    workorder_status: new
+  
+  - request_id: REQ_CMN_002
+    external_id: EXT_CMN_002
+    skill_id: voice
+    request_source: residential
+    product: voice
+    service_region: ontario
+    request_type: new
+    order_date_offset_hours: -144
+    foc_target: 10.0
+    workorder_status: new
+  
+  - request_id: REQ_CMN_003
+    external_id: EXT_CMN_003
+    skill_id: internet
+    request_source: bcom
+    product: internet
+    service_region: ontario
+    request_type: change
+    order_date_offset_hours: -120
+    foc_target: 8.0
+    workorder_status: new
+  
+  - request_id: REQ_CMN_004
+    external_id: EXT_CMN_004
+    skill_id: tv
+    request_source: residential
+    product: tv
+    service_region: ontario
+    request_type: new
+    order_date_offset_hours: -96
+    foc_target: 8.0
+    workorder_status: new
+  
+  - request_id: REQ_CMN_005
+    external_id: EXT_CMN_005
+    skill_id: internet
+    request_source: residential
+    product: internet
+    service_region: ontario
+    request_type: new
+    order_date_offset_hours: -72
+    foc_target: 7.0
+    workorder_status: new
+  
+  - request_id: REQ_CMN_006
+    external_id: EXT_CMN_006
+    skill_id: voice
+    request_source: residential
+    product: voice
+    service_region: ontario
+    request_type: add
+    order_date_offset_hours: -48
+    foc_target: 8.0
+    workorder_status: new
+  
+  - request_id: REQ_CMN_007
+    external_id: EXT_CMN_007
+    skill_id: internet
+    request_source: residential
+    product: internet
+    service_region: ontario
+    request_type: new
+    order_date_offset_hours: -36
+    foc_target: 8.0
+    workorder_status: new
+  
+  - request_id: REQ_CMN_008
+    external_id: EXT_CMN_008
+    skill_id: tv
+    request_source: residential
+    product: tv
+    service_region: ontario
+    request_type: change
+    order_date_offset_hours: -24
+    foc_target: 7.0
+    workorder_status: new
+  
+  - request_id: REQ_CMN_009
+    external_id: EXT_CMN_009
+    skill_id: internet
+    request_source: residential
+    product: internet
+    service_region: ontario
+    request_type: new
+    order_date_offset_hours: -18
+    foc_target: 8.0
+    workorder_status: new
+  
+  - request_id: REQ_CMN_010
+    external_id: EXT_CMN_010
+    skill_id: voice
+    request_source: residential
+    product: voice
+    service_region: ontario
+    request_type: new
+    order_date_offset_hours: -12
+    foc_target: 8.0
+    workorder_status: new
+  
+  - request_id: REQ_CMN_011
+    external_id: EXT_CMN_011
+    skill_id: internet
+    request_source: residential
+    product: internet
+    service_region: ontario
+    request_type: move
+    order_date_offset_hours: -8
+    foc_target: 7.0
+    workorder_status: new
+  
+  - request_id: REQ_CMN_012
+    external_id: EXT_CMN_012
+    skill_id: tv
+    request_source: residential
+    product: tv
+    service_region: ontario
+    request_type: new
+    order_date_offset_hours: -6
+    foc_target: 8.0
+    workorder_status: new
+  
+  - request_id: REQ_CMN_013
+    external_id: EXT_CMN_013
+    skill_id: internet
+    request_source: bcom
+    product: internet
+    service_region: ontario
+    request_type: new
+    order_date_offset_hours: -4
+    foc_target: 7.0
+    workorder_status: new
+  
+  - request_id: REQ_CMN_014
+    external_id: EXT_CMN_014
+    skill_id: voice
+    request_source: residential
+    product: voice
+    service_region: ontario
+    request_type: new
+    order_date_offset_hours: -3
+    foc_target: 8.0
+    workorder_status: new
+  
+  - request_id: REQ_CMN_015
+    external_id: EXT_CMN_015
+    skill_id: internet
+    request_source: residential
+    product: internet
+    service_region: ontario
+    request_type: new
+    order_date_offset_hours: -2
+    foc_target: 8.0
+    workorder_status: new
+  
+  # ========================================================================
+  # FOLLOWUP REQUESTS - For present agents (12 min handle time)
+  # ========================================================================
+  
+  - request_id: REQ_FU_ALICE_001
+    external_id: EXT_FU_A001
+    skill_id: internet
+    request_source: residential
+    product: internet
+    service_region: ontario
+    request_type: followup
+    order_date_offset_hours: -120
+    foc_target: 7.0
+    workorder_status: customerreplied
+    sticky_agent_id: alice.johnson
+    workorder_expected_completion_date_offset_hours: -24
+  
+  - request_id: REQ_FU_ALICE_002
+    external_id: EXT_FU_A002
+    skill_id: voice
+    request_source: residential
+    product: voice
+    service_region: ontario
+    request_type: followup
+    order_date_offset_hours: -96
+    foc_target: 7.0
+    workorder_status: customerreplied
+    sticky_agent_id: alice.johnson
+    workorder_expected_completion_date_offset_hours: -12
+  
+  - request_id: REQ_FU_BOB_001
+    external_id: EXT_FU_B001
+    skill_id: internet
+    request_source: bcom
+    product: internet
+    service_region: ontario
+    request_type: followup
+    order_date_offset_hours: -72
+    foc_target: 5.0
+    workorder_status: customerreplied
+    sticky_agent_id: bob.smith
+    workorder_expected_completion_date_offset_hours: -6
+  
+  - request_id: REQ_FU_CAROL_001
+    external_id: EXT_FU_C001
+    skill_id: tv
+    request_source: residential
+    product: tv
+    service_region: ontario
+    request_type: followup
+    order_date_offset_hours: -48
+    foc_target: 7.0
+    workorder_status: customerreplied
+    sticky_agent_id: carol.davis
+    workorder_tags: [NEW_INTERNAL_NOTE]
+    workorder_expected_completion_date_offset_hours: 24
+  
+  - request_id: REQ_FU_DAVE_001
+    external_id: EXT_FU_D001
+    skill_id: voice
+    request_source: residential
+    product: voice
+    service_region: ontario
+    request_type: followup
+    order_date_offset_hours: -60
+    foc_target: 7.0
+    workorder_status: customerreplied
+    sticky_agent_id: dave.wilson
+    workorder_expected_completion_date_offset_hours: 12
+  
+  # ========================================================================
+  # FOLLOWUP REQUESTS - For ABSENT agent (Frank)
+  # These will be redistributed as CMO requests (12 min handle time)
+  # ========================================================================
+  
+  - request_id: REQ_FU_FRANK_001
+    external_id: EXT_FU_F001
+    skill_id: internet
+    request_source: residential
+    product: internet
+    service_region: ontario
+    request_type: followup
+    order_date_offset_hours: -84
+    foc_target: 7.0
+    workorder_status: customerreplied
+    sticky_agent_id: frank.brown
+    workorder_expected_completion_date_offset_hours: -48
+  
+  - request_id: REQ_FU_FRANK_002
+    external_id: EXT_FU_F002
+    skill_id: voice
+    request_source: residential
+    product: voice
+    service_region: ontario
+    request_type: followup
+    order_date_offset_hours: -72
+    foc_target: 7.0
+    workorder_status: customerreplied
+    sticky_agent_id: frank.brown
+    workorder_expected_completion_date_offset_hours: -36
+  
+  - request_id: REQ_FU_FRANK_003
+    external_id: EXT_FU_F003
+    skill_id: internet
+    request_source: bcom
+    product: internet
+    service_region: ontario
+    request_type: followup
+    order_date_offset_hours: -60
+    foc_target: 5.0
+    workorder_tags: [NEW_INTERNAL_NOTE]
+    sticky_agent_id: frank.brown
