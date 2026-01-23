@@ -1,0 +1,182 @@
+{
+  "metadata": {
+    "analysis_type": "full_simulation",
+    "demo_version": "1.0.0",
+    "analysis_date": "2026-01-22T21:17:09.608362+00:00",
+    "baseline_scenario": "demo/demo_foc_impact_analysis/scenarios/baseline_scenario.yaml",
+    "proposed_scenario": "demo/demo_foc_impact_analysis/scenarios/proposed_scenario.yaml",
+    "simulation_duration_hours": 8.0
+  },
+  "baseline_statistics": {
+    "timing": {
+      "start_time": "2024-01-15 09:00:00-05:00",
+      "end_time": "2024-01-15 10:15:00-05:00",
+      "duration_seconds": 4500.0,
+      "duration_hours": 1.25
+    },
+    "events": {
+      "total_processed": 60
+    },
+    "assignments": {
+      "total": 50,
+      "by_priority": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 50
+      },
+      "followup_count": 0,
+      "cmo_count": 50,
+      "from_absent_agent_count": 0
+    },
+    "agents": {
+      "total_agents": 10,
+      "agents_with_assignments": 10,
+      "agents_without_assignments": 0,
+      "avg_assignments_per_agent": 5.0,
+      "max_assignments_per_agent": 5,
+      "min_assignments_per_agent": 5,
+      "assignments_per_agent": {
+        "AGENT001": 5,
+        "AGENT003": 5,
+        "AGENT007": 5,
+        "AGENT010": 5,
+        "AGENT006": 5,
+        "AGENT002": 5,
+        "AGENT005": 5,
+        "AGENT004": 5,
+        "AGENT009": 5,
+        "AGENT008": 5
+      }
+    },
+    "requests": {
+      "total_requests": 50,
+      "assigned_requests": 50,
+      "pending_requests": 0,
+      "pool_statistics": {
+        "total_requests": 50,
+        "total_added": 50,
+        "total_removed": 0,
+        "total_assigned": 50,
+        "by_state": {
+          "new": 0,
+          "assigned": 50
+        },
+        "by_skill": {
+          "SkillA": 17,
+          "SkillB": 19,
+          "SkillC": 14
+        },
+        "flags": {
+          "sla_count": 0,
+          "escalated_count": 0,
+          "winback_count": 0
+        },
+        "age": {
+          "min_days": 0.13541666666666666,
+          "max_days": 7.177083333333333,
+          "avg_days": 2.927083333333333
+        },
+        "foc_compliance": {
+          "compliant_count": 50,
+          "breached_count": 0,
+          "compliance_rate": 1.0
+        }
+      }
+    },
+    "routing": {
+      "total_decisions": 60,
+      "successful_routings": 50,
+      "failed_routings": 10,
+      "success_rate": 0.8333333333333334,
+      "avg_filtered_per_decision": 15.916666666666666
+    }
+  },
+  "proposed_statistics": {
+    "timing": {
+      "start_time": "2024-01-15 09:00:00-05:00",
+      "end_time": "2024-01-15 10:15:00-05:00",
+      "duration_seconds": 4500.0,
+      "duration_hours": 1.25
+    },
+    "events": {
+      "total_processed": 60
+    },
+    "assignments": {
+      "total": 50,
+      "by_priority": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 50
+      },
+      "followup_count": 0,
+      "cmo_count": 50,
+      "from_absent_agent_count": 0
+    },
+    "agents": {
+      "total_agents": 10,
+      "agents_with_assignments": 10,
+      "agents_without_assignments": 0,
+      "avg_assignments_per_agent": 5.0,
+      "max_assignments_per_agent": 5,
+      "min_assignments_per_agent": 5,
+      "assignments_per_agent": {
+        "AGENT001": 5,
+        "AGENT003": 5,
+        "AGENT007": 5,
+        "AGENT010": 5,
+        "AGENT006": 5,
+        "AGENT002": 5,
+        "AGENT005": 5,
+        "AGENT004": 5,
+        "AGENT009": 5,
+        "AGENT008": 5
+      }
+    },
+    "requests": {
+      "total_requests": 50,
+      "assigned_requests": 50,
+      "pending_requests": 0,
+      "pool_statistics": {
+        "total_requests": 50,
+        "total_added": 50,
+        "total_removed": 0,
+        "total_assigned": 50,
+        "by_state": {
+          "new": 0,
+          "assigned": 50
+        },
+        "by_skill": {
+          "SkillA": 17,
+          "SkillB": 19,
+          "SkillC": 14
+        },
+        "flags": {
+          "sla_count": 0,
+          "escalated_count": 0,
+          "winback_count": 0
+        },
+        "age": {
+          "min_days": 0.13541666666666666,
+          "max_days": 7.177083333333333,
+          "avg_days": 2.927083333333333
+        },
+        "foc_compliance": {
+          "compliant_count": 48,
+          "breached_count": 2,
+          "compliance_rate": 0.96
+        }
+      }
+    },
+    "routing": {
+      "total_decisions": 60,
+      "successful_routings": 50,
+      "failed_routings": 10,
+      "success_rate": 0.8333333333333334,
+      "avg_filtered_per_decision": 15.883333333333333
+    }
+  }
+}

@@ -17,12 +17,12 @@ Usage:
 import sys
 import os
 import time
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, List, Any
+from typing import Dict, Any
 
 # Add parent directory to path to import simulator modules
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 
 from scenario.scenario_loader import ScenarioLoader
 from scenario.scenario_runner import ScenarioRunner
@@ -32,8 +32,8 @@ from scenario.scenario_runner import ScenarioRunner
 # DEMO CONFIGURATION
 # ============================================================================
 
-SCENARIO_FILE = "demo/scenarios/morning_shift_demo.yaml"
-OUTPUT_DIR = "demo/output"
+SCENARIO_FILE = "demo/demo_8hour_shift/scenarios/morning_shift_demo.yaml"
+OUTPUT_DIR = "demo/demo_8hour_shift/output"
 DEMO_SPEED = "normal"  # 'fast', 'normal', 'slow'
 
 
@@ -339,7 +339,7 @@ def display_request_summary(scenario: Dict):
     
     if from_absent_count > 0:
         print(f"  {Colors.YELLOW}⚠ Followups from absent agents: {from_absent_count}{Colors.END}")
-        print(f"    (These will be redistributed as CMO requests)")
+        print("    (These will be redistributed as CMO requests)")
     
     print(f"\n{Colors.BOLD}Priority Distribution:{Colors.END}\n")
     priority_labels = {
@@ -442,7 +442,7 @@ def display_shift_timeline(result):
             
         except Exception as e:
             # Skip this assignment if we can't parse it
-            print(f"  {Colors.YELLOW}Warning: Could not parse timestamp for assignment{Colors.END}")
+            print(f"  {Colors.YELLOW}Warning: Could not parse timestamp for assignment{Colors.END} {e}")
             continue
     
     if not hourly_assignments:

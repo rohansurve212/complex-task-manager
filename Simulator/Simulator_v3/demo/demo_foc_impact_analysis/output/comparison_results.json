@@ -1,0 +1,1170 @@
+{
+  "metadata": {
+    "demo_version": "1.0.0",
+    "analysis_date": "2026-01-23T14:03:40.425367+00:00",
+    "baseline_scenario": "demo/demo_foc_impact_analysis/scenarios/baseline_scenario.yaml",
+    "proposed_scenario": "demo/demo_foc_impact_analysis/scenarios/proposed_scenario.yaml"
+  },
+  "baseline": {
+    "analysis_time": "2024-01-15T09:00:00-05:00",
+    "hours_after_start": 0.0,
+    "overall_metrics": {
+      "total_requests": 50,
+      "foc_compliant": 1,
+      "foc_compliance_rate": 0.02,
+      "average_priority_score": 0.359375,
+      "median_priority_score": 0.3046875,
+      "average_age_days": 172.5
+    },
+    "client_metrics": {
+      "CLIENT_E": {
+        "total_requests": 10,
+        "foc_compliant": 0,
+        "average_priority_score": 0.4171875000000001,
+        "average_rank": 22.1,
+        "foc_target": 8.0,
+        "average_age_days": 200.25,
+        "foc_compliance_rate": 0.0
+      },
+      "CLIENT_D": {
+        "total_requests": 10,
+        "foc_compliant": 0,
+        "average_priority_score": 0.3848958333333333,
+        "average_rank": 24.0,
+        "foc_target": 8.0,
+        "average_age_days": 184.75,
+        "foc_compliance_rate": 0.0
+      },
+      "CLIENT_C": {
+        "total_requests": 10,
+        "foc_compliant": 0,
+        "average_priority_score": 0.35625,
+        "average_rank": 25.5,
+        "foc_target": 8.0,
+        "average_age_days": 171.0,
+        "foc_compliance_rate": 0.0
+      },
+      "CLIENT_B": {
+        "total_requests": 10,
+        "foc_compliant": 0,
+        "average_priority_score": 0.33333333333333337,
+        "average_rank": 27.0,
+        "foc_target": 8.0,
+        "average_age_days": 160.0,
+        "foc_compliance_rate": 0.0
+      },
+      "CLIENT_A": {
+        "total_requests": 10,
+        "foc_compliant": 1,
+        "average_priority_score": 0.3052083333333333,
+        "average_rank": 28.9,
+        "foc_target": 8.0,
+        "average_age_days": 146.5,
+        "foc_compliance_rate": 0.1
+      }
+    },
+    "request_details": [
+      {
+        "request_id": "REQ_E010",
+        "client_id": "CLIENT_E",
+        "skill_id": "SkillC",
+        "foc_target": 8.0,
+        "age_days": 427.5,
+        "priority_score": 0.890625,
+        "is_foc_compliant": false,
+        "rank": 1
+      },
+      {
+        "request_id": "REQ_D010",
+        "client_id": "CLIENT_D",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 405.0,
+        "priority_score": 0.84375,
+        "is_foc_compliant": false,
+        "rank": 2
+      },
+      {
+        "request_id": "REQ_C010",
+        "client_id": "CLIENT_C",
+        "skill_id": "SkillA",
+        "foc_target": 8.0,
+        "age_days": 390.0,
+        "priority_score": 0.8125,
+        "is_foc_compliant": false,
+        "rank": 3
+      },
+      {
+        "request_id": "REQ_B010",
+        "client_id": "CLIENT_B",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 375.0,
+        "priority_score": 0.78125,
+        "is_foc_compliant": false,
+        "rank": 4
+      },
+      {
+        "request_id": "REQ_E009",
+        "client_id": "CLIENT_E",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 367.5,
+        "priority_score": 0.765625,
+        "is_foc_compliant": false,
+        "rank": 5
+      },
+      {
+        "request_id": "REQ_A010",
+        "client_id": "CLIENT_A",
+        "skill_id": "SkillA",
+        "foc_target": 8.0,
+        "age_days": 360.0,
+        "priority_score": 0.75,
+        "is_foc_compliant": false,
+        "rank": 6
+      },
+      {
+        "request_id": "REQ_D009",
+        "client_id": "CLIENT_D",
+        "skill_id": "SkillA",
+        "foc_target": 8.0,
+        "age_days": 345.0,
+        "priority_score": 0.71875,
+        "is_foc_compliant": false,
+        "rank": 7
+      },
+      {
+        "request_id": "REQ_C009",
+        "client_id": "CLIENT_C",
+        "skill_id": "SkillC",
+        "foc_target": 8.0,
+        "age_days": 330.0,
+        "priority_score": 0.6875,
+        "is_foc_compliant": false,
+        "rank": 8
+      },
+      {
+        "request_id": "REQ_B009",
+        "client_id": "CLIENT_B",
+        "skill_id": "SkillC",
+        "foc_target": 8.0,
+        "age_days": 315.0,
+        "priority_score": 0.65625,
+        "is_foc_compliant": false,
+        "rank": 9
+      },
+      {
+        "request_id": "REQ_E008",
+        "client_id": "CLIENT_E",
+        "skill_id": "SkillA",
+        "foc_target": 8.0,
+        "age_days": 307.5,
+        "priority_score": 0.640625,
+        "is_foc_compliant": false,
+        "rank": 10
+      },
+      {
+        "request_id": "REQ_A009",
+        "client_id": "CLIENT_A",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 300.0,
+        "priority_score": 0.625,
+        "is_foc_compliant": false,
+        "rank": 11
+      },
+      {
+        "request_id": "REQ_D008",
+        "client_id": "CLIENT_D",
+        "skill_id": "SkillC",
+        "foc_target": 8.0,
+        "age_days": 285.0,
+        "priority_score": 0.59375,
+        "is_foc_compliant": false,
+        "rank": 12
+      },
+      {
+        "request_id": "REQ_C008",
+        "client_id": "CLIENT_C",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 270.0,
+        "priority_score": 0.5625,
+        "is_foc_compliant": false,
+        "rank": 13
+      },
+      {
+        "request_id": "REQ_B008",
+        "client_id": "CLIENT_B",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 255.0,
+        "priority_score": 0.53125,
+        "is_foc_compliant": false,
+        "rank": 14
+      },
+      {
+        "request_id": "REQ_E007",
+        "client_id": "CLIENT_E",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 247.5,
+        "priority_score": 0.515625,
+        "is_foc_compliant": false,
+        "rank": 15
+      },
+      {
+        "request_id": "REQ_A008",
+        "client_id": "CLIENT_A",
+        "skill_id": "SkillA",
+        "foc_target": 8.0,
+        "age_days": 240.0,
+        "priority_score": 0.5,
+        "is_foc_compliant": false,
+        "rank": 16
+      },
+      {
+        "request_id": "REQ_D007",
+        "client_id": "CLIENT_D",
+        "skill_id": "SkillA",
+        "foc_target": 8.0,
+        "age_days": 225.0,
+        "priority_score": 0.46875,
+        "is_foc_compliant": false,
+        "rank": 17
+      },
+      {
+        "request_id": "REQ_C007",
+        "client_id": "CLIENT_C",
+        "skill_id": "SkillC",
+        "foc_target": 8.0,
+        "age_days": 210.0,
+        "priority_score": 0.4375,
+        "is_foc_compliant": false,
+        "rank": 18
+      },
+      {
+        "request_id": "REQ_B007",
+        "client_id": "CLIENT_B",
+        "skill_id": "SkillA",
+        "foc_target": 8.0,
+        "age_days": 195.0,
+        "priority_score": 0.40625,
+        "is_foc_compliant": false,
+        "rank": 19
+      },
+      {
+        "request_id": "REQ_E006",
+        "client_id": "CLIENT_E",
+        "skill_id": "SkillC",
+        "foc_target": 8.0,
+        "age_days": 187.5,
+        "priority_score": 0.390625,
+        "is_foc_compliant": false,
+        "rank": 20
+      },
+      {
+        "request_id": "REQ_A007",
+        "client_id": "CLIENT_A",
+        "skill_id": "SkillC",
+        "foc_target": 8.0,
+        "age_days": 180.0,
+        "priority_score": 0.375,
+        "is_foc_compliant": false,
+        "rank": 21
+      },
+      {
+        "request_id": "REQ_D006",
+        "client_id": "CLIENT_D",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 172.5,
+        "priority_score": 0.359375,
+        "is_foc_compliant": false,
+        "rank": 22
+      },
+      {
+        "request_id": "REQ_C006",
+        "client_id": "CLIENT_C",
+        "skill_id": "SkillA",
+        "foc_target": 8.0,
+        "age_days": 165.0,
+        "priority_score": 0.34375,
+        "is_foc_compliant": false,
+        "rank": 23
+      },
+      {
+        "request_id": "REQ_E005",
+        "client_id": "CLIENT_E",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 152.5,
+        "priority_score": 0.3177083333333333,
+        "is_foc_compliant": false,
+        "rank": 24
+      },
+      {
+        "request_id": "REQ_B006",
+        "client_id": "CLIENT_B",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 150.0,
+        "priority_score": 0.3125,
+        "is_foc_compliant": false,
+        "rank": 25
+      },
+      {
+        "request_id": "REQ_D005",
+        "client_id": "CLIENT_D",
+        "skill_id": "SkillA",
+        "foc_target": 8.0,
+        "age_days": 142.5,
+        "priority_score": 0.296875,
+        "is_foc_compliant": false,
+        "rank": 26
+      },
+      {
+        "request_id": "REQ_A006",
+        "client_id": "CLIENT_A",
+        "skill_id": "SkillA",
+        "foc_target": 8.0,
+        "age_days": 135.0,
+        "priority_score": 0.28125,
+        "is_foc_compliant": false,
+        "rank": 27
+      },
+      {
+        "request_id": "REQ_C005",
+        "client_id": "CLIENT_C",
+        "skill_id": "SkillC",
+        "foc_target": 8.0,
+        "age_days": 127.5,
+        "priority_score": 0.265625,
+        "is_foc_compliant": false,
+        "rank": 28
+      },
+      {
+        "request_id": "REQ_E004",
+        "client_id": "CLIENT_E",
+        "skill_id": "SkillA",
+        "foc_target": 8.0,
+        "age_days": 122.5,
+        "priority_score": 0.2552083333333333,
+        "is_foc_compliant": false,
+        "rank": 29
+      },
+      {
+        "request_id": "REQ_B005",
+        "client_id": "CLIENT_B",
+        "skill_id": "SkillC",
+        "foc_target": 8.0,
+        "age_days": 120.0,
+        "priority_score": 0.25,
+        "is_foc_compliant": false,
+        "rank": 30
+      },
+      {
+        "request_id": "REQ_D004",
+        "client_id": "CLIENT_D",
+        "skill_id": "SkillC",
+        "foc_target": 8.0,
+        "age_days": 112.5,
+        "priority_score": 0.234375,
+        "is_foc_compliant": false,
+        "rank": 31
+      },
+      {
+        "request_id": "REQ_A005",
+        "client_id": "CLIENT_A",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 105.0,
+        "priority_score": 0.21875,
+        "is_foc_compliant": false,
+        "rank": 32
+      },
+      {
+        "request_id": "REQ_C004",
+        "client_id": "CLIENT_C",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 97.5,
+        "priority_score": 0.203125,
+        "is_foc_compliant": false,
+        "rank": 33
+      },
+      {
+        "request_id": "REQ_E003",
+        "client_id": "CLIENT_E",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 92.5,
+        "priority_score": 0.19270833333333334,
+        "is_foc_compliant": false,
+        "rank": 34
+      },
+      {
+        "request_id": "REQ_B004",
+        "client_id": "CLIENT_B",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 90.0,
+        "priority_score": 0.1875,
+        "is_foc_compliant": false,
+        "rank": 35
+      },
+      {
+        "request_id": "REQ_D003",
+        "client_id": "CLIENT_D",
+        "skill_id": "SkillA",
+        "foc_target": 8.0,
+        "age_days": 82.5,
+        "priority_score": 0.171875,
+        "is_foc_compliant": false,
+        "rank": 36
+      },
+      {
+        "request_id": "REQ_A004",
+        "client_id": "CLIENT_A",
+        "skill_id": "SkillA",
+        "foc_target": 8.0,
+        "age_days": 75.0,
+        "priority_score": 0.15625,
+        "is_foc_compliant": false,
+        "rank": 37
+      },
+      {
+        "request_id": "REQ_C003",
+        "client_id": "CLIENT_C",
+        "skill_id": "SkillC",
+        "foc_target": 8.0,
+        "age_days": 67.5,
+        "priority_score": 0.140625,
+        "is_foc_compliant": false,
+        "rank": 38
+      },
+      {
+        "request_id": "REQ_E002",
+        "client_id": "CLIENT_E",
+        "skill_id": "SkillC",
+        "foc_target": 8.0,
+        "age_days": 62.5,
+        "priority_score": 0.13020833333333334,
+        "is_foc_compliant": false,
+        "rank": 39
+      },
+      {
+        "request_id": "REQ_B003",
+        "client_id": "CLIENT_B",
+        "skill_id": "SkillC",
+        "foc_target": 8.0,
+        "age_days": 60.0,
+        "priority_score": 0.125,
+        "is_foc_compliant": false,
+        "rank": 40
+      },
+      {
+        "request_id": "REQ_D002",
+        "client_id": "CLIENT_D",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 52.5,
+        "priority_score": 0.109375,
+        "is_foc_compliant": false,
+        "rank": 41
+      },
+      {
+        "request_id": "REQ_A003",
+        "client_id": "CLIENT_A",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 45.0,
+        "priority_score": 0.09375,
+        "is_foc_compliant": false,
+        "rank": 42
+      },
+      {
+        "request_id": "REQ_C002",
+        "client_id": "CLIENT_C",
+        "skill_id": "SkillA",
+        "foc_target": 8.0,
+        "age_days": 37.5,
+        "priority_score": 0.078125,
+        "is_foc_compliant": false,
+        "rank": 43
+      },
+      {
+        "request_id": "REQ_E001",
+        "client_id": "CLIENT_E",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 35.0,
+        "priority_score": 0.07291666666666667,
+        "is_foc_compliant": false,
+        "rank": 44
+      },
+      {
+        "request_id": "REQ_B002",
+        "client_id": "CLIENT_B",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 30.0,
+        "priority_score": 0.0625,
+        "is_foc_compliant": false,
+        "rank": 45
+      },
+      {
+        "request_id": "REQ_D001",
+        "client_id": "CLIENT_D",
+        "skill_id": "SkillA",
+        "foc_target": 8.0,
+        "age_days": 25.0,
+        "priority_score": 0.052083333333333336,
+        "is_foc_compliant": false,
+        "rank": 46
+      },
+      {
+        "request_id": "REQ_A002",
+        "client_id": "CLIENT_A",
+        "skill_id": "SkillA",
+        "foc_target": 8.0,
+        "age_days": 20.0,
+        "priority_score": 0.041666666666666664,
+        "is_foc_compliant": false,
+        "rank": 47
+      },
+      {
+        "request_id": "REQ_C001",
+        "client_id": "CLIENT_C",
+        "skill_id": "SkillC",
+        "foc_target": 8.0,
+        "age_days": 15.0,
+        "priority_score": 0.03125,
+        "is_foc_compliant": false,
+        "rank": 48
+      },
+      {
+        "request_id": "REQ_B001",
+        "client_id": "CLIENT_B",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 10.0,
+        "priority_score": 0.020833333333333332,
+        "is_foc_compliant": false,
+        "rank": 49
+      },
+      {
+        "request_id": "REQ_A001",
+        "client_id": "CLIENT_A",
+        "skill_id": "SkillA",
+        "foc_target": 8.0,
+        "age_days": 5.0,
+        "priority_score": 0.010416666666666666,
+        "is_foc_compliant": true,
+        "rank": 50
+      }
+    ]
+  },
+  "proposed": {
+    "analysis_time": "2024-01-15T09:00:00-05:00",
+    "hours_after_start": 0.0,
+    "overall_metrics": {
+      "total_requests": 50,
+      "foc_compliant": 1,
+      "foc_compliance_rate": 0.02,
+      "average_priority_score": 0.4141071428571429,
+      "median_priority_score": 0.3504464285714286,
+      "average_age_days": 172.5
+    },
+    "client_metrics": {
+      "CLIENT_B": {
+        "total_requests": 10,
+        "foc_compliant": 0,
+        "average_priority_score": 0.4761904761904764,
+        "average_rank": 23.2,
+        "foc_target": 5.6,
+        "average_age_days": 160.0,
+        "foc_compliance_rate": 0.0
+      },
+      "CLIENT_A": {
+        "total_requests": 10,
+        "foc_compliant": 1,
+        "average_priority_score": 0.43601190476190477,
+        "average_rank": 25.4,
+        "foc_target": 5.6,
+        "average_age_days": 146.5,
+        "foc_compliance_rate": 0.1
+      },
+      "CLIENT_E": {
+        "total_requests": 10,
+        "foc_compliant": 0,
+        "average_priority_score": 0.4171875000000001,
+        "average_rank": 24.8,
+        "foc_target": 8.0,
+        "average_age_days": 200.25,
+        "foc_compliance_rate": 0.0
+      },
+      "CLIENT_D": {
+        "total_requests": 10,
+        "foc_compliant": 0,
+        "average_priority_score": 0.3848958333333333,
+        "average_rank": 26.2,
+        "foc_target": 8.0,
+        "average_age_days": 184.75,
+        "foc_compliance_rate": 0.0
+      },
+      "CLIENT_C": {
+        "total_requests": 10,
+        "foc_compliant": 0,
+        "average_priority_score": 0.35625,
+        "average_rank": 27.9,
+        "foc_target": 8.0,
+        "average_age_days": 171.0,
+        "foc_compliance_rate": 0.0
+      }
+    },
+    "request_details": [
+      {
+        "request_id": "REQ_B010",
+        "client_id": "CLIENT_B",
+        "skill_id": "SkillB",
+        "foc_target": 5.6,
+        "age_days": 375.0,
+        "priority_score": 1.1160714285714288,
+        "is_foc_compliant": false,
+        "rank": 1
+      },
+      {
+        "request_id": "REQ_A010",
+        "client_id": "CLIENT_A",
+        "skill_id": "SkillA",
+        "foc_target": 5.6,
+        "age_days": 360.0,
+        "priority_score": 1.0714285714285716,
+        "is_foc_compliant": false,
+        "rank": 2
+      },
+      {
+        "request_id": "REQ_B009",
+        "client_id": "CLIENT_B",
+        "skill_id": "SkillC",
+        "foc_target": 5.6,
+        "age_days": 315.0,
+        "priority_score": 0.9375000000000002,
+        "is_foc_compliant": false,
+        "rank": 3
+      },
+      {
+        "request_id": "REQ_A009",
+        "client_id": "CLIENT_A",
+        "skill_id": "SkillB",
+        "foc_target": 5.6,
+        "age_days": 300.0,
+        "priority_score": 0.892857142857143,
+        "is_foc_compliant": false,
+        "rank": 4
+      },
+      {
+        "request_id": "REQ_E010",
+        "client_id": "CLIENT_E",
+        "skill_id": "SkillC",
+        "foc_target": 8.0,
+        "age_days": 427.5,
+        "priority_score": 0.890625,
+        "is_foc_compliant": false,
+        "rank": 5
+      },
+      {
+        "request_id": "REQ_D010",
+        "client_id": "CLIENT_D",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 405.0,
+        "priority_score": 0.84375,
+        "is_foc_compliant": false,
+        "rank": 6
+      },
+      {
+        "request_id": "REQ_C010",
+        "client_id": "CLIENT_C",
+        "skill_id": "SkillA",
+        "foc_target": 8.0,
+        "age_days": 390.0,
+        "priority_score": 0.8125,
+        "is_foc_compliant": false,
+        "rank": 7
+      },
+      {
+        "request_id": "REQ_E009",
+        "client_id": "CLIENT_E",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 367.5,
+        "priority_score": 0.765625,
+        "is_foc_compliant": false,
+        "rank": 8
+      },
+      {
+        "request_id": "REQ_B008",
+        "client_id": "CLIENT_B",
+        "skill_id": "SkillB",
+        "foc_target": 5.6,
+        "age_days": 255.0,
+        "priority_score": 0.7589285714285716,
+        "is_foc_compliant": false,
+        "rank": 9
+      },
+      {
+        "request_id": "REQ_D009",
+        "client_id": "CLIENT_D",
+        "skill_id": "SkillA",
+        "foc_target": 8.0,
+        "age_days": 345.0,
+        "priority_score": 0.71875,
+        "is_foc_compliant": false,
+        "rank": 10
+      },
+      {
+        "request_id": "REQ_A008",
+        "client_id": "CLIENT_A",
+        "skill_id": "SkillA",
+        "foc_target": 5.6,
+        "age_days": 240.0,
+        "priority_score": 0.7142857142857144,
+        "is_foc_compliant": false,
+        "rank": 11
+      },
+      {
+        "request_id": "REQ_C009",
+        "client_id": "CLIENT_C",
+        "skill_id": "SkillC",
+        "foc_target": 8.0,
+        "age_days": 330.0,
+        "priority_score": 0.6875,
+        "is_foc_compliant": false,
+        "rank": 12
+      },
+      {
+        "request_id": "REQ_E008",
+        "client_id": "CLIENT_E",
+        "skill_id": "SkillA",
+        "foc_target": 8.0,
+        "age_days": 307.5,
+        "priority_score": 0.640625,
+        "is_foc_compliant": false,
+        "rank": 13
+      },
+      {
+        "request_id": "REQ_D008",
+        "client_id": "CLIENT_D",
+        "skill_id": "SkillC",
+        "foc_target": 8.0,
+        "age_days": 285.0,
+        "priority_score": 0.59375,
+        "is_foc_compliant": false,
+        "rank": 14
+      },
+      {
+        "request_id": "REQ_B007",
+        "client_id": "CLIENT_B",
+        "skill_id": "SkillA",
+        "foc_target": 5.6,
+        "age_days": 195.0,
+        "priority_score": 0.580357142857143,
+        "is_foc_compliant": false,
+        "rank": 15
+      },
+      {
+        "request_id": "REQ_C008",
+        "client_id": "CLIENT_C",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 270.0,
+        "priority_score": 0.5625,
+        "is_foc_compliant": false,
+        "rank": 16
+      },
+      {
+        "request_id": "REQ_A007",
+        "client_id": "CLIENT_A",
+        "skill_id": "SkillC",
+        "foc_target": 5.6,
+        "age_days": 180.0,
+        "priority_score": 0.5357142857142858,
+        "is_foc_compliant": false,
+        "rank": 17
+      },
+      {
+        "request_id": "REQ_E007",
+        "client_id": "CLIENT_E",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 247.5,
+        "priority_score": 0.515625,
+        "is_foc_compliant": false,
+        "rank": 18
+      },
+      {
+        "request_id": "REQ_D007",
+        "client_id": "CLIENT_D",
+        "skill_id": "SkillA",
+        "foc_target": 8.0,
+        "age_days": 225.0,
+        "priority_score": 0.46875,
+        "is_foc_compliant": false,
+        "rank": 19
+      },
+      {
+        "request_id": "REQ_B006",
+        "client_id": "CLIENT_B",
+        "skill_id": "SkillB",
+        "foc_target": 5.6,
+        "age_days": 150.0,
+        "priority_score": 0.4464285714285715,
+        "is_foc_compliant": false,
+        "rank": 20
+      },
+      {
+        "request_id": "REQ_C007",
+        "client_id": "CLIENT_C",
+        "skill_id": "SkillC",
+        "foc_target": 8.0,
+        "age_days": 210.0,
+        "priority_score": 0.4375,
+        "is_foc_compliant": false,
+        "rank": 21
+      },
+      {
+        "request_id": "REQ_A006",
+        "client_id": "CLIENT_A",
+        "skill_id": "SkillA",
+        "foc_target": 5.6,
+        "age_days": 135.0,
+        "priority_score": 0.40178571428571436,
+        "is_foc_compliant": false,
+        "rank": 22
+      },
+      {
+        "request_id": "REQ_E006",
+        "client_id": "CLIENT_E",
+        "skill_id": "SkillC",
+        "foc_target": 8.0,
+        "age_days": 187.5,
+        "priority_score": 0.390625,
+        "is_foc_compliant": false,
+        "rank": 23
+      },
+      {
+        "request_id": "REQ_D006",
+        "client_id": "CLIENT_D",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 172.5,
+        "priority_score": 0.359375,
+        "is_foc_compliant": false,
+        "rank": 24
+      },
+      {
+        "request_id": "REQ_B005",
+        "client_id": "CLIENT_B",
+        "skill_id": "SkillC",
+        "foc_target": 5.6,
+        "age_days": 120.0,
+        "priority_score": 0.3571428571428572,
+        "is_foc_compliant": false,
+        "rank": 25
+      },
+      {
+        "request_id": "REQ_C006",
+        "client_id": "CLIENT_C",
+        "skill_id": "SkillA",
+        "foc_target": 8.0,
+        "age_days": 165.0,
+        "priority_score": 0.34375,
+        "is_foc_compliant": false,
+        "rank": 26
+      },
+      {
+        "request_id": "REQ_E005",
+        "client_id": "CLIENT_E",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 152.5,
+        "priority_score": 0.3177083333333333,
+        "is_foc_compliant": false,
+        "rank": 27
+      },
+      {
+        "request_id": "REQ_A005",
+        "client_id": "CLIENT_A",
+        "skill_id": "SkillB",
+        "foc_target": 5.6,
+        "age_days": 105.0,
+        "priority_score": 0.31250000000000006,
+        "is_foc_compliant": false,
+        "rank": 28
+      },
+      {
+        "request_id": "REQ_D005",
+        "client_id": "CLIENT_D",
+        "skill_id": "SkillA",
+        "foc_target": 8.0,
+        "age_days": 142.5,
+        "priority_score": 0.296875,
+        "is_foc_compliant": false,
+        "rank": 29
+      },
+      {
+        "request_id": "REQ_B004",
+        "client_id": "CLIENT_B",
+        "skill_id": "SkillB",
+        "foc_target": 5.6,
+        "age_days": 90.0,
+        "priority_score": 0.2678571428571429,
+        "is_foc_compliant": false,
+        "rank": 30
+      },
+      {
+        "request_id": "REQ_C005",
+        "client_id": "CLIENT_C",
+        "skill_id": "SkillC",
+        "foc_target": 8.0,
+        "age_days": 127.5,
+        "priority_score": 0.265625,
+        "is_foc_compliant": false,
+        "rank": 31
+      },
+      {
+        "request_id": "REQ_E004",
+        "client_id": "CLIENT_E",
+        "skill_id": "SkillA",
+        "foc_target": 8.0,
+        "age_days": 122.5,
+        "priority_score": 0.2552083333333333,
+        "is_foc_compliant": false,
+        "rank": 32
+      },
+      {
+        "request_id": "REQ_D004",
+        "client_id": "CLIENT_D",
+        "skill_id": "SkillC",
+        "foc_target": 8.0,
+        "age_days": 112.5,
+        "priority_score": 0.234375,
+        "is_foc_compliant": false,
+        "rank": 33
+      },
+      {
+        "request_id": "REQ_A004",
+        "client_id": "CLIENT_A",
+        "skill_id": "SkillA",
+        "foc_target": 5.6,
+        "age_days": 75.0,
+        "priority_score": 0.22321428571428575,
+        "is_foc_compliant": false,
+        "rank": 34
+      },
+      {
+        "request_id": "REQ_C004",
+        "client_id": "CLIENT_C",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 97.5,
+        "priority_score": 0.203125,
+        "is_foc_compliant": false,
+        "rank": 35
+      },
+      {
+        "request_id": "REQ_E003",
+        "client_id": "CLIENT_E",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 92.5,
+        "priority_score": 0.19270833333333334,
+        "is_foc_compliant": false,
+        "rank": 36
+      },
+      {
+        "request_id": "REQ_B003",
+        "client_id": "CLIENT_B",
+        "skill_id": "SkillC",
+        "foc_target": 5.6,
+        "age_days": 60.0,
+        "priority_score": 0.1785714285714286,
+        "is_foc_compliant": false,
+        "rank": 37
+      },
+      {
+        "request_id": "REQ_D003",
+        "client_id": "CLIENT_D",
+        "skill_id": "SkillA",
+        "foc_target": 8.0,
+        "age_days": 82.5,
+        "priority_score": 0.171875,
+        "is_foc_compliant": false,
+        "rank": 38
+      },
+      {
+        "request_id": "REQ_C003",
+        "client_id": "CLIENT_C",
+        "skill_id": "SkillC",
+        "foc_target": 8.0,
+        "age_days": 67.5,
+        "priority_score": 0.140625,
+        "is_foc_compliant": false,
+        "rank": 39
+      },
+      {
+        "request_id": "REQ_A003",
+        "client_id": "CLIENT_A",
+        "skill_id": "SkillB",
+        "foc_target": 5.6,
+        "age_days": 45.0,
+        "priority_score": 0.13392857142857145,
+        "is_foc_compliant": false,
+        "rank": 40
+      },
+      {
+        "request_id": "REQ_E002",
+        "client_id": "CLIENT_E",
+        "skill_id": "SkillC",
+        "foc_target": 8.0,
+        "age_days": 62.5,
+        "priority_score": 0.13020833333333334,
+        "is_foc_compliant": false,
+        "rank": 41
+      },
+      {
+        "request_id": "REQ_D002",
+        "client_id": "CLIENT_D",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 52.5,
+        "priority_score": 0.109375,
+        "is_foc_compliant": false,
+        "rank": 42
+      },
+      {
+        "request_id": "REQ_B002",
+        "client_id": "CLIENT_B",
+        "skill_id": "SkillB",
+        "foc_target": 5.6,
+        "age_days": 30.0,
+        "priority_score": 0.0892857142857143,
+        "is_foc_compliant": false,
+        "rank": 43
+      },
+      {
+        "request_id": "REQ_C002",
+        "client_id": "CLIENT_C",
+        "skill_id": "SkillA",
+        "foc_target": 8.0,
+        "age_days": 37.5,
+        "priority_score": 0.078125,
+        "is_foc_compliant": false,
+        "rank": 44
+      },
+      {
+        "request_id": "REQ_E001",
+        "client_id": "CLIENT_E",
+        "skill_id": "SkillB",
+        "foc_target": 8.0,
+        "age_days": 35.0,
+        "priority_score": 0.07291666666666667,
+        "is_foc_compliant": false,
+        "rank": 45
+      },
+      {
+        "request_id": "REQ_A002",
+        "client_id": "CLIENT_A",
+        "skill_id": "SkillA",
+        "foc_target": 5.6,
+        "age_days": 20.0,
+        "priority_score": 0.059523809523809534,
+        "is_foc_compliant": false,
+        "rank": 46
+      },
+      {
+        "request_id": "REQ_D001",
+        "client_id": "CLIENT_D",
+        "skill_id": "SkillA",
+        "foc_target": 8.0,
+        "age_days": 25.0,
+        "priority_score": 0.052083333333333336,
+        "is_foc_compliant": false,
+        "rank": 47
+      },
+      {
+        "request_id": "REQ_C001",
+        "client_id": "CLIENT_C",
+        "skill_id": "SkillC",
+        "foc_target": 8.0,
+        "age_days": 15.0,
+        "priority_score": 0.03125,
+        "is_foc_compliant": false,
+        "rank": 48
+      },
+      {
+        "request_id": "REQ_B001",
+        "client_id": "CLIENT_B",
+        "skill_id": "SkillB",
+        "foc_target": 5.6,
+        "age_days": 10.0,
+        "priority_score": 0.029761904761904767,
+        "is_foc_compliant": false,
+        "rank": 49
+      },
+      {
+        "request_id": "REQ_A001",
+        "client_id": "CLIENT_A",
+        "skill_id": "SkillA",
+        "foc_target": 5.6,
+        "age_days": 5.0,
+        "priority_score": 0.014880952380952384,
+        "is_foc_compliant": true,
+        "rank": 50
+      }
+    ]
+  },
+  "comparison": {
+    "overall_metrics_change": {
+      "total_requests": {
+        "baseline": 50,
+        "proposed": 50,
+        "change": 0,
+        "change_percent": "+0.0%"
+      },
+      "foc_compliant": {
+        "baseline": 1,
+        "proposed": 1,
+        "change": 0,
+        "change_percent": "+0.0%"
+      },
+      "foc_compliance_rate": {
+        "baseline": 0.02,
+        "proposed": 0.02,
+        "change": 0.0,
+        "change_percent": "+0.0%"
+      },
+      "average_priority_score": {
+        "baseline": 0.359375,
+        "proposed": 0.4141071428571429,
+        "change": 0.054732142857142896,
+        "change_percent": "+15.2%"
+      },
+      "median_priority_score": {
+        "baseline": 0.3046875,
+        "proposed": 0.3504464285714286,
+        "change": 0.0457589285714286,
+        "change_percent": "+15.0%"
+      },
+      "average_age_days": {
+        "baseline": 172.5,
+        "proposed": 172.5,
+        "change": 0.0,
+        "change_percent": "+0.0%"
+      }
+    }
+  }
+}

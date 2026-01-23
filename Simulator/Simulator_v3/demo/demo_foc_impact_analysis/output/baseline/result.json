@@ -1,0 +1,1064 @@
+{
+  "start_time": "2024-01-15T09:00:00-05:00",
+  "end_time": "2024-01-15T10:15:00-05:00",
+  "statistics": {
+    "timing": {
+      "start_time": "2024-01-15 09:00:00-05:00",
+      "end_time": "2024-01-15 10:15:00-05:00",
+      "duration_seconds": 4500.0,
+      "duration_hours": 1.25
+    },
+    "events": {
+      "total_processed": 60
+    },
+    "assignments": {
+      "total": 50,
+      "by_priority": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 50
+      },
+      "followup_count": 0,
+      "cmo_count": 50,
+      "from_absent_agent_count": 0
+    },
+    "agents": {
+      "total_agents": 10,
+      "agents_with_assignments": 10,
+      "agents_without_assignments": 0,
+      "avg_assignments_per_agent": 5.0,
+      "max_assignments_per_agent": 5,
+      "min_assignments_per_agent": 5,
+      "assignments_per_agent": {
+        "AGENT001": 5,
+        "AGENT003": 5,
+        "AGENT007": 5,
+        "AGENT010": 5,
+        "AGENT006": 5,
+        "AGENT002": 5,
+        "AGENT005": 5,
+        "AGENT004": 5,
+        "AGENT009": 5,
+        "AGENT008": 5
+      }
+    },
+    "requests": {
+      "total_requests": 50,
+      "assigned_requests": 50,
+      "pending_requests": 0,
+      "pool_statistics": {
+        "total_requests": 50,
+        "total_added": 50,
+        "total_removed": 0,
+        "total_assigned": 50,
+        "by_state": {
+          "new": 0,
+          "assigned": 50
+        },
+        "by_skill": {
+          "SkillA": 17,
+          "SkillB": 19,
+          "SkillC": 14
+        },
+        "flags": {
+          "sla_count": 0,
+          "escalated_count": 0,
+          "winback_count": 0
+        },
+        "age": {
+          "min_days": 0.13541666666666666,
+          "max_days": 7.177083333333333,
+          "avg_days": 2.927083333333333
+        },
+        "foc_compliance": {
+          "compliant_count": 50,
+          "breached_count": 0,
+          "compliance_rate": 1.0
+        }
+      }
+    },
+    "routing": {
+      "total_decisions": 60,
+      "successful_routings": 50,
+      "failed_routings": 10,
+      "success_rate": 0.8333333333333334,
+      "avg_filtered_per_decision": 15.916666666666666
+    }
+  },
+  "assignments": [
+    {
+      "assignment_id": "ASSIGN_0",
+      "timestamp": "2024-01-15T09:00:00-05:00",
+      "agent_id": "AGENT001",
+      "request_id": "REQ_D010",
+      "completion_time": "2024-01-15T09:15:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_1",
+      "timestamp": "2024-01-15T09:00:00-05:00",
+      "agent_id": "AGENT003",
+      "request_id": "REQ_E010",
+      "completion_time": "2024-01-15T09:15:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_2",
+      "timestamp": "2024-01-15T09:00:00-05:00",
+      "agent_id": "AGENT007",
+      "request_id": "REQ_C010",
+      "completion_time": "2024-01-15T09:15:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_3",
+      "timestamp": "2024-01-15T09:00:00-05:00",
+      "agent_id": "AGENT010",
+      "request_id": "REQ_B010",
+      "completion_time": "2024-01-15T09:15:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_4",
+      "timestamp": "2024-01-15T09:00:00-05:00",
+      "agent_id": "AGENT006",
+      "request_id": "REQ_E009",
+      "completion_time": "2024-01-15T09:15:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_5",
+      "timestamp": "2024-01-15T09:00:00-05:00",
+      "agent_id": "AGENT002",
+      "request_id": "REQ_A010",
+      "completion_time": "2024-01-15T09:15:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_6",
+      "timestamp": "2024-01-15T09:00:00-05:00",
+      "agent_id": "AGENT005",
+      "request_id": "REQ_D009",
+      "completion_time": "2024-01-15T09:15:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_7",
+      "timestamp": "2024-01-15T09:00:00-05:00",
+      "agent_id": "AGENT004",
+      "request_id": "REQ_C009",
+      "completion_time": "2024-01-15T09:15:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_8",
+      "timestamp": "2024-01-15T09:00:00-05:00",
+      "agent_id": "AGENT009",
+      "request_id": "REQ_B009",
+      "completion_time": "2024-01-15T09:15:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_9",
+      "timestamp": "2024-01-15T09:00:00-05:00",
+      "agent_id": "AGENT008",
+      "request_id": "REQ_A009",
+      "completion_time": "2024-01-15T09:15:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_10",
+      "timestamp": "2024-01-15T09:15:00-05:00",
+      "agent_id": "AGENT001",
+      "request_id": "REQ_E008",
+      "completion_time": "2024-01-15T09:30:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_11",
+      "timestamp": "2024-01-15T09:15:00-05:00",
+      "agent_id": "AGENT007",
+      "request_id": "REQ_D008",
+      "completion_time": "2024-01-15T09:30:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_12",
+      "timestamp": "2024-01-15T09:15:00-05:00",
+      "agent_id": "AGENT009",
+      "request_id": "REQ_C008",
+      "completion_time": "2024-01-15T09:30:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_13",
+      "timestamp": "2024-01-15T09:15:00-05:00",
+      "agent_id": "AGENT008",
+      "request_id": "REQ_B008",
+      "completion_time": "2024-01-15T09:30:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_14",
+      "timestamp": "2024-01-15T09:15:00-05:00",
+      "agent_id": "AGENT003",
+      "request_id": "REQ_A008",
+      "completion_time": "2024-01-15T09:30:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_15",
+      "timestamp": "2024-01-15T09:15:00-05:00",
+      "agent_id": "AGENT010",
+      "request_id": "REQ_E007",
+      "completion_time": "2024-01-15T09:30:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_16",
+      "timestamp": "2024-01-15T09:15:00-05:00",
+      "agent_id": "AGENT004",
+      "request_id": "REQ_C007",
+      "completion_time": "2024-01-15T09:30:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_17",
+      "timestamp": "2024-01-15T09:15:00-05:00",
+      "agent_id": "AGENT006",
+      "request_id": "REQ_D007",
+      "completion_time": "2024-01-15T09:30:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_18",
+      "timestamp": "2024-01-15T09:15:00-05:00",
+      "agent_id": "AGENT005",
+      "request_id": "REQ_B007",
+      "completion_time": "2024-01-15T09:30:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_19",
+      "timestamp": "2024-01-15T09:15:00-05:00",
+      "agent_id": "AGENT002",
+      "request_id": "REQ_D006",
+      "completion_time": "2024-01-15T09:30:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_20",
+      "timestamp": "2024-01-15T09:30:00-05:00",
+      "agent_id": "AGENT001",
+      "request_id": "REQ_C006",
+      "completion_time": "2024-01-15T09:45:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_21",
+      "timestamp": "2024-01-15T09:30:00-05:00",
+      "agent_id": "AGENT009",
+      "request_id": "REQ_E006",
+      "completion_time": "2024-01-15T09:45:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_22",
+      "timestamp": "2024-01-15T09:30:00-05:00",
+      "agent_id": "AGENT005",
+      "request_id": "REQ_A007",
+      "completion_time": "2024-01-15T09:45:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_23",
+      "timestamp": "2024-01-15T09:30:00-05:00",
+      "agent_id": "AGENT002",
+      "request_id": "REQ_E005",
+      "completion_time": "2024-01-15T09:45:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_24",
+      "timestamp": "2024-01-15T09:30:00-05:00",
+      "agent_id": "AGENT007",
+      "request_id": "REQ_D005",
+      "completion_time": "2024-01-15T09:45:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_25",
+      "timestamp": "2024-01-15T09:30:00-05:00",
+      "agent_id": "AGENT008",
+      "request_id": "REQ_B006",
+      "completion_time": "2024-01-15T09:45:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_26",
+      "timestamp": "2024-01-15T09:30:00-05:00",
+      "agent_id": "AGENT006",
+      "request_id": "REQ_A006",
+      "completion_time": "2024-01-15T09:45:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_27",
+      "timestamp": "2024-01-15T09:30:00-05:00",
+      "agent_id": "AGENT003",
+      "request_id": "REQ_C005",
+      "completion_time": "2024-01-15T09:45:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_28",
+      "timestamp": "2024-01-15T09:30:00-05:00",
+      "agent_id": "AGENT004",
+      "request_id": "REQ_B005",
+      "completion_time": "2024-01-15T09:45:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_29",
+      "timestamp": "2024-01-15T09:30:00-05:00",
+      "agent_id": "AGENT010",
+      "request_id": "REQ_E004",
+      "completion_time": "2024-01-15T09:45:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_30",
+      "timestamp": "2024-01-15T09:45:00-05:00",
+      "agent_id": "AGENT001",
+      "request_id": "REQ_A005",
+      "completion_time": "2024-01-15T10:00:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_31",
+      "timestamp": "2024-01-15T09:45:00-05:00",
+      "agent_id": "AGENT005",
+      "request_id": "REQ_D004",
+      "completion_time": "2024-01-15T10:00:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_32",
+      "timestamp": "2024-01-15T09:45:00-05:00",
+      "agent_id": "AGENT004",
+      "request_id": "REQ_C004",
+      "completion_time": "2024-01-15T10:00:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_33",
+      "timestamp": "2024-01-15T09:45:00-05:00",
+      "agent_id": "AGENT010",
+      "request_id": "REQ_E003",
+      "completion_time": "2024-01-15T10:00:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_34",
+      "timestamp": "2024-01-15T09:45:00-05:00",
+      "agent_id": "AGENT009",
+      "request_id": "REQ_B004",
+      "completion_time": "2024-01-15T10:00:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_35",
+      "timestamp": "2024-01-15T09:45:00-05:00",
+      "agent_id": "AGENT002",
+      "request_id": "REQ_D003",
+      "completion_time": "2024-01-15T10:00:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_36",
+      "timestamp": "2024-01-15T09:45:00-05:00",
+      "agent_id": "AGENT003",
+      "request_id": "REQ_A004",
+      "completion_time": "2024-01-15T10:00:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_37",
+      "timestamp": "2024-01-15T09:45:00-05:00",
+      "agent_id": "AGENT007",
+      "request_id": "REQ_C003",
+      "completion_time": "2024-01-15T10:00:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_38",
+      "timestamp": "2024-01-15T09:45:00-05:00",
+      "agent_id": "AGENT006",
+      "request_id": "REQ_D002",
+      "completion_time": "2024-01-15T10:00:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_39",
+      "timestamp": "2024-01-15T09:45:00-05:00",
+      "agent_id": "AGENT008",
+      "request_id": "REQ_E002",
+      "completion_time": "2024-01-15T10:00:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_40",
+      "timestamp": "2024-01-15T10:00:00-05:00",
+      "agent_id": "AGENT001",
+      "request_id": "REQ_A003",
+      "completion_time": "2024-01-15T10:15:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_41",
+      "timestamp": "2024-01-15T10:00:00-05:00",
+      "agent_id": "AGENT004",
+      "request_id": "REQ_B003",
+      "completion_time": "2024-01-15T10:15:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_42",
+      "timestamp": "2024-01-15T10:00:00-05:00",
+      "agent_id": "AGENT006",
+      "request_id": "REQ_C002",
+      "completion_time": "2024-01-15T10:15:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_43",
+      "timestamp": "2024-01-15T10:00:00-05:00",
+      "agent_id": "AGENT008",
+      "request_id": "REQ_E001",
+      "completion_time": "2024-01-15T10:15:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_44",
+      "timestamp": "2024-01-15T10:00:00-05:00",
+      "agent_id": "AGENT005",
+      "request_id": "REQ_B002",
+      "completion_time": "2024-01-15T10:15:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_45",
+      "timestamp": "2024-01-15T10:00:00-05:00",
+      "agent_id": "AGENT010",
+      "request_id": "REQ_D001",
+      "completion_time": "2024-01-15T10:15:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_46",
+      "timestamp": "2024-01-15T10:00:00-05:00",
+      "agent_id": "AGENT007",
+      "request_id": "REQ_A002",
+      "completion_time": "2024-01-15T10:15:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_47",
+      "timestamp": "2024-01-15T10:00:00-05:00",
+      "agent_id": "AGENT009",
+      "request_id": "REQ_C001",
+      "completion_time": "2024-01-15T10:15:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_48",
+      "timestamp": "2024-01-15T10:00:00-05:00",
+      "agent_id": "AGENT003",
+      "request_id": "REQ_A001",
+      "completion_time": "2024-01-15T10:15:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    },
+    {
+      "assignment_id": "ASSIGN_49",
+      "timestamp": "2024-01-15T10:00:00-05:00",
+      "agent_id": "AGENT002",
+      "request_id": "REQ_B001",
+      "completion_time": "2024-01-15T10:15:00-05:00",
+      "handle_time_minutes": 15.0,
+      "was_followup": false,
+      "from_absent_agent": false,
+      "priority_level": 5
+    }
+  ],
+  "routing_decisions": [
+    {
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT001",
+      "filtered_count": 36,
+      "selected_request_id": "REQ_D010",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT003",
+      "filtered_count": 31,
+      "selected_request_id": "REQ_E010",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT007",
+      "filtered_count": 30,
+      "selected_request_id": "REQ_C010",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT010",
+      "filtered_count": 34,
+      "selected_request_id": "REQ_B010",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT006",
+      "filtered_count": 33,
+      "selected_request_id": "REQ_E009",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT002",
+      "filtered_count": 32,
+      "selected_request_id": "REQ_A010",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT005",
+      "filtered_count": 44,
+      "selected_request_id": "REQ_D009",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT004",
+      "filtered_count": 29,
+      "selected_request_id": "REQ_C009",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT009",
+      "filtered_count": 42,
+      "selected_request_id": "REQ_B009",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:00:00-05:00",
+      "agent_id": "AGENT008",
+      "filtered_count": 27,
+      "selected_request_id": "REQ_A009",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:15:00-05:00",
+      "agent_id": "AGENT001",
+      "filtered_count": 29,
+      "selected_request_id": "REQ_E008",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:15:00-05:00",
+      "agent_id": "AGENT007",
+      "filtered_count": 24,
+      "selected_request_id": "REQ_D008",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:15:00-05:00",
+      "agent_id": "AGENT009",
+      "filtered_count": 38,
+      "selected_request_id": "REQ_C008",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:15:00-05:00",
+      "agent_id": "AGENT008",
+      "filtered_count": 24,
+      "selected_request_id": "REQ_B008",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:15:00-05:00",
+      "agent_id": "AGENT003",
+      "filtered_count": 23,
+      "selected_request_id": "REQ_A008",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:15:00-05:00",
+      "agent_id": "AGENT010",
+      "filtered_count": 25,
+      "selected_request_id": "REQ_E007",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:15:00-05:00",
+      "agent_id": "AGENT004",
+      "filtered_count": 22,
+      "selected_request_id": "REQ_C007",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:15:00-05:00",
+      "agent_id": "AGENT006",
+      "filtered_count": 24,
+      "selected_request_id": "REQ_D007",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:15:00-05:00",
+      "agent_id": "AGENT005",
+      "filtered_count": 32,
+      "selected_request_id": "REQ_B007",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:15:00-05:00",
+      "agent_id": "AGENT002",
+      "filtered_count": 22,
+      "selected_request_id": "REQ_D006",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:30:00-05:00",
+      "agent_id": "AGENT001",
+      "filtered_count": 21,
+      "selected_request_id": "REQ_C006",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:30:00-05:00",
+      "agent_id": "AGENT009",
+      "filtered_count": 29,
+      "selected_request_id": "REQ_E006",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:30:00-05:00",
+      "agent_id": "AGENT005",
+      "filtered_count": 28,
+      "selected_request_id": "REQ_A007",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:30:00-05:00",
+      "agent_id": "AGENT002",
+      "filtered_count": 20,
+      "selected_request_id": "REQ_E005",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:30:00-05:00",
+      "agent_id": "AGENT007",
+      "filtered_count": 16,
+      "selected_request_id": "REQ_D005",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:30:00-05:00",
+      "agent_id": "AGENT008",
+      "filtered_count": 17,
+      "selected_request_id": "REQ_B006",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:30:00-05:00",
+      "agent_id": "AGENT006",
+      "filtered_count": 17,
+      "selected_request_id": "REQ_A006",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:30:00-05:00",
+      "agent_id": "AGENT003",
+      "filtered_count": 14,
+      "selected_request_id": "REQ_C005",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:30:00-05:00",
+      "agent_id": "AGENT004",
+      "filtered_count": 15,
+      "selected_request_id": "REQ_B005",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:30:00-05:00",
+      "agent_id": "AGENT010",
+      "filtered_count": 16,
+      "selected_request_id": "REQ_E004",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:45:00-05:00",
+      "agent_id": "AGENT001",
+      "filtered_count": 15,
+      "selected_request_id": "REQ_A005",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:45:00-05:00",
+      "agent_id": "AGENT005",
+      "filtered_count": 19,
+      "selected_request_id": "REQ_D004",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:45:00-05:00",
+      "agent_id": "AGENT004",
+      "filtered_count": 12,
+      "selected_request_id": "REQ_C004",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:45:00-05:00",
+      "agent_id": "AGENT010",
+      "filtered_count": 13,
+      "selected_request_id": "REQ_E003",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:45:00-05:00",
+      "agent_id": "AGENT009",
+      "filtered_count": 16,
+      "selected_request_id": "REQ_B004",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:45:00-05:00",
+      "agent_id": "AGENT002",
+      "filtered_count": 11,
+      "selected_request_id": "REQ_D003",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:45:00-05:00",
+      "agent_id": "AGENT003",
+      "filtered_count": 9,
+      "selected_request_id": "REQ_A004",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:45:00-05:00",
+      "agent_id": "AGENT007",
+      "filtered_count": 8,
+      "selected_request_id": "REQ_C003",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:45:00-05:00",
+      "agent_id": "AGENT006",
+      "filtered_count": 9,
+      "selected_request_id": "REQ_D002",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 09:45:00-05:00",
+      "agent_id": "AGENT008",
+      "filtered_count": 7,
+      "selected_request_id": "REQ_E002",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 10:00:00-05:00",
+      "agent_id": "AGENT001",
+      "filtered_count": 8,
+      "selected_request_id": "REQ_A003",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 10:00:00-05:00",
+      "agent_id": "AGENT004",
+      "filtered_count": 5,
+      "selected_request_id": "REQ_B003",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 10:00:00-05:00",
+      "agent_id": "AGENT006",
+      "filtered_count": 7,
+      "selected_request_id": "REQ_C002",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 10:00:00-05:00",
+      "agent_id": "AGENT008",
+      "filtered_count": 4,
+      "selected_request_id": "REQ_E001",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 10:00:00-05:00",
+      "agent_id": "AGENT005",
+      "filtered_count": 6,
+      "selected_request_id": "REQ_B002",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 10:00:00-05:00",
+      "agent_id": "AGENT010",
+      "filtered_count": 4,
+      "selected_request_id": "REQ_D001",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 10:00:00-05:00",
+      "agent_id": "AGENT007",
+      "filtered_count": 3,
+      "selected_request_id": "REQ_A002",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 10:00:00-05:00",
+      "agent_id": "AGENT009",
+      "filtered_count": 3,
+      "selected_request_id": "REQ_C001",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 10:00:00-05:00",
+      "agent_id": "AGENT003",
+      "filtered_count": 1,
+      "selected_request_id": "REQ_A001",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 10:00:00-05:00",
+      "agent_id": "AGENT002",
+      "filtered_count": 1,
+      "selected_request_id": "REQ_B001",
+      "was_followup": false
+    },
+    {
+      "timestamp": "2024-01-15 10:15:00-05:00",
+      "agent_id": "AGENT001",
+      "filtered_count": 0,
+      "selected_request_id": null,
+      "was_followup": null
+    },
+    {
+      "timestamp": "2024-01-15 10:15:00-05:00",
+      "agent_id": "AGENT006",
+      "filtered_count": 0,
+      "selected_request_id": null,
+      "was_followup": null
+    },
+    {
+      "timestamp": "2024-01-15 10:15:00-05:00",
+      "agent_id": "AGENT003",
+      "filtered_count": 0,
+      "selected_request_id": null,
+      "was_followup": null
+    },
+    {
+      "timestamp": "2024-01-15 10:15:00-05:00",
+      "agent_id": "AGENT002",
+      "filtered_count": 0,
+      "selected_request_id": null,
+      "was_followup": null
+    },
+    {
+      "timestamp": "2024-01-15 10:15:00-05:00",
+      "agent_id": "AGENT007",
+      "filtered_count": 0,
+      "selected_request_id": null,
+      "was_followup": null
+    },
+    {
+      "timestamp": "2024-01-15 10:15:00-05:00",
+      "agent_id": "AGENT004",
+      "filtered_count": 0,
+      "selected_request_id": null,
+      "was_followup": null
+    },
+    {
+      "timestamp": "2024-01-15 10:15:00-05:00",
+      "agent_id": "AGENT010",
+      "filtered_count": 0,
+      "selected_request_id": null,
+      "was_followup": null
+    },
+    {
+      "timestamp": "2024-01-15 10:15:00-05:00",
+      "agent_id": "AGENT009",
+      "filtered_count": 0,
+      "selected_request_id": null,
+      "was_followup": null
+    },
+    {
+      "timestamp": "2024-01-15 10:15:00-05:00",
+      "agent_id": "AGENT008",
+      "filtered_count": 0,
+      "selected_request_id": null,
+      "was_followup": null
+    },
+    {
+      "timestamp": "2024-01-15 10:15:00-05:00",
+      "agent_id": "AGENT005",
+      "filtered_count": 0,
+      "selected_request_id": null,
+      "was_followup": null
+    }
+  ]
+}

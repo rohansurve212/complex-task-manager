@@ -1,0 +1,668 @@
+# Baseline Scenario - All clients have same FOC target (8.0 days)
+# This scenario demonstrates the current state where all clients
+# have identical foc_target values
+
+name: Baseline Scenario - Uniform FOC Target
+description: Baseline with 5 clients, all requests having foc_target=8.0 days
+
+# Simulation start time
+start_time: "2024-01-15T09:00:00-05:00"
+
+# Routing configuration
+routing_config:
+  pilot_program_enabled: true
+
+# Agents - 10 agents available to handle requests
+agents:
+  - agent_id: AGENT001
+    full_name: Alice Johnson
+    skillsets: [SkillA, SkillB]
+
+  - agent_id: AGENT002
+    full_name: Bob Smith
+    skillsets: [SkillA, SkillB]
+
+  - agent_id: AGENT003
+    full_name: Carol Davis
+    skillsets: [SkillA, SkillC]
+
+  - agent_id: AGENT004
+    full_name: David Wilson
+    skillsets: [SkillB, SkillC]
+
+  - agent_id: AGENT005
+    full_name: Eve Martinez
+    skillsets: [SkillA, SkillB, SkillC]
+
+  - agent_id: AGENT006
+    full_name: Frank Miller
+    skillsets: [SkillA, SkillB]
+
+  - agent_id: AGENT007
+    full_name: Grace Lee
+    skillsets: [SkillA, SkillC]
+
+  - agent_id: AGENT008
+    full_name: Henry Brown
+    skillsets: [SkillB, SkillC]
+
+  - agent_id: AGENT009
+    full_name: Iris Chen
+    skillsets: [SkillA, SkillB, SkillC]
+
+  - agent_id: AGENT010
+    full_name: Jack Thompson
+    skillsets: [SkillA, SkillB]
+
+# Requests - 50 total requests from 5 different clients
+# Client_A: 10 requests (all foc_target = 8.0)
+# Client_B: 10 requests (all foc_target = 8.0) 
+# Client_C: 10 requests (all foc_target = 8.0)
+# Client_D: 10 requests (all foc_target = 8.0)
+# Client_E: 10 requests (all foc_target = 8.0)
+
+requests:
+  # ========== CLIENT A (10 requests) ==========
+  - request_id: REQ_A001
+    external_id: EXT_A001
+    skill_id: SkillA
+    request_source: client_a
+    product: ProductA
+    service_region: Ontario
+    request_type: new
+    order_date_offset_hours: -2
+    foc_target: 8.0
+    golden_customer_id: CLIENT_A
+    workorder_status: new
+
+  - request_id: REQ_A002
+    external_id: EXT_A002
+    skill_id: SkillA
+    request_source: client_a
+    product: ProductA
+    service_region: Ontario
+    request_type: change
+    order_date_offset_hours: -8
+    foc_target: 8.0
+    golden_customer_id: CLIENT_A
+    workorder_status: new
+
+  - request_id: REQ_A003
+    external_id: EXT_A003
+    skill_id: SkillB
+    request_source: client_a
+    product: ProductB
+    service_region: Ontario
+    request_type: new
+    order_date_offset_hours: -18
+    foc_target: 8.0
+    golden_customer_id: CLIENT_A
+    workorder_status: new
+
+  - request_id: REQ_A004
+    external_id: EXT_A004
+    skill_id: SkillA
+    request_source: client_a
+    product: ProductA
+    service_region: Quebec
+    request_type: move
+    order_date_offset_hours: -30
+    foc_target: 8.0
+    golden_customer_id: CLIENT_A
+    workorder_status: new
+
+  - request_id: REQ_A005
+    external_id: EXT_A005
+    skill_id: SkillB
+    request_source: client_a
+    product: ProductB
+    service_region: Ontario
+    request_type: new
+    order_date_offset_hours: -42
+    foc_target: 8.0
+    golden_customer_id: CLIENT_A
+    workorder_status: new
+
+  - request_id: REQ_A006
+    external_id: EXT_A006
+    skill_id: SkillA
+    request_source: client_a
+    product: ProductA
+    service_region: Ontario
+    request_type: add
+    order_date_offset_hours: -54
+    foc_target: 8.0
+    golden_customer_id: CLIENT_A
+    workorder_status: new
+
+  - request_id: REQ_A007
+    external_id: EXT_A007
+    skill_id: SkillC
+    request_source: client_a
+    product: ProductC
+    service_region: Ontario
+    request_type: new
+    order_date_offset_hours: -72
+    foc_target: 8.0
+    golden_customer_id: CLIENT_A
+    workorder_status: new
+
+  - request_id: REQ_A008
+    external_id: EXT_A008
+    skill_id: SkillA
+    request_source: client_a
+    product: ProductA
+    service_region: Ontario
+    request_type: new
+    order_date_offset_hours: -96
+    foc_target: 8.0
+    golden_customer_id: CLIENT_A
+    workorder_status: new
+
+  - request_id: REQ_A009
+    external_id: EXT_A009
+    skill_id: SkillB
+    request_source: client_a
+    product: ProductB
+    service_region: Quebec
+    request_type: change
+    order_date_offset_hours: -120
+    foc_target: 8.0
+    golden_customer_id: CLIENT_A
+    workorder_status: new
+
+  - request_id: REQ_A010
+    external_id: EXT_A010
+    skill_id: SkillA
+    request_source: client_a
+    product: ProductA
+    service_region: Ontario
+    request_type: new
+    order_date_offset_hours: -144
+    foc_target: 8.0
+    golden_customer_id: CLIENT_A
+    workorder_status: new
+
+  # ========== CLIENT B (10 requests) ==========
+  - request_id: REQ_B001
+    external_id: EXT_B001
+    skill_id: SkillB
+    request_source: client_b
+    product: ProductB
+    service_region: Ontario
+    request_type: new
+    order_date_offset_hours: -4
+    foc_target: 8.0
+    golden_customer_id: CLIENT_B
+    workorder_status: new
+
+  - request_id: REQ_B002
+    external_id: EXT_B002
+    skill_id: SkillB
+    request_source: client_b
+    product: ProductB
+    service_region: Quebec
+    request_type: change
+    order_date_offset_hours: -12
+    foc_target: 8.0
+    golden_customer_id: CLIENT_B
+    workorder_status: new
+
+  - request_id: REQ_B003
+    external_id: EXT_B003
+    skill_id: SkillC
+    request_source: client_b
+    product: ProductC
+    service_region: Ontario
+    request_type: new
+    order_date_offset_hours: -24
+    foc_target: 8.0
+    golden_customer_id: CLIENT_B
+    workorder_status: new
+
+  - request_id: REQ_B004
+    external_id: EXT_B004
+    skill_id: SkillB
+    request_source: client_b
+    product: ProductB
+    service_region: Ontario
+    request_type: move
+    order_date_offset_hours: -36
+    foc_target: 8.0
+    golden_customer_id: CLIENT_B
+    workorder_status: new
+
+  - request_id: REQ_B005
+    external_id: EXT_B005
+    skill_id: SkillC
+    request_source: client_b
+    product: ProductC
+    service_region: Quebec
+    request_type: new
+    order_date_offset_hours: -48
+    foc_target: 8.0
+    golden_customer_id: CLIENT_B
+    workorder_status: new
+
+  - request_id: REQ_B006
+    external_id: EXT_B006
+    skill_id: SkillB
+    request_source: client_b
+    product: ProductB
+    service_region: Ontario
+    request_type: add
+    order_date_offset_hours: -60
+    foc_target: 8.0
+    golden_customer_id: CLIENT_B
+    workorder_status: new
+
+  - request_id: REQ_B007
+    external_id: EXT_B007
+    skill_id: SkillA
+    request_source: client_b
+    product: ProductA
+    service_region: Ontario
+    request_type: new
+    order_date_offset_hours: -78
+    foc_target: 8.0
+    golden_customer_id: CLIENT_B
+    workorder_status: new
+
+  - request_id: REQ_B008
+    external_id: EXT_B008
+    skill_id: SkillB
+    request_source: client_b
+    product: ProductB
+    service_region: Ontario
+    request_type: new
+    order_date_offset_hours: -102
+    foc_target: 8.0
+    golden_customer_id: CLIENT_B
+    workorder_status: new
+
+  - request_id: REQ_B009
+    external_id: EXT_B009
+    skill_id: SkillC
+    request_source: client_b
+    product: ProductC
+    service_region: Quebec
+    request_type: change
+    order_date_offset_hours: -126
+    foc_target: 8.0
+    golden_customer_id: CLIENT_B
+    workorder_status: new
+
+  - request_id: REQ_B010
+    external_id: EXT_B010
+    skill_id: SkillB
+    request_source: client_b
+    product: ProductB
+    service_region: Ontario
+    request_type: new
+    order_date_offset_hours: -150
+    foc_target: 8.0
+    golden_customer_id: CLIENT_B
+    workorder_status: new
+
+  # ========== CLIENT C (10 requests) ==========
+  - request_id: REQ_C001
+    external_id: EXT_C001
+    skill_id: SkillC
+    request_source: client_c
+    product: ProductC
+    service_region: Ontario
+    request_type: new
+    order_date_offset_hours: -6
+    foc_target: 8.0
+    golden_customer_id: CLIENT_C
+    workorder_status: new
+
+  - request_id: REQ_C002
+    external_id: EXT_C002
+    skill_id: SkillA
+    request_source: client_c
+    product: ProductA
+    service_region: Quebec
+    request_type: change
+    order_date_offset_hours: -15
+    foc_target: 8.0
+    golden_customer_id: CLIENT_C
+    workorder_status: new
+
+  - request_id: REQ_C003
+    external_id: EXT_C003
+    skill_id: SkillC
+    request_source: client_c
+    product: ProductC
+    service_region: Ontario
+    request_type: new
+    order_date_offset_hours: -27
+    foc_target: 8.0
+    golden_customer_id: CLIENT_C
+    workorder_status: new
+
+  - request_id: REQ_C004
+    external_id: EXT_C004
+    skill_id: SkillB
+    request_source: client_c
+    product: ProductB
+    service_region: Ontario
+    request_type: move
+    order_date_offset_hours: -39
+    foc_target: 8.0
+    golden_customer_id: CLIENT_C
+    workorder_status: new
+
+  - request_id: REQ_C005
+    external_id: EXT_C005
+    skill_id: SkillC
+    request_source: client_c
+    product: ProductC
+    service_region: Quebec
+    request_type: new
+    order_date_offset_hours: -51
+    foc_target: 8.0
+    golden_customer_id: CLIENT_C
+    workorder_status: new
+
+  - request_id: REQ_C006
+    external_id: EXT_C006
+    skill_id: SkillA
+    request_source: client_c
+    product: ProductA
+    service_region: Ontario
+    request_type: add
+    order_date_offset_hours: -66
+    foc_target: 8.0
+    golden_customer_id: CLIENT_C
+    workorder_status: new
+
+  - request_id: REQ_C007
+    external_id: EXT_C007
+    skill_id: SkillC
+    request_source: client_c
+    product: ProductC
+    service_region: Ontario
+    request_type: new
+    order_date_offset_hours: -84
+    foc_target: 8.0
+    golden_customer_id: CLIENT_C
+    workorder_status: new
+
+  - request_id: REQ_C008
+    external_id: EXT_C008
+    skill_id: SkillB
+    request_source: client_c
+    product: ProductB
+    service_region: Ontario
+    request_type: new
+    order_date_offset_hours: -108
+    foc_target: 8.0
+    golden_customer_id: CLIENT_C
+    workorder_status: new
+
+  - request_id: REQ_C009
+    external_id: EXT_C009
+    skill_id: SkillC
+    request_source: client_c
+    product: ProductC
+    service_region: Quebec
+    request_type: change
+    order_date_offset_hours: -132
+    foc_target: 8.0
+    golden_customer_id: CLIENT_C
+    workorder_status: new
+
+  - request_id: REQ_C010
+    external_id: EXT_C010
+    skill_id: SkillA
+    request_source: client_c
+    product: ProductA
+    service_region: Ontario
+    request_type: new
+    order_date_offset_hours: -156
+    foc_target: 8.0
+    golden_customer_id: CLIENT_C
+    workorder_status: new
+
+  # ========== CLIENT D (10 requests) ==========
+  - request_id: REQ_D001
+    external_id: EXT_D001
+    skill_id: SkillA
+    request_source: client_d
+    product: ProductA
+    service_region: Ontario
+    request_type: new
+    order_date_offset_hours: -10
+    foc_target: 8.0
+    golden_customer_id: CLIENT_D
+    workorder_status: new
+
+  - request_id: REQ_D002
+    external_id: EXT_D002
+    skill_id: SkillB
+    request_source: client_d
+    product: ProductB
+    service_region: Quebec
+    request_type: change
+    order_date_offset_hours: -21
+    foc_target: 8.0
+    golden_customer_id: CLIENT_D
+    workorder_status: new
+
+  - request_id: REQ_D003
+    external_id: EXT_D003
+    skill_id: SkillA
+    request_source: client_d
+    product: ProductA
+    service_region: Ontario
+    request_type: new
+    order_date_offset_hours: -33
+    foc_target: 8.0
+    golden_customer_id: CLIENT_D
+    workorder_status: new
+
+  - request_id: REQ_D004
+    external_id: EXT_D004
+    skill_id: SkillC
+    request_source: client_d
+    product: ProductC
+    service_region: Ontario
+    request_type: move
+    order_date_offset_hours: -45
+    foc_target: 8.0
+    golden_customer_id: CLIENT_D
+    workorder_status: new
+
+  - request_id: REQ_D005
+    external_id: EXT_D005
+    skill_id: SkillA
+    request_source: client_d
+    product: ProductA
+    service_region: Quebec
+    request_type: new
+    order_date_offset_hours: -57
+    foc_target: 8.0
+    golden_customer_id: CLIENT_D
+    workorder_status: new
+
+  - request_id: REQ_D006
+    external_id: EXT_D006
+    skill_id: SkillB
+    request_source: client_d
+    product: ProductB
+    service_region: Ontario
+    request_type: add
+    order_date_offset_hours: -69
+    foc_target: 8.0
+    golden_customer_id: CLIENT_D
+    workorder_status: new
+
+  - request_id: REQ_D007
+    external_id: EXT_D007
+    skill_id: SkillA
+    request_source: client_d
+    product: ProductA
+    service_region: Ontario
+    request_type: new
+    order_date_offset_hours: -90
+    foc_target: 8.0
+    golden_customer_id: CLIENT_D
+    workorder_status: new
+
+  - request_id: REQ_D008
+    external_id: EXT_D008
+    skill_id: SkillC
+    request_source: client_d
+    product: ProductC
+    service_region: Ontario
+    request_type: new
+    order_date_offset_hours: -114
+    foc_target: 8.0
+    golden_customer_id: CLIENT_D
+    workorder_status: new
+
+  - request_id: REQ_D009
+    external_id: EXT_D009
+    skill_id: SkillA
+    request_source: client_d
+    product: ProductA
+    service_region: Quebec
+    request_type: change
+    order_date_offset_hours: -138
+    foc_target: 8.0
+    golden_customer_id: CLIENT_D
+    workorder_status: new
+
+  - request_id: REQ_D010
+    external_id: EXT_D010
+    skill_id: SkillB
+    request_source: client_d
+    product: ProductB
+    service_region: Ontario
+    request_type: new
+    order_date_offset_hours: -162
+    foc_target: 8.0
+    golden_customer_id: CLIENT_D
+    workorder_status: new
+
+  # ========== CLIENT E (10 requests) ==========
+  - request_id: REQ_E001
+    external_id: EXT_E001
+    skill_id: SkillB
+    request_source: client_e
+    product: ProductB
+    service_region: Ontario
+    request_type: new
+    order_date_offset_hours: -14
+    foc_target: 8.0
+    golden_customer_id: CLIENT_E
+    workorder_status: new
+
+  - request_id: REQ_E002
+    external_id: EXT_E002
+    skill_id: SkillC
+    request_source: client_e
+    product: ProductC
+    service_region: Quebec
+    request_type: change
+    order_date_offset_hours: -25
+    foc_target: 8.0
+    golden_customer_id: CLIENT_E
+    workorder_status: new
+
+  - request_id: REQ_E003
+    external_id: EXT_E003
+    skill_id: SkillB
+    request_source: client_e
+    product: ProductB
+    service_region: Ontario
+    request_type: new
+    order_date_offset_hours: -37
+    foc_target: 8.0
+    golden_customer_id: CLIENT_E
+    workorder_status: new
+
+  - request_id: REQ_E004
+    external_id: EXT_E004
+    skill_id: SkillA
+    request_source: client_e
+    product: ProductA
+    service_region: Ontario
+    request_type: move
+    order_date_offset_hours: -49
+    foc_target: 8.0
+    golden_customer_id: CLIENT_E
+    workorder_status: new
+
+  - request_id: REQ_E005
+    external_id: EXT_E005
+    skill_id: SkillB
+    request_source: client_e
+    product: ProductB
+    service_region: Quebec
+    request_type: new
+    order_date_offset_hours: -61
+    foc_target: 8.0
+    golden_customer_id: CLIENT_E
+    workorder_status: new
+
+  - request_id: REQ_E006
+    external_id: EXT_E006
+    skill_id: SkillC
+    request_source: client_e
+    product: ProductC
+    service_region: Ontario
+    request_type: add
+    order_date_offset_hours: -75
+    foc_target: 8.0
+    golden_customer_id: CLIENT_E
+    workorder_status: new
+
+  - request_id: REQ_E007
+    external_id: EXT_E007
+    skill_id: SkillB
+    request_source: client_e
+    product: ProductB
+    service_region: Ontario
+    request_type: new
+    order_date_offset_hours: -99
+    foc_target: 8.0
+    golden_customer_id: CLIENT_E
+    workorder_status: new
+
+  - request_id: REQ_E008
+    external_id: EXT_E008
+    skill_id: SkillA
+    request_source: client_e
+    product: ProductA
+    service_region: Ontario
+    request_type: new
+    order_date_offset_hours: -123
+    foc_target: 8.0
+    golden_customer_id: CLIENT_E
+    workorder_status: new
+
+  - request_id: REQ_E009
+    external_id: EXT_E009
+    skill_id: SkillB
+    request_source: client_e
+    product: ProductB
+    service_region: Quebec
+    request_type: change
+    order_date_offset_hours: -147
+    foc_target: 8.0
+    golden_customer_id: CLIENT_E
+    workorder_status: new
+
+  - request_id: REQ_E010
+    external_id: EXT_E010
+    skill_id: SkillC
+    request_source: client_e
+    product: ProductC
+    service_region: Ontario
+    request_type: new
+    order_date_offset_hours: -171
+    foc_target: 8.0
+    golden_customer_id: CLIENT_E
+    workorder_status: new
