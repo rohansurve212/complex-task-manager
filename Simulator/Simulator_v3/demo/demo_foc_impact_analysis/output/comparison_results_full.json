@@ -2,7 +2,7 @@
   "metadata": {
     "analysis_type": "full_simulation",
     "demo_version": "1.0.0",
-    "analysis_date": "2026-01-22T21:17:09.608362+00:00",
+    "analysis_date": "2026-01-27T01:30:44.394233+00:00",
     "baseline_scenario": "demo/demo_foc_impact_analysis/scenarios/baseline_scenario.yaml",
     "proposed_scenario": "demo/demo_foc_impact_analysis/scenarios/proposed_scenario.yaml",
     "simulation_duration_hours": 8.0
