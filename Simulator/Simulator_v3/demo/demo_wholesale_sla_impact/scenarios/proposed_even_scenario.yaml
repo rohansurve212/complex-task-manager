@@ -1,187 +1,78 @@
-name: Proposed - Wholesale Team with Single SLA Customer
-description: 'Proposed state with 1 SLA customer (CUST_A: foc_target=1.0 day, has_sla=True) and 12 non-SLA customers (foc_target=8.0
-  days, has_sla=False).'
+name: Proposed - Even Distribution (1 SLA Customer)
+description: 'Proposed state with 1 SLA customer (CUST_A: foc_target=1.0 day, has_sla=True). All 15 agents serve all customers
+  evenly.'
 start_time: '2024-01-15T09:00:00-05:00'
 routing_config:
   pilot_program_enabled: true
+  agent_distribution: even
 agents:
 - agent_id: AGENT001
   full_name: Alex Thompson
   skillsets: &id001
   - WholesaleBasic
   - WholesaleAdvanced
+  team: wholesale_all
 - agent_id: AGENT002
   full_name: Jordan Martinez
   skillsets: *id001
+  team: wholesale_all
 - agent_id: AGENT003
   full_name: Taylor Chen
   skillsets: *id001
+  team: wholesale_all
 - agent_id: AGENT004
   full_name: Morgan Kim
   skillsets: *id001
+  team: wholesale_all
 - agent_id: AGENT005
   full_name: Casey Rodriguez
   skillsets: *id001
+  team: wholesale_all
 - agent_id: AGENT006
   full_name: Riley Patel
   skillsets: *id001
+  team: wholesale_all
 - agent_id: AGENT007
   full_name: Jamie Anderson
   skillsets: *id001
+  team: wholesale_all
 - agent_id: AGENT008
   full_name: Drew Williams
-  skillsets: *id001
-- agent_id: AGENT009
-  full_name: Avery Johnson
-  skillsets: *id001
-- agent_id: AGENT010
-  full_name: Quinn Davis
-  skillsets: *id001
-- agent_id: AGENT011
-  full_name: Dakota Brown
-  skillsets: *id001
-- agent_id: AGENT012
-  full_name: Skyler Garcia
-  skillsets: *id001
-- agent_id: AGENT013
-  full_name: Cameron Miller
-  skillsets: *id001
-- agent_id: AGENT014
-  full_name: Peyton Wilson
-  skillsets: *id001
-- agent_id: AGENT015
-  full_name: Reese Moore
-  skillsets: *id001
-- agent_id: AGENT016
-  full_name: Parker Taylor
-  skillsets: *id001
-- agent_id: AGENT017
-  full_name: Hayden Jackson
-  skillsets: *id001
-- agent_id: AGENT018
-  full_name: Emerson White
-  skillsets: *id001
-- agent_id: AGENT019
-  full_name: Finley Harris
-  skillsets: *id001
-- agent_id: AGENT020
-  full_name: River Martin
-  skillsets: *id001
-- agent_id: AGENT021
-  full_name: Sage Lee
-  skillsets: *id001
-- agent_id: AGENT022
-  full_name: Phoenix Walker
-  skillsets: *id001
-- agent_id: AGENT023
-  full_name: Rowan Hall
   skillsets: &id002
   - WholesaleBasic
   - WholesaleExpert
-- agent_id: AGENT024
-  full_name: Blake Allen
+  team: wholesale_all
+- agent_id: AGENT009
+  full_name: Avery Johnson
   skillsets: *id002
-- agent_id: AGENT025
-  full_name: Charlie Young
+  team: wholesale_all
+- agent_id: AGENT010
+  full_name: Quinn Davis
   skillsets: *id002
-- agent_id: AGENT026
-  full_name: Ellis King
+  team: wholesale_all
+- agent_id: AGENT011
+  full_name: Dakota Brown
   skillsets: *id002
-- agent_id: AGENT027
-  full_name: Harper Wright
-  skillsets: *id002
-- agent_id: AGENT028
-  full_name: Kendall Lopez
-  skillsets: *id002
-- agent_id: AGENT029
-  full_name: Logan Hill
-  skillsets: *id002
-- agent_id: AGENT030
-  full_name: Milan Scott
-  skillsets: *id002
-- agent_id: AGENT031
-  full_name: Oakley Green
-  skillsets: *id002
-- agent_id: AGENT032
-  full_name: Presley Adams
-  skillsets: *id002
-- agent_id: AGENT033
-  full_name: Remy Baker
-  skillsets: *id002
-- agent_id: AGENT034
-  full_name: Sawyer Nelson
+  team: wholesale_all
+- agent_id: AGENT012
+  full_name: Skyler Garcia
   skillsets: &id003
-  - WholesaleAdvanced
-  - WholesaleExpert
-- agent_id: AGENT035
-  full_name: Spencer Carter
-  skillsets: *id003
-- agent_id: AGENT036
-  full_name: Tatum Mitchell
-  skillsets: *id003
-- agent_id: AGENT037
-  full_name: Winter Roberts
-  skillsets: *id003
-- agent_id: AGENT038
-  full_name: Zion Turner
-  skillsets: *id003
-- agent_id: AGENT039
-  full_name: Arden Phillips
-  skillsets: *id003
-- agent_id: AGENT040
-  full_name: Bailey Campbell
-  skillsets: *id003
-- agent_id: AGENT041
-  full_name: Carson Parker
-  skillsets: *id003
-- agent_id: AGENT042
-  full_name: Devon Evans
-  skillsets: *id003
-- agent_id: AGENT043
-  full_name: Eden Edwards
-  skillsets: *id003
-- agent_id: AGENT044
-  full_name: Gray Collins
-  skillsets: *id003
-- agent_id: AGENT045
-  full_name: Harley Stewart
-  skillsets: &id004
   - WholesaleBasic
   - WholesaleAdvanced
   - WholesaleExpert
-- agent_id: AGENT046
-  full_name: Indigo Morris
-  skillsets: *id004
-- agent_id: AGENT047
-  full_name: Jules Rogers
-  skillsets: *id004
-- agent_id: AGENT048
-  full_name: Kay Reed
-  skillsets: *id004
-- agent_id: AGENT049
-  full_name: Lane Cook
-  skillsets: *id004
-- agent_id: AGENT050
-  full_name: Monroe Morgan
-  skillsets: *id004
-- agent_id: AGENT051
-  full_name: Nico Bell
-  skillsets: *id004
-- agent_id: AGENT052
-  full_name: Ocean Murphy
-  skillsets: *id004
-- agent_id: AGENT053
-  full_name: Perry Bailey
-  skillsets: *id004
-- agent_id: AGENT054
-  full_name: Rain Rivera
-  skillsets: *id004
-- agent_id: AGENT055
-  full_name: Shay Cooper
-  skillsets: *id004
-- agent_id: AGENT056
-  full_name: True Richardson
-  skillsets: *id004
+  team: wholesale_all
+- agent_id: AGENT013
+  full_name: Cameron Miller
+  skillsets: *id003
+  team: wholesale_all
+- agent_id: AGENT014
+  full_name: Peyton Wilson
+  skillsets: *id003
+  team: wholesale_all
+- agent_id: AGENT015
+  full_name: Reese Moore
+  skillsets: *id003
+  team: wholesale_all
 requests:
 - request_id: REQ_CUST_A_001
   external_id: EXT_CUST_A_001

@@ -2,13 +2,19 @@
 """
 Generate Baseline and Proposed Scenario Files for Wholesale SLA Impact Demo
 
-This script generates two scenario files:
-1. baseline_scenario.yaml - All 13 customers with foc_target=8.0, has_sla=False
-2. proposed_scenario.yaml - 7 SLA customers with foc_target=1.0, has_sla=True; 6 non-SLA with foc_target=8.0, has_sla=False
+This script generates FOUR scenario files:
 
-Total: 500 requests from 13 customers
-- 7 SLA customers (CUST_A-G): 200 requests (40%)
-- 6 Non-SLA customers (CUST_H-M): 300 requests (60%)
+EVEN DISTRIBUTION (all 15 agents serve all customers):
+1. baseline_even_scenario.yaml - All 13 customers with foc_target=8.0, has_sla=False
+2. proposed_even_scenario.yaml - 1 SLA customer (CUST_A) with foc_target=1.0, has_sla=True
+
+DEDICATED AGENTS (2 agents for CUST_A, 13 agents for CUST_B-M):
+3. baseline_dedicated_scenario.yaml - All 13 customers with foc_target=8.0, has_sla=False
+4. proposed_dedicated_scenario.yaml - 1 SLA customer (CUST_A) with foc_target=1.0, has_sla=True
+
+Total: 500 requests from 13 customers, 15 agents
+- 1 SLA customer (CUST_A): 30 requests (6%)
+- 12 Non-SLA customers (CUST_B-M): 470 requests (94%)
 """
 
 import yaml
@@ -16,17 +22,18 @@ from typing import List, Dict
 
 
 # Customer configuration
-SLA_CUSTOMERS = {
+SLA_CUSTOMER = {
     'CUST_A': 30,
+}
+
+# All other customers (now 12 non-SLA)
+NON_SLA_CUSTOMERS = {
     'CUST_B': 30,
     'CUST_C': 30,
     'CUST_D': 30,
     'CUST_E': 30,
     'CUST_F': 25,
     'CUST_G': 25,
-}
-
-NON_SLA_CUSTOMERS = {
     'CUST_H': 50,
     'CUST_I': 50,
     'CUST_J': 50,
@@ -45,55 +52,104 @@ REQUEST_TYPES = ['new', 'change']
 PRODUCTS = ['WholesalePro', 'WholesaleStandard', 'WholesalePremium']
 
 
-def generate_agents() -> List[Dict]:
-    """Generate 56 wholesale team agents"""
+def generate_agents_even() -> List[Dict]:
+    """Generate 15 wholesale team agents - ALL agents can serve ALL customers"""
     
     # Agent name pools for variety
-    first_names = [
-        'Alex', 'Jordan', 'Taylor', 'Morgan', 'Casey', 'Riley', 'Jamie', 'Drew', 'Avery', 'Quinn',
-        'Dakota', 'Skyler', 'Cameron', 'Peyton', 'Reese', 'Parker', 'Hayden', 'Emerson', 'Finley', 'River',
-        'Sage', 'Phoenix', 'Rowan', 'Blake', 'Charlie', 'Ellis', 'Harper', 'Kendall', 'Logan', 'Milan',
-        'Oakley', 'Presley', 'Remy', 'Sawyer', 'Spencer', 'Tatum', 'Winter', 'Zion', 'Arden', 'Bailey',
-        'Carson', 'Devon', 'Eden', 'Gray', 'Harley', 'Indigo', 'Jules', 'Kay', 'Lane', 'Monroe',
-        'Nico', 'Ocean', 'Perry', 'Rain', 'Shay', 'True'
-    ]
+    first_names = ['Alex', 'Jordan', 'Taylor', 'Morgan', 'Casey', 'Riley', 'Jamie', 
+                   'Drew', 'Avery', 'Quinn', 'Dakota', 'Skyler', 'Cameron', 'Peyton', 'Reese']
     
-    last_names = [
-        'Thompson', 'Martinez', 'Chen', 'Kim', 'Rodriguez', 'Patel', 'Anderson', 'Williams', 'Johnson', 'Davis',
-        'Brown', 'Garcia', 'Miller', 'Wilson', 'Moore', 'Taylor', 'Jackson', 'White', 'Harris', 'Martin',
-        'Lee', 'Walker', 'Hall', 'Allen', 'Young', 'King', 'Wright', 'Lopez', 'Hill', 'Scott',
-        'Green', 'Adams', 'Baker', 'Nelson', 'Carter', 'Mitchell', 'Roberts', 'Turner', 'Phillips', 'Campbell',
-        'Parker', 'Evans', 'Edwards', 'Collins', 'Stewart', 'Morris', 'Rogers', 'Reed', 'Cook', 'Morgan',
-        'Bell', 'Murphy', 'Bailey', 'Rivera', 'Cooper', 'Richardson'
-    ]
+    last_names = ['Thompson', 'Martinez', 'Chen', 'Kim', 'Rodriguez', 'Patel', 
+                  'Anderson', 'Williams', 'Johnson', 'Davis', 'Brown', 'Garcia', 
+                  'Miller', 'Wilson', 'Moore']
     
     # Skillset distribution patterns
     skillset_patterns = [
-        ['WholesaleBasic', 'WholesaleAdvanced'],           # 40% of agents
-        ['WholesaleBasic', 'WholesaleExpert'],             # 20% of agents
-        ['WholesaleAdvanced', 'WholesaleExpert'],          # 20% of agents
-        ['WholesaleBasic', 'WholesaleAdvanced', 'WholesaleExpert'],  # 20% of agents
+        ['WholesaleBasic', 'WholesaleAdvanced'],           # 7 agents
+        ['WholesaleBasic', 'WholesaleExpert'],             # 4 agents
+        ['WholesaleBasic', 'WholesaleAdvanced', 'WholesaleExpert'],  # 4 agents
     ]
     
     agents = []
-    for i in range(56):
+    for i in range(15):
         agent_id = f'AGENT{i+1:03d}'
-        full_name = f'{first_names[i % len(first_names)]} {last_names[i % len(last_names)]}'
+        full_name = f'{first_names[i]} {last_names[i]}'
         
-        # Distribute skillsets based on patterns
-        if i < 22:  # First 40% (22 agents)
+        # Distribute skillsets
+        if i < 7:  # First 7 agents
             skillsets = skillset_patterns[0]
-        elif i < 33:  # Next 20% (11 agents)
+        elif i < 11:  # Next 4 agents
             skillsets = skillset_patterns[1]
-        elif i < 44:  # Next 20% (11 agents)
+        else:  # Last 4 agents
             skillsets = skillset_patterns[2]
-        else:  # Last 20% (12 agents)
-            skillsets = skillset_patterns[3]
         
         agents.append({
             'agent_id': agent_id,
             'full_name': full_name,
-            'skillsets': skillsets
+            'skillsets': skillsets,
+            'team': 'wholesale_all'  # All agents serve all customers
+        })
+    
+    return agents
+
+
+def generate_agents_dedicated() -> List[Dict]:
+    """
+    Generate 15 wholesale team agents with DEDICATED assignments:
+    - 2 agents DEDICATED to CUST_A (SLA customer)
+    - 13 agents DEDICATED to CUST_B-M (Non-SLA customers)
+    """
+    
+    first_names = ['Alex', 'Jordan', 'Taylor', 'Morgan', 'Casey', 'Riley', 'Jamie', 
+                   'Drew', 'Avery', 'Quinn', 'Dakota', 'Skyler', 'Cameron', 'Peyton', 'Reese']
+    
+    last_names = ['Thompson', 'Martinez', 'Chen', 'Kim', 'Rodriguez', 'Patel', 
+                  'Anderson', 'Williams', 'Johnson', 'Davis', 'Brown', 'Garcia', 
+                  'Miller', 'Wilson', 'Moore']
+    
+    skillset_patterns = [
+        ['WholesaleBasic', 'WholesaleAdvanced'],
+        ['WholesaleBasic', 'WholesaleExpert'],
+        ['WholesaleBasic', 'WholesaleAdvanced', 'WholesaleExpert'],
+    ]
+    
+    agents = []
+    
+    # First 2 agents: DEDICATED to CUST_A (SLA customer)
+    for i in range(2):
+        agent_id = f'AGENT{i+1:03d}'
+        full_name = f'{first_names[i]} {last_names[i]}'
+        skillsets = skillset_patterns[2]  # Best skillsets for SLA customer
+        
+        agents.append({
+            'agent_id': agent_id,
+            'full_name': full_name,
+            'skillsets': skillsets,
+            'team': 'wholesale_sla',
+            'dedicated_customers': ['CUST_A']  # Only serve CUST_A
+        })
+    
+    # Remaining 13 agents: DEDICATED to CUST_B-M (Non-SLA customers)
+    non_sla_customers = list(NON_SLA_CUSTOMERS.keys())
+    
+    for i in range(2, 15):
+        agent_id = f'AGENT{i+1:03d}'
+        full_name = f'{first_names[i]} {last_names[i]}'
+        
+        # Distribute skillsets
+        if i < 9:
+            skillsets = skillset_patterns[0]
+        elif i < 13:
+            skillsets = skillset_patterns[1]
+        else:
+            skillsets = skillset_patterns[2]
+        
+        agents.append({
+            'agent_id': agent_id,
+            'full_name': full_name,
+            'skillsets': skillsets,
+            'team': 'wholesale_nonsla',
+            'dedicated_customers': non_sla_customers  # Only serve CUST_B-M
         })
     
     return agents
@@ -112,13 +168,12 @@ def generate_requests(customer_id: str, num_requests: int, foc_target: float, ha
     """
     requests = []
     
-    # Distribute requests across different ages (oldest to newest)
-    # Age range: 1 hour to 30 days (720 hours)
-    hour_increment = 720 / num_requests  # Spread requests evenly across 30 days
+    # Distribute requests across 30 days (0 to 720 hours ago)
+    max_age_hours = 720  # 30 days
     
     for i in range(1, num_requests + 1):
         # Calculate age offset (negative = in the past)
-        offset_hours = -(start_offset + int((i - 1) * hour_increment))
+        offset_hours = -(i * max_age_hours / num_requests)
         
         # Cycle through skills
         skill_idx = (i - 1) % len(SKILLS)
@@ -151,26 +206,26 @@ def generate_requests(customer_id: str, num_requests: int, foc_target: float, ha
     return requests
 
 
-def generate_baseline_scenario() -> Dict:
-    """Generate baseline scenario - all customers without SLA"""
-    print("Generating baseline scenario...")
+def generate_baseline_even_scenario() -> Dict:
+    """Generate baseline scenario - EVEN distribution - all customers without SLA"""
+    print("Generating baseline (EVEN distribution) scenario...")
     
     scenario = {
-        'name': 'Baseline - Wholesale Team (No SLA Assignments)',
-        'description': 'Current state with 500 requests from 13 customers (scaled from 10,035). All customers have 8-day FOC target with no SLA.',
+        'name': 'Baseline - Even Distribution (No SLA)',
+        'description': 'Current state with 500 requests from 13 customers. All 15 agents serve all customers evenly. All customers have 8-day FOC target with no SLA.',
         'start_time': '2024-01-15T09:00:00-05:00',
         'routing_config': {
-            'pilot_program_enabled': True
+            'pilot_program_enabled': True,
+            'agent_distribution': 'even'
         },
-        'agents': generate_agents(),
+        'agents': generate_agents_even(),
         'requests': []
     }
     
-    # Generate requests for all customers (all with foc_target=8.0, has_sla=False)
     start_offset = 1
     
-    # SLA customers (but not SLA yet in baseline)
-    for customer_id, num_requests in SLA_CUSTOMERS.items():
+    # SLA customer (but not SLA yet in baseline)
+    for customer_id, num_requests in SLA_CUSTOMER.items():
         requests = generate_requests(customer_id, num_requests, foc_target=8.0, has_sla=False, start_offset=start_offset)
         scenario['requests'].extend(requests)
         start_offset += num_requests
@@ -187,26 +242,26 @@ def generate_baseline_scenario() -> Dict:
     return scenario
 
 
-def generate_proposed_scenario() -> Dict:
-    """Generate proposed scenario - 7 customers with SLA, 6 without"""
-    print("\nGenerating proposed scenario...")
+def generate_proposed_even_scenario() -> Dict:
+    """Generate proposed scenario - EVEN distribution - 1 customer with SLA"""
+    print("\nGenerating proposed (EVEN distribution) scenario...")
     
     scenario = {
-        'name': 'Proposed - Wholesale Team with SLA Assignments',
-        'description': 'Proposed state with 7 SLA customers (foc_target=1.0 day, has_sla=True) and 6 non-SLA customers (foc_target=8.0 days, has_sla=False).',
+        'name': 'Proposed - Even Distribution (1 SLA Customer)',
+        'description': 'Proposed state with 1 SLA customer (CUST_A: foc_target=1.0 day, has_sla=True). All 15 agents serve all customers evenly.',
         'start_time': '2024-01-15T09:00:00-05:00',
         'routing_config': {
-            'pilot_program_enabled': True
+            'pilot_program_enabled': True,
+            'agent_distribution': 'even'
         },
-        'agents': generate_agents(),
+        'agents': generate_agents_even(),
         'requests': []
     }
     
-    # Generate requests for all customers
     start_offset = 1
     
-    # SLA customers (foc_target=1.0, has_sla=True)
-    for customer_id, num_requests in SLA_CUSTOMERS.items():
+    # SLA customer (foc_target=1.0, has_sla=True)
+    for customer_id, num_requests in SLA_CUSTOMER.items():
         requests = generate_requests(customer_id, num_requests, foc_target=1.0, has_sla=True, start_offset=start_offset)
         scenario['requests'].extend(requests)
         start_offset += num_requests
@@ -220,6 +275,78 @@ def generate_proposed_scenario() -> Dict:
         print(f"  Added {num_requests} non-SLA requests for {customer_id}")
     
     print(f"Total requests: {len(scenario['requests'])}")
+    return scenario
+
+
+def generate_baseline_dedicated_scenario() -> Dict:
+    """Generate baseline scenario - DEDICATED agents - all customers without SLA"""
+    print("\nGenerating baseline (DEDICATED agents) scenario...")
+    
+    scenario = {
+        'name': 'Baseline - Dedicated Agents (No SLA)',
+        'description': 'Current state with 500 requests from 13 customers. 2 agents dedicated to CUST_A, 13 agents dedicated to CUST_B-M. All customers have 8-day FOC target with no SLA.',
+        'start_time': '2024-01-15T09:00:00-05:00',
+        'routing_config': {
+            'pilot_program_enabled': True,
+            'agent_distribution': 'dedicated'
+        },
+        'agents': generate_agents_dedicated(),
+        'requests': []
+    }
+    
+    start_offset = 1
+    
+    # SLA customer (but not SLA yet in baseline)
+    for customer_id, num_requests in SLA_CUSTOMER.items():
+        requests = generate_requests(customer_id, num_requests, foc_target=8.0, has_sla=False, start_offset=start_offset)
+        scenario['requests'].extend(requests)
+        start_offset += num_requests
+        print(f"  Added {num_requests} requests for {customer_id} (2 dedicated agents)")
+    
+    # Non-SLA customers
+    for customer_id, num_requests in NON_SLA_CUSTOMERS.items():
+        requests = generate_requests(customer_id, num_requests, foc_target=8.0, has_sla=False, start_offset=start_offset)
+        scenario['requests'].extend(requests)
+        start_offset += num_requests
+        print(f"  Added {num_requests} requests for {customer_id}")
+    
+    print(f"Total requests: {len(scenario['requests'])}, 13 agents for CUST_B-M")
+    return scenario
+
+
+def generate_proposed_dedicated_scenario() -> Dict:
+    """Generate proposed scenario - DEDICATED agents - 1 customer with SLA"""
+    print("\nGenerating proposed (DEDICATED agents) scenario...")
+    
+    scenario = {
+        'name': 'Proposed - Dedicated Agents (1 SLA Customer)',
+        'description': 'Proposed state with 1 SLA customer (CUST_A: foc_target=1.0 day, has_sla=True). 2 agents dedicated to CUST_A, 13 agents dedicated to CUST_B-M.',
+        'start_time': '2024-01-15T09:00:00-05:00',
+        'routing_config': {
+            'pilot_program_enabled': True,
+            'agent_distribution': 'dedicated'
+        },
+        'agents': generate_agents_dedicated(),
+        'requests': []
+    }
+    
+    start_offset = 1
+    
+    # SLA customer (foc_target=1.0, has_sla=True)
+    for customer_id, num_requests in SLA_CUSTOMER.items():
+        requests = generate_requests(customer_id, num_requests, foc_target=1.0, has_sla=True, start_offset=start_offset)
+        scenario['requests'].extend(requests)
+        start_offset += num_requests
+        print(f"  Added {num_requests} SLA requests for {customer_id} (2 dedicated agents)")
+    
+    # Non-SLA customers (foc_target=8.0, has_sla=False)
+    for customer_id, num_requests in NON_SLA_CUSTOMERS.items():
+        requests = generate_requests(customer_id, num_requests, foc_target=8.0, has_sla=False, start_offset=start_offset)
+        scenario['requests'].extend(requests)
+        start_offset += num_requests
+        print(f"  Added {num_requests} non-SLA requests for {customer_id}")
+    
+    print(f"Total requests: {len(scenario['requests'])}, 13 agents for CUST_B-M")
     return scenario
 
 
@@ -237,28 +364,56 @@ def main():
     print()
     print("Configuration:")
     print("  Total requests: 500")
-    print("  SLA customers: 7 (CUST_A-G) - 200 requests (40%)")
-    print("  Non-SLA customers: 6 (CUST_H-M) - 300 requests (60%)")
-    print("  Agents: 56 (Wholesale team)")
+    print("  SLA customer: 1 (CUST_A) - 30 requests (6%)")
+    print("  Non-SLA customers: 12 (CUST_B-M) - 470 requests (94%)")
+    print("  Agents: 15 (Wholesale team)")
+    print()
+    print("Generating 4 scenarios:")
+    print("  1. Baseline - Even distribution (all agents serve all customers)")
+    print("  2. Proposed - Even distribution (1 SLA customer)")
+    print("  3. Baseline - Dedicated agents (2 for CUST_A, 13 for others)")
+    print("  4. Proposed - Dedicated agents (1 SLA customer)")
     print()
     
-    # Generate baseline
-    baseline = generate_baseline_scenario()
-    save_scenario(baseline, 'scenarios/baseline_scenario.yaml')
+    # Generate baseline - even
+    baseline_even = generate_baseline_even_scenario()
+    save_scenario(baseline_even, 'demo/demo_wholesale_sla_impact/scenarios/baseline_even_scenario.yaml')
     
-    # Generate proposed
-    proposed = generate_proposed_scenario()
-    save_scenario(proposed, 'scenarios/proposed_scenario.yaml')
+    # Generate proposed - even
+    proposed_even = generate_proposed_even_scenario()
+    save_scenario(proposed_even, 'demo/demo_wholesale_sla_impact/scenarios/proposed_even_scenario.yaml')
+    
+    # Generate baseline - dedicated
+    baseline_dedicated = generate_baseline_dedicated_scenario()
+    save_scenario(baseline_dedicated, 'demo/demo_wholesale_sla_impact/scenarios/baseline_dedicated_scenario.yaml')
+    
+    # Generate proposed - dedicated
+    proposed_dedicated = generate_proposed_dedicated_scenario()
+    save_scenario(proposed_dedicated, 'demo/demo_wholesale_sla_impact/scenarios/proposed_dedicated_scenario.yaml')
     
     print()
     print("=" * 80)
     print("Scenario generation complete!")
     print("=" * 80)
     print()
+    print("Scenario files created:")
+    print("  1. scenarios/baseline_even_scenario.yaml")
+    print("  2. scenarios/proposed_even_scenario.yaml")
+    print("  3. scenarios/baseline_dedicated_scenario.yaml")
+    print("  4. scenarios/proposed_dedicated_scenario.yaml")
+    print()
     print("Next steps:")
-    print("  1. Review the generated scenario files in scenarios/")
-    print("  2. Run quick analysis: python compare_foc_impact.py")
-    print("  3. Run full simulation: python run_full_simulation.py")
+    print("  To compare EVEN distribution scenarios:")
+    print("    python compare_foc_impact.py scenarios/baseline_even_scenario.yaml scenarios/proposed_even_scenario.yaml")
+    print()
+    print("  To compare DEDICATED agent scenarios:")
+    print("    python compare_foc_impact.py scenarios/baseline_dedicated_scenario.yaml scenarios/proposed_dedicated_scenario.yaml")
+    print()
+    print("  To run full simulation for EVEN distribution:")
+    print("    python run_full_simulation.py --baseline scenarios/baseline_even_scenario.yaml --proposed scenarios/proposed_even_scenario.yaml")
+    print()
+    print("  To run full simulation for DEDICATED agents:")
+    print("    python run_full_simulation.py --baseline scenarios/baseline_dedicated_scenario.yaml --proposed scenarios/proposed_dedicated_scenario.yaml")
 
 
 if __name__ == '__main__':

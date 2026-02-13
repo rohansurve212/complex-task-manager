@@ -37,33 +37,47 @@ Proposed:  7 SLA customers (foc_target=1.0 day, has_sla=True)
 Total: 500 requests (200 SLA, 300 non-SLA)
 
 Usage:
+    # Use default scenarios (even distribution)
     python compare_foc_impact.py
+    
+    # Compare even distribution scenarios
+    python compare_foc_impact.py --baseline demo/demo_wholesale_sla_impact/scenarios/baseline_even_scenario.yaml --proposed demo/demo_wholesale_sla_impact/scenarios/proposed_even_scenario.yaml
+    
+    # Compare dedicated agent scenarios
+    python compare_foc_impact.py --baseline demo/demo_wholesale_sla_impact/scenarios/baseline_dedicated_scenario.yaml --proposed demo/demo_wholesale_sla_impact/scenarios/proposed_dedicated_scenario.yaml
 """
 
+from collections import defaultdict
 import sys
 import os
-import yaml
 import json
 import time
-from datetime import datetime, timezone, timedelta
-from typing import Dict, List, Any, Tuple
-from collections import defaultdict
 import statistics
+import yaml
+import argparse
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
+from typing import Dict, Any, Tuple, List
+
+# Add parent directories to path
+# sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 
 
 # ============================================================================
 # DEMO CONFIGURATION
 # ============================================================================
 
-BASELINE_SCENARIO = "demo/demo_wholesale_sla_impact/scenarios/baseline_scenario.yaml"
-PROPOSED_SCENARIO = "demo/demo_wholesale_sla_impact/scenarios/proposed_scenario.yaml"
+# Default scenario file paths (can be overridden via command-line)
+BASELINE_SCENARIO = "demo/demo_wholesale_sla_impact/scenarios/baseline_even_scenario.yaml"
+PROPOSED_SCENARIO = "demo/demo_wholesale_sla_impact/scenarios/proposed_even_scenario.yaml"
+
+# Output configuration
 OUTPUT_DIR = "demo/demo_wholesale_sla_impact/output"
-OUTPUT_FILE = "comparison_results_quick.json"
-DEMO_SPEED = "normal"  # 'fast', 'normal', 'slow'
+COMPARISON_OUTPUT_FILENAME = "comparison_results_quick.json"
 
 # Version
-VERSION = "1.0.0"
+VERSION = "1.1.0"
+DEMO_SPEED = "normal"  # 'fast', 'normal', 'slow'
 
 
 # ============================================================================
@@ -196,7 +210,7 @@ class SimplifiedRequest:
     
     def get_age_days(self, current_time: datetime) -> float:
         """Get request age in days"""
-        return (current_time - self.order_date).total_seconds() / (24.0 * 60.0)
+        return (current_time - self.order_date).total_seconds() / (24.0 * 60.0 * 60)
     
     def is_foc_compliant(self, current_time: datetime) -> bool:
         """Check if request is within FOC target"""
@@ -347,37 +361,37 @@ class ScenarioAnalyzer:
 # DEMO ORCHESTRATION
 # ============================================================================
 
-def demo_introduction():
+def demo_introduction(baseline_path: str, proposed_path: str):
     """Display demo introduction"""
     clear_screen()
     print_header("STM ROUTING SIMULATOR v3.0")
-    print_header("WHOLESALE SLA PRIORITY ANALYSIS (QUICK MODE)")
+    print_header("WHOLESALE SLA QUICK PRIORITY ANALYSIS")
     
-    print_warning_box()
+    print(f"\n{Colors.BOLD}Welcome to the Wholesale SLA Quick Priority Analysis!{Colors.END}\n")
     
-    print(f"{Colors.BOLD}Welcome to the Wholesale SLA Impact Analysis Tool!{Colors.END}\n")
+    print("This tool provides QUICK metrics by calculating priority scores at time t=0.")
+    print("It does NOT run full discrete event simulation with agent assignments.\n")
     
-    print("This tool provides FAST analysis of how SLA assignments and FOC target")
-    print("changes affect request priority scores and rankings.\n")
-    
-    print(f"{Colors.BOLD}Wholesale Team Context:{Colors.END}")
-    print("  • 56 agents handling wholesale requests")
-    print("  • 500 requests from 13 customers (scaled from 10,035 production)")
-    print("  • 40% of requests from 7 potential SLA customers\n")
+    print(f"{Colors.BOLD}Analysis Type:{Colors.END}")
+    print("  • Calculates priority scores for all requests")
+    print("  • Ranks requests by priority (queue positions)")
+    print("  • Predicts position changes between scenarios")
+    print("  • Provides quick insights without full simulation\n")
     
     print(f"{Colors.BOLD}Scenarios Being Compared:{Colors.END}")
-    print("  • Baseline: All 13 customers, foc_target=8.0 days, no SLA")
-    print("  • Proposed: 7 SLA customers (foc_target=1.0 day, has_sla=True)")
-    print("             6 non-SLA customers (foc_target=8.0 days, has_sla=False)\n")
+    print(f"  Baseline: {baseline_path}")
+    print(f"  Proposed: {proposed_path}\n")
     
-    print(f"{Colors.BOLD}Expected Impact:{Colors.END}")
-    print(f"  • FOC change: 8 days → 1 day ({Colors.YELLOW}87.5% reduction!{Colors.END})")
-    print(f"  • Priority increase: {Colors.RED}~700% (8x){Colors.END} for SLA customers")
-    print(f"  • This is {Colors.RED}MUCH MORE DRAMATIC{Colors.END} than typical adjustments\n")
+    print(f"{Colors.BOLD}What You'll Learn:{Colors.END}")
+    print("  • Predicted queue position changes")
+    print("  • Priority score distributions")
+    print("  • FOC compliance rates (at t=0)")
+    print("  • Customer tier impact preview\n")
     
-    print(f"{Colors.CYAN}For full simulation results, use: python run_full_simulation.py{Colors.END}\n")
+    print(f"{Colors.YELLOW}⚡ Note: This is a QUICK analysis (< 5 seconds).{Colors.END}")
+    print(f"{Colors.YELLOW}   For actual wait times, use run_full_simulation.py{Colors.END}\n")
     
-    input(f"{Colors.BOLD}Press Enter to begin quick analysis...{Colors.END}")
+    input(f"{Colors.BOLD}Press Enter to begin analysis...{Colors.END}")
 
 
 def load_scenarios():
@@ -811,7 +825,7 @@ def save_results(baseline_analysis: Dict, proposed_analysis: Dict, rank_changes:
         }
     }
     
-    output_path = Path(OUTPUT_DIR) / OUTPUT_FILE
+    output_path = Path(OUTPUT_DIR) / COMPARISON_OUTPUT_FILENAME
     
     with open(output_path, 'w') as f:
         json.dump(results, f, indent=2, default=str)
@@ -858,13 +872,78 @@ def demo_conclusion(rank_changes: Dict):
 
 
 # ============================================================================
-# MAIN DEMO FLOW
+# COMMAND-LINE ARGUMENT PARSING
+# ============================================================================
+
+def parse_arguments():
+    """Parse command-line arguments"""
+    parser = argparse.ArgumentParser(
+        description='Quick priority analysis comparing baseline and proposed scenarios',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+        Examples:
+        # Use default scenarios (even distribution)
+        python compare_foc_impact.py
+
+        # Compare even distribution scenarios
+        python compare_foc_impact.py --baseline scenarios/baseline_even_scenario.yaml --proposed scenarios/proposed_even_scenario.yaml
+
+        # Compare dedicated agent scenarios
+        python compare_foc_impact.py --baseline scenarios/baseline_dedicated_scenario.yaml --proposed scenarios/proposed_dedicated_scenario.yaml
+
+        # Custom output directory
+        python compare_foc_impact.py --baseline scenarios/baseline_even_scenario.yaml --proposed scenarios/proposed_even_scenario.yaml --output output/even_comparison
+                """
+    )
+    
+    parser.add_argument(
+        '--baseline',
+        type=str,
+        default=BASELINE_SCENARIO,
+        help=f'Path to baseline scenario YAML file (default: {BASELINE_SCENARIO})'
+    )
+    
+    parser.add_argument(
+        '--proposed',
+        type=str,
+        default=PROPOSED_SCENARIO,
+        help=f'Path to proposed scenario YAML file (default: {PROPOSED_SCENARIO})'
+    )
+    
+    parser.add_argument(
+        '--output',
+        type=str,
+        default=OUTPUT_DIR,
+        help=f'Output directory for results (default: {OUTPUT_DIR})'
+    )
+    
+    parser.add_argument(
+        '--version',
+        action='version',
+        version=f'STM Routing Simulator Quick Analysis v{VERSION}'
+    )
+    
+    return parser.parse_args()
+
+
+# ============================================================================
+# MAIN ANALYSIS FLOW
 # ============================================================================
 
 def main() -> int:
-    """Main entry point for the Wholesale SLA Quick Analysis"""
+    """Main entry point for quick priority analysis"""
+    
+    # Parse command-line arguments
+    args = parse_arguments()
+    
+    # Update global configuration with command-line arguments
+    global BASELINE_SCENARIO, PROPOSED_SCENARIO, OUTPUT_DIR
+    BASELINE_SCENARIO = args.baseline
+    PROPOSED_SCENARIO = args.proposed
+    OUTPUT_DIR = args.output
+    
     try:
-        demo_introduction()
+        demo_introduction(BASELINE_SCENARIO, PROPOSED_SCENARIO)
         baseline, proposed = load_scenarios()
         display_scenario_overview(baseline, proposed)
         baseline_analysis, proposed_analysis = run_analysis(baseline, proposed)
@@ -877,23 +956,15 @@ def main() -> int:
         save_results(baseline_analysis, proposed_analysis, rank_changes)
         demo_conclusion(rank_changes)
         
-        print(f"\n{Colors.GREEN}✅ Quick analysis completed successfully!{Colors.END}\n")
         return 0
         
     except FileNotFoundError as e:
         print(f"\n{Colors.RED}❌ Error: Scenario file not found{Colors.END}")
         print(f"   {e}")
-        print("\n   Make sure you're running this from the demo directory:")
-        print("   cd demo/demo_wholesale_sla_impact")
-        return 1
-        
-    except yaml.YAMLError as e:
-        print(f"\n{Colors.RED}❌ Error: Failed to parse YAML scenario file{Colors.END}")
-        print(f"   {e}")
-        return 1
-        
-    except KeyboardInterrupt:
-        print(f"\n\n{Colors.YELLOW}⚠️  Demo interrupted by user{Colors.END}\n")
+        print("\n   Make sure the scenario files exist:")
+        print(f"   - Baseline: {BASELINE_SCENARIO}")
+        print(f"   - Proposed: {PROPOSED_SCENARIO}")
+        print("\n   Run from: Simulator_v3/demo/demo_wholesale_sla_impact/")
         return 1
         
     except Exception as e:

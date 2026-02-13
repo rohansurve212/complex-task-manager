@@ -41,10 +41,11 @@ import os
 import json
 import time
 import statistics
+import argparse
 import yaml
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
-from typing import Dict, Any, Tuple, List
+from typing import Dict, Any, Tuple
 
 # Add parent directories to path to import simulator modules
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
@@ -53,10 +54,10 @@ try:
     from scenario.scenario_loader import ScenarioLoader
     from scenario.scenario_runner import ScenarioRunner
 except ImportError as e:
-    print(f"\n❌ Error: Could not import simulator modules")
+    print("\n❌ Error: Could not import simulator modules")
     print(f"   {e}")
-    print(f"\nMake sure you're running this from: Simulator_v3/demo/demo_wholesale_sla_impact/")
-    print(f"And that Simulator_v3/scenario/ exists with scenario_loader.py and scenario_runner.py")
+    print("\nMake sure you're running this from: Simulator_v3/demo/demo_wholesale_sla_impact/")
+    print("And that Simulator_v3/scenario/ exists with scenario_loader.py and scenario_runner.py")
     sys.exit(1)
 
 
@@ -64,15 +65,15 @@ except ImportError as e:
 # DEMO CONFIGURATION
 # ============================================================================
 
-# Scenario file paths (relative to Simulator_v3 root)
-BASELINE_SCENARIO = "demo/demo_wholesale_sla_impact/scenarios/baseline_scenario.yaml"
-PROPOSED_SCENARIO = "demo/demo_wholesale_sla_impact/scenarios/proposed_scenario.yaml"
+# Default scenario file paths (can be overridden via command-line)
+BASELINE_SCENARIO = "demo/demo_wholesale_sla_impact/scenarios/baseline_even_scenario.yaml"
+PROPOSED_SCENARIO = "demo/demo_wholesale_sla_impact/scenarios/proposed_even_scenario.yaml"
 
 # Output configuration
 OUTPUT_DIR = "demo/demo_wholesale_sla_impact/output"
-BASELINE_OUTPUT = "baseline"
-PROPOSED_OUTPUT = "proposed"
-COMPARISON_OUTPUT = "comparison_results_full.json"
+BASELINE_OUTPUT_SUBDIR = "baseline"
+PROPOSED_OUTPUT_SUBDIR = "proposed"
+COMPARISON_OUTPUT_FILENAME = "comparison_results_full.json"
 
 # Simulation parameters
 DEFAULT_DURATION_HOURS = 8.0  # Standard 8-hour shift
@@ -197,7 +198,7 @@ class SimplifiedRequest:
     
     def get_age_days(self, current_time: datetime) -> float:
         """Get request age in days"""
-        return (current_time - self.order_date).total_seconds() / (24.0 * 60.0)
+        return (current_time - self.order_date).total_seconds() / (24.0 * 60.0 * 60)
 
 
 def analyze_queue_positions(scenario_path: str) -> Dict[str, Any]:
@@ -419,7 +420,7 @@ def display_scenario_overview(baseline_scenario, proposed_scenario):
     print(f"  Start Time: {baseline_start_time.strftime('%Y-%m-%d %I:%M %p')}")
     print(f"  Total Requests: {len(baseline_requests)}")
     print(f"  Agents: {len(baseline_agents)} (Wholesale team)")
-    print(f"  Customers: 13 (CUST_A through CUST_M)")
+    print("  Customers: 13 (CUST_A through CUST_M)")
     
     # Count SLA vs non-SLA in proposed
     sla_count = count_sla_requests(proposed_scenario)
@@ -429,15 +430,15 @@ def display_scenario_overview(baseline_scenario, proposed_scenario):
     print(f"\n{Colors.BOLD}Proposed Scenario Breakdown:{Colors.END}")
     print(f"  SLA Customers (CUST_A-G): {sla_count} requests (40%)")
     print(f"    • foc_target: 1.0 day {Colors.YELLOW}(87.5% reduction!){Colors.END}")
-    print(f"    • has_sla: True")
+    print("    • has_sla: True")
     print(f"  Non-SLA Customers (CUST_H-M): {non_sla_count} requests (60%)")
-    print(f"    • foc_target: 8.0 days (unchanged)")
-    print(f"    • has_sla: False")
+    print("    • foc_target: 8.0 days (unchanged)")
+    print("    • has_sla: False")
     
     print(f"\n{Colors.BOLD}Expected Priority Impact:{Colors.END}")
     print(f"  • SLA customers: ~{Colors.RED}700% (8x){Colors.END} priority increase")
-    print(f"  • Queue domination: SLA requests will occupy top positions")
-    print(f"  • Service tier gap: Very strong two-tier system")
+    print("  • Queue domination: SLA requests will occupy top positions")
+    print("  • Service tier gap: Very strong two-tier system")
     
     pause(2.0)
 
@@ -490,7 +491,7 @@ def run_baseline_simulation(baseline_scenario) -> Dict[str, Any]:
     print("  (All customers: foc_target=8.0 days, has_sla=False)\n")
     
     # Create output directory
-    baseline_output_path = Path(OUTPUT_DIR) / BASELINE_OUTPUT
+    baseline_output_path = Path(OUTPUT_DIR) / BASELINE_OUTPUT_SUBDIR
     baseline_output_path.mkdir(parents=True, exist_ok=True)
     
     print_progress("Initializing simulation environment")
@@ -536,7 +537,7 @@ def run_proposed_simulation(proposed_scenario) -> Dict[str, Any]:
     print("  (6 non-SLA customers: foc_target=8.0 days, has_sla=False)\n")
     
     # Create output directory
-    proposed_output_path = Path(OUTPUT_DIR) / PROPOSED_OUTPUT
+    proposed_output_path = Path(OUTPUT_DIR) / PROPOSED_OUTPUT_SUBDIR
     proposed_output_path.mkdir(parents=True, exist_ok=True)
     
     print_progress("Initializing simulation environment")
@@ -636,14 +637,14 @@ def compare_results(baseline_stats: Dict, proposed_stats: Dict, rank_changes: Di
     elif wait_time_change > 5:
         print(f"  • Overall wait time {Colors.YELLOW}increased{Colors.END} by {wait_time_change:.1f}%")
     else:
-        print(f"  • Overall wait time remained relatively stable")
+        print("  • Overall wait time remained relatively stable")
     
     if foc_change > 2:
         print(f"  • FOC compliance {Colors.GREEN}improved{Colors.END} by {foc_change:.1f} percentage points")
     elif foc_change < -2:
         print(f"  • FOC compliance {Colors.RED}decreased{Colors.END} by {abs(foc_change):.1f} percentage points")
     else:
-        print(f"  • FOC compliance remained relatively stable")
+        print("  • FOC compliance remained relatively stable")
     
     print(f"  • System throughput: {baseline_stats.get('requests_completed', 0)} → {proposed_stats.get('requests_completed', 0)} requests")
     print(f"  • Queue position gap: {Colors.BOLD}{abs(rank_changes['position_gap']):.0f} positions{Colors.END}")
@@ -741,7 +742,7 @@ def save_comparison_results(baseline_stats: Dict, proposed_stats: Dict, rank_cha
         }
     }
     
-    output_path = Path(OUTPUT_DIR) / COMPARISON_OUTPUT
+    output_path = Path(OUTPUT_DIR) / COMPARISON_OUTPUT_FILENAME
     
     with open(output_path, 'w') as f:
         json.dump(comparison, f, indent=2, default=str)
@@ -749,10 +750,10 @@ def save_comparison_results(baseline_stats: Dict, proposed_stats: Dict, rank_cha
     print_progress(f"Saved comparison to {output_path}")
     
     print(f"\n{Colors.BOLD}Output Files:{Colors.END}")
-    print(f"  📁 Baseline:  {OUTPUT_DIR}/{BASELINE_OUTPUT}/")
-    print(f"  📁 Proposed:  {OUTPUT_DIR}/{PROPOSED_OUTPUT}/")
+    print(f"  📁 Baseline:  {OUTPUT_DIR}/{BASELINE_OUTPUT_SUBDIR}/")
+    print(f"  📁 Proposed:  {OUTPUT_DIR}/{PROPOSED_OUTPUT_SUBDIR}/")
     print(f"  📄 Comparison: {output_path}")
-    print(f"  📊 Includes: Simulation metrics + Queue position analysis")
+    print("  📊 Includes: Simulation metrics + Queue position analysis")
     
     pause(1.0)
 
@@ -778,9 +779,9 @@ def demo_conclusion(rank_changes: Dict):
     
     print(f"\n{Colors.BOLD}Output Files Location:{Colors.END}")
     print(f"  {OUTPUT_DIR}/")
-    print(f"    ├── baseline/           (Baseline simulation results)")
-    print(f"    ├── proposed/           (Proposed simulation results)")
-    print(f"    └── comparison_results_full.json (Includes position analysis)")
+    print("    ├── baseline/           (Baseline simulation results)")
+    print("    ├── proposed/           (Proposed simulation results)")
+    print("    └── comparison_results_full.json (Includes position analysis)")
     
     print(f"\n{Colors.BOLD}Critical Next Steps:{Colors.END}")
     print("  1. Review detailed metrics in output files")
@@ -802,10 +803,83 @@ def demo_conclusion(rank_changes: Dict):
 
 
 # ============================================================================
+# COMMAND-LINE ARGUMENT PARSING
+# ============================================================================
+
+def parse_arguments():
+    """Parse command-line arguments"""
+    parser = argparse.ArgumentParser(
+        description='Full discrete event simulation comparing baseline and proposed scenarios',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+        Examples:
+        # Use default scenarios (even distribution)
+        python run_full_simulation.py
+        
+        # Compare even distribution scenarios
+        python demo/demo_wholesale_sla_impact/run_full_simulation.py --baseline demo/demo_wholesale_sla_impact/scenarios/baseline_even_scenario.yaml --proposed demo/demo_wholesale_sla_impact/scenarios/proposed_even_scenario.yaml
+        
+        # Compare dedicated agent scenarios
+        python demo/demo_wholesale_sla_impact/run_full_simulation.py --baseline demo/demo_wholesale_sla_impact/scenarios/baseline_dedicated_scenario.yaml --proposed demo/demo_wholesale_sla_impact/scenarios/proposed_dedicated_scenario.yaml
+        
+        # Custom duration and output
+        python demo/demo_wholesale_sla_impact/run_full_simulation.py --baseline demo/demo_wholesale_sla_impact/scenarios/baseline_even_scenario.yaml --proposed demo/demo_wholesale_sla_impact/scenarios/proposed_even_scenario.yaml --duration 4 --output output/even_simulation
+                """
+    )
+    
+    parser.add_argument(
+        '--baseline',
+        type=str,
+        default=BASELINE_SCENARIO,
+        help=f'Path to baseline scenario YAML file (default: {BASELINE_SCENARIO})'
+    )
+    
+    parser.add_argument(
+        '--proposed',
+        type=str,
+        default=PROPOSED_SCENARIO,
+        help=f'Path to proposed scenario YAML file (default: {PROPOSED_SCENARIO})'
+    )
+    
+    parser.add_argument(
+        '--output',
+        type=str,
+        default=OUTPUT_DIR,
+        help=f'Output directory for results (default: {OUTPUT_DIR})'
+    )
+    
+    parser.add_argument(
+        '--duration',
+        type=float,
+        default=DEFAULT_DURATION_HOURS,
+        help=f'Simulation duration in hours (default: {DEFAULT_DURATION_HOURS})'
+    )
+    
+    parser.add_argument(
+        '--version',
+        action='version',
+        version=f'STM Routing Simulator Full Simulation v{VERSION}'
+    )
+    
+    return parser.parse_args()
+
+
+# ============================================================================
 # MAIN SIMULATION FLOW
 # ============================================================================
 
 def main() -> int:
+    """Main entry point for full simulation"""
+    
+    # Parse command-line arguments
+    args = parse_arguments()
+    
+    # Update global configuration with command-line arguments
+    global BASELINE_SCENARIO, PROPOSED_SCENARIO, OUTPUT_DIR, DEFAULT_DURATION_HOURS
+    BASELINE_SCENARIO = args.baseline
+    PROPOSED_SCENARIO = args.proposed
+    OUTPUT_DIR = args.output
+    DEFAULT_DURATION_HOURS = args.duration
     """Main entry point for full simulation"""
     try:
         demo_introduction()
@@ -824,19 +898,19 @@ def main() -> int:
     except FileNotFoundError as e:
         print(f"\n{Colors.RED}❌ Error: Scenario file not found{Colors.END}")
         print(f"   {e}")
-        print(f"\n   Make sure you're running this from: Simulator_v3/demo/demo_wholesale_sla_impact/")
-        print(f"   Or run from Simulator_v3 root: python demo/demo_wholesale_sla_impact/run_full_simulation.py")
+        print("\n   Make sure you're running this from: Simulator_v3/demo/demo_wholesale_sla_impact/")
+        print("   Or run from Simulator_v3 root: python demo/demo_wholesale_sla_impact/run_full_simulation.py")
         return 1
         
     except ImportError as e:
         print(f"\n{Colors.RED}❌ Error: Could not import simulator modules{Colors.END}")
         print(f"   {e}")
-        print(f"\n   Make sure you have the correct directory structure:")
-        print(f"   Simulator_v3/")
-        print(f"     ├── scenario/")
-        print(f"     │   ├── scenario_loader.py")
-        print(f"     │   └── scenario_runner.py")
-        print(f"     └── demo/demo_wholesale_sla_impact/")
+        print("\n   Make sure you have the correct directory structure:")
+        print("   Simulator_v3/")
+        print("     ├── scenario/")
+        print("     │   ├── scenario_loader.py")
+        print("     │   └── scenario_runner.py")
+        print("     └── demo/demo_wholesale_sla_impact/")
         return 1
         
     except KeyboardInterrupt:
